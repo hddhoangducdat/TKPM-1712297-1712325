@@ -1,20 +1,18 @@
 import React from "react";
-import { Router, Route } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import * as history from "history";
 
 // Components
 
+import authPage from "./components/auth/auth";
 import homePage from "./components/home/home";
-import login from "./components/login/login";
-import register from "./components/register/register";
 
 const App = () => {
   return (
     <Router history={history.createBrowserHistory()}>
       <Switch>
+        <Route path="/" exact component={authPage} />
         <Route path="/home" exact component={homePage} />
-        <Route path="/login" exact component={login} />
-        <Route path="/register" exact component={register} />
       </Switch>
     </Router>
   );
