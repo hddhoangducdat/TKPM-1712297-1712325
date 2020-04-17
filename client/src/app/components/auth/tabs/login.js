@@ -4,6 +4,7 @@ import React from "react";
 
 import "../../../css/auth/main.css";
 import "../../../css/auth/util.css";
+import "../../../css/auth/auth.css";
 
 const login = () => {
   return (
