@@ -24,18 +24,19 @@
 .left {
   left: 0;
 
-  background-color: #1b1e2b;
+  background-color: #2a2e42;
 }
 
 /* Control the right side */
 .right {
   right: 0;
+  background-color: #1b1e2b;
 }
 
 .right::before {
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url("../../asset/img/auth_background.png");
+  background-image: url("../../asset/img/login_background.jpg");
   content: "";
   display: block;
   position: absolute;
@@ -64,8 +65,4 @@
 
 .centered h1 {
   color: white;
-}
-
-button-submit {
-  padding-top: 30px;
 }

@@ -1,11 +1,12 @@
 import React from "react";
+import { Field, reduxForm } from "redux-form";
 
 // CSS
 
 import "../../../css/auth/main.css";
 import "../../../css/auth/util.css";
 
-const login = () => {
+const register = () => {
   return (
     <form className="contact100-form validate-form">
       <span className="contact100-form-title">
@@ -76,4 +77,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default reduxForm({ form: "register" })(register);
