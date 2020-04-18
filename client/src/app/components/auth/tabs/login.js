@@ -1,5 +1,6 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
 
 // CSS
 
@@ -7,9 +8,22 @@ import "../../../css/auth/main.css";
 import "../../../css/auth/util.css";
 import "../../../css/auth/auth.css";
 
-const login = () => {
+// Action
+
+import { login as loginAction } from "../../../store/actions";
+
+// Functions
+
+const login = ({ loginAction, handleSubmit }) => {
+  const formSubmit = (formProps) => {
+    loginAction(formProps);
+  };
+
   return (
-    <form className="contact100-form validate-form">
+    <form
+      onSubmit={handleSubmit(formSubmit)}
+      className="contact100-form validate-form"
+    >
       <span className="contact100-form-title">ARE YOU READY!!!</span>
 
       <div
@@ -32,7 +46,7 @@ const login = () => {
       >
         <Field
           className="input100"
-          type="text"
+          type="password"
           name="password"
           placeholder="Password"
           component="input"
@@ -52,4 +66,6 @@ const login = () => {
   );
 };
 
-export default reduxForm({ form: "login" })(login);
+const exportReduxForm = reduxForm({ form: "login" })(login);
+
+export default connect(null, { loginAction })(exportReduxForm);

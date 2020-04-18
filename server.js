@@ -3,7 +3,9 @@ dotenv.config();
 
 const express = require("express");
 const mongoose = require("mongoose");
+
 const authRoute = require("./server/routers/userRoute/authRoute");
+
 const app = express();
 
 mongoose.connect(

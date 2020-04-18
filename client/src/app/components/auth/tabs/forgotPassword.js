@@ -1,4 +1,5 @@
 import React from "react";
+import { Field, reduxForm } from "redux-form";
 
 // CSS
 
@@ -14,11 +15,12 @@ const login = () => {
         className="wrap-input100 validate-input"
         data-validate="Please enter your name"
       >
-        <input
+        <Field
           className="input100"
           type="text"
           name="name"
           placeholder="We need your email address"
+          component="input"
         />
         <span className="focus-input100"></span>
       </div>
@@ -35,4 +37,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default reduxForm({ form: "Forgot Password" })(login);
