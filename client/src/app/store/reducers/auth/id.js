@@ -3,6 +3,9 @@ export default (state = {}, action) => {
     case "SET_CURRENT_USER_AUTHEN":
       return action.payload;
 
+    case "LOGIN_FAILED":
+      return 1;
+
     default:
       return state;
   }

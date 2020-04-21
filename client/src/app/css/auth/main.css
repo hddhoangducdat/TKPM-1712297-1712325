@@ -318,6 +318,57 @@ textarea.input100 {
   width: calc(100% + 20px);
 }
 
+.contact100-form-btn-disabled {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  min-width: 150px;
+  height: 62px;
+  background-color: transparent;
+  border-radius: 31px;
+
+  font-family: Ubuntu-Bold;
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.2;
+  text-transform: uppercase;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+  position: relative;
+  z-index: 1;
+}
+
+.contact100-form-btn-disabled:before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+  border-radius: 31px;
+  background-color: #5b5b66;
+  pointer-events: none;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
 /*------------------------------------------------------------------
   [ Alert validate ]*/
 
@@ -359,8 +410,8 @@ textarea.input100 {
 }
 
 .alert-validate::after {
-  content: "\f06a";
   font-family: FontAwesome;
+  content: "\f06a";
   display: block;
   position: absolute;
   z-index: 1100;
@@ -380,9 +431,9 @@ textarea.input100 {
   opacity: 1;
 }
 
-@media (max-width: 992px) {
+/* @media (max-width: 992px) {
   .alert-validate::before {
     visibility: visible;
     opacity: 1;
   }
-}
+} */

@@ -9,10 +9,23 @@ import Box from "@material-ui/core/Box";
 import PhoneIcon from "@material-ui/icons/Phone";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
+import FadeIn from "react-fade-in";
+
+import { connect } from "react-redux";
 
 // CSS
 import "../../css/auth/auth.css";
-import logo from "../../asset/img/Logo2.png";
+import "../../asset/fonts/font-awesome-4.7.0/css/font-awesome.min.css";
+
+// Logo
+
+import defaultLogo from "../../asset/img/logo/default.png";
+import loginFailed from "../../asset/img/logo/loginFailed.png";
+import existedEmail from "../../asset/img/logo/existedEmail.png";
+import registerSuccessful from "../../asset/img/logo/registerSuccessful.png";
+import checkEmail from "../../asset/img/logo/checkEmail.png";
+import blankForm from "../../asset/img/logo/blankForm.png";
+import updatePassword from "../../asset/img/logo/updatePassword.png";
 
 // Tabs
 import Login from "./tabs/login";
@@ -68,18 +81,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Auth = () => {
+const Auth = ({ submit }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [logo, setLogo] = React.useState(defaultLogo);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  React.useEffect(() => {
+    if (submit === 1) setLogo(loginFailed);
+    else if (submit === 2) setLogo(existedEmail);
+    else if (submit === 3) setLogo(checkEmail);
+    else if (submit === 4) setLogo(registerSuccessful);
+    else if (submit === 0) setLogo(blankForm);
+    else if (submit === 5) setLogo(updatePassword);
+    else setLogo(defaultLogo);
+  }, [submit]);
+
   return (
     <div>
       <div className="split-left left">
         <div className="centered">
-          <img src={logo} alt="" />
+          <FadeIn>
+            <img src={logo} alt="" />
+          </FadeIn>
           <h1>A Chat and Streaming Web for Education</h1>
         </div>
       </div>
@@ -109,13 +136,13 @@ const Auth = () => {
           <div className="below-tabs">
             <div className="centered">
               <TabPanel value={value} index={0}>
-                <Login />
+                <Login load={submit} />
               </TabPanel>
               <TabPanel value={value} index={1}>
-                <Register />
+                <Register load={submit} />
               </TabPanel>
               <TabPanel value={value} index={2}>
-                <ForgotPassword />
+                <ForgotPassword load={submit} />
               </TabPanel>
             </div>
           </div>
@@ -125,4 +152,10 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+const mapStateToProps = (state) => {
+  return {
+    submit: state.auth.submit,
+  };
+};
+
+export default connect(mapStateToProps)(Auth);
