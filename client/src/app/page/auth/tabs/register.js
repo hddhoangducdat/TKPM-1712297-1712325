@@ -128,7 +128,7 @@ const Register = ({ register, handleSubmit, load }) => {
   return (
     <form
       onSubmit={handleSubmit(formSubmit)}
-      className="contact100-form validate-form"
+      className="contact100-form validate-form centered"
     >
       <span className="contact100-form-title">
         GET YOUR OWN PERSONAL's ACCOUNT

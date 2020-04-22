@@ -54,7 +54,7 @@ const ForgotPassword = ({ changePassword, handleSubmit, load }) => {
   return (
     <form
       onSubmit={handleSubmit(formSubmit)}
-      className="contact100-form validate-form"
+      className="contact100-form validate-form centered"
     >
       <span className="contact100-form-title">WE'RE HERE TO HELP</span>
 

@@ -44,7 +44,7 @@ const Login = ({ loginAction, handleSubmit, load }) => {
     <div>
       <form
         onSubmit={handleSubmit(formSubmit)}
-        className="contact100-form validate-form"
+        className="contact100-form validate-form centered"
       >
         <span className="contact100-form-title">ARE YOU READY!!!</span>
 
