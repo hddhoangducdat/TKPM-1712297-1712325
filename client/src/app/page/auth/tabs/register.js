@@ -58,7 +58,7 @@ const Register = ({ register, handleSubmit, load }) => {
 
   useEffect(() => {
     if (load === 0 || load === 2 || load === 3) setButton(false);
-  });
+  }, [load, button]);
 
   const onChangeFullName = (e) => {
     const ktra = /^[A-Za-z]\w{3,20}$/;

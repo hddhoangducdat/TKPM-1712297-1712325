@@ -2,7 +2,11 @@ import { combineReducers } from "redux";
 import { reducer as formReducer } from "redux-form";
 import auth from "./auth";
 
-export default combineReducers({
-  form: formReducer,
-  auth,
-});
+const createReducer = (asyncReducers) =>
+  combineReducers({
+    form: formReducer,
+    auth,
+    ...asyncReducers,
+  });
+
+export default createReducer;

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Field, reduxForm } from "redux-form";
 import FadeIn from "react-fade-in";
-import Lottie from "react-lottie";
 
 import { connect } from "react-redux";
 
@@ -43,7 +42,7 @@ const ChangePassword = ({ handleSubmit, updatePassword, match }) => {
     else if (password === "") setDisabled(true);
     else if (rePassword === "") setDisabled(true);
     else setDisabled(false);
-  }, [password, rePassword]);
+  }, [password, rePassword, validate]);
 
   const onChangePassword = (e) => {
     const ktra = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;

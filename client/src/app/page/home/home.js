@@ -1,7 +1,13 @@
 import React from "react";
+import history from "../../../history";
 
 const home = () => {
-  return <div>home</div>;
+  const onLogOut = () => {
+    localStorage.removeItem("jwtToken");
+    history.push("/");
+  };
+
+  return <button onClick={onLogOut}>Log Out</button>;
 };
 
 export default home;

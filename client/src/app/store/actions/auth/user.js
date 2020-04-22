@@ -35,6 +35,7 @@ export const setCurrentUserAuthen = (token) => async (dispatch) => {
       type: "SET_CURRENT_USER_AUTHEN",
       payload: _id,
     });
+    history.push("/home");
   } else
     dispatch({
       type: "SET_CURRENT_USER_AUTHEN",

@@ -1,6 +1,5 @@
 import axios from "../../../api/server";
 import { setCurrentUserAuthen } from "./user";
-import history from "../../../../history";
 
 export const login = (formValues) => async (dispatch) => {
   if (!formValues.email) dispatch({ type: "FORM_BLANK" });
@@ -15,7 +14,6 @@ export const login = (formValues) => async (dispatch) => {
       const { token } = response.data;
       localStorage.setItem("jwtToken", token);
       dispatch(setCurrentUserAuthen(token));
-      history.push("/home");
     } catch (err) {
       dispatch({
         type: "LOGIN_FAILED",

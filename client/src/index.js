@@ -1,17 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware, compose } from "redux";
-import reduxThunk from "redux-thunk";
-
+import store from "./app/store";
+import { setCurrentUserAuthen } from "./app/store/actions";
 import App from "./app/App";
-import reducers from "./app/store/reducers";
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(
-  reducers,
-  composeEnhancers(applyMiddleware(reduxThunk))
-);
+if (localStorage.jwtToken) {
+  store.dispatch(setCurrentUserAuthen(localStorage.jwtToken));
+}
 
 ReactDOM.render(
   <Provider store={store}>

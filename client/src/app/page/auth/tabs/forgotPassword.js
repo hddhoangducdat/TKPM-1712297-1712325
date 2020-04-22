@@ -49,7 +49,7 @@ const ForgotPassword = ({ changePassword, handleSubmit, load }) => {
 
   useEffect(() => {
     if (load === 0 || load === 2 || load === 3) setButton(false);
-  });
+  }, [load, button]);
 
   return (
     <form

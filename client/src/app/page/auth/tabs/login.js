@@ -38,7 +38,7 @@ const Login = ({ loginAction, handleSubmit, load }) => {
 
   useEffect(() => {
     if (load === 0 || load === 1) setButton(false);
-  });
+  }, [load, button]);
 
   return (
     <div>

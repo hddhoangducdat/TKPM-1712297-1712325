@@ -8,7 +8,6 @@ import history from "../history";
 
 import authPage from "./page/auth/auth";
 import emailConfirm from "./page/email/emailConfirm";
-import updatepassword from "./page/email/changePassword";
 import homePage from "./page/home/home";
 import loading from "./components/loading/loading";
 import changePassword from "./page/email/changePassword";
