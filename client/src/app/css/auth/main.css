@@ -172,6 +172,13 @@ iframe {
   margin-top: 40%;
 }
 
+@media only screen and (max-width: 1200px) {
+  .contact100-form {
+    width: 60%;
+    margin-top: 80%;
+  }
+}
+
 .contact100-form-title {
   display: block;
   font-family: Ubuntu-Bold;

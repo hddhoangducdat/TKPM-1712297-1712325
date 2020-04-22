@@ -113,7 +113,7 @@ const Auth = ({ submit }) => {
 
       <div className="split-right right">
         <div class="tabs">
-          <input type="radio" id="tab1" name="tab-control" checked />
+          <input type="radio" id="tab1" name="tab-control" defaultChecked />
           <input type="radio" id="tab2" name="tab-control" />
           <input type="radio" id="tab3" name="tab-control" />
           <ul>

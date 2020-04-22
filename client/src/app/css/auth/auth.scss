@@ -12,13 +12,13 @@ $accent-inactive: desaturate($accent, 85%);
 $secondary: $accent-inactive;
 
 /* tab setting */
-$tab-count: 4;
+$tab-count: 3;
 $indicator-width: 50px;
 $indicator-height: 4px;
 
 /* breakpoints */
 $breakpoints: (
-  medium: #{$tab-count * 250px},
+  medium: #{$tab-count * 3000px},
   small: #{$tab-count * 150px},
 );
 
