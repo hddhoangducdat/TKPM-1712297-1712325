@@ -1,7 +1,7 @@
 import axios from "../../../api/server";
 import { setCurrentUserAuthen } from "./user";
 
-export const login = (formValues) => async (dispatch) => {
+export const login = (formValues, setButton) => async (dispatch) => {
   if (!formValues.email) dispatch({ type: "FORM_BLANK" });
   else if (!formValues.password) dispatch({ type: "FORM_BLANK" });
   else {
@@ -18,6 +18,7 @@ export const login = (formValues) => async (dispatch) => {
       dispatch({
         type: "LOGIN_FAILED",
       });
+      setButton(false);
     }
   }
 };

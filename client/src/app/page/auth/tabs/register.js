@@ -56,10 +56,6 @@ const Register = ({ register, handleSubmit, load }) => {
     else setDisabled(true);
   }, [validate]);
 
-  useEffect(() => {
-    if (load === 0 || load === 2 || load === 3) setButton(false);
-  }, [load, button]);
-
   const onChangeFullName = (e) => {
     const ktra = /^[A-Za-z]\w{3,20}$/;
     if (String(e.target.value).match(ktra)) {
@@ -122,7 +118,7 @@ const Register = ({ register, handleSubmit, load }) => {
 
   const formSubmit = (formProps) => {
     setButton(true);
-    register(formProps);
+    register(formProps, setButton);
   };
 
   return (

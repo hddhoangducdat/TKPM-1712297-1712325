@@ -39,17 +39,18 @@ const useStyles = makeStyles({
 });
 
 const EmailConfirm = ({ match, confirmEmail, submit }) => {
+  const [success, setSuccess] = React.useState(true);
   const classes = useStyles();
 
   useEffect(() => {
     // console.log(props.match.params.token);
-    confirmEmail(match.params.token);
+    confirmEmail(match.params.token, setSuccess);
   }, [confirmEmail, match.params.token]);
 
   const defaultOptions = {
     loop: true,
     autoplay: true,
-    animationData: submit === 4 ? successful.default : bearLoading.default,
+    animationData: success ? successful.default : bearLoading.default,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },

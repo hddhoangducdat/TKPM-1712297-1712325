@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import Lottie from "react-lottie";
@@ -16,11 +16,11 @@ import * as spinner from "../../../asset/json/loading/spinner.json";
 import "../../../css/auth/main.css";
 import "../../../css/auth/util.css";
 
-const ForgotPassword = ({ changePassword, handleSubmit, load }) => {
+const ForgotPassword = ({ changePassword, handleSubmit }) => {
   const [button, setButton] = useState(false);
   const formSubmit = (formProps) => {
     setButton(true);
-    changePassword(formProps);
+    changePassword(formProps, setButton);
   };
 
   const defaultOptions = {
@@ -46,10 +46,6 @@ const ForgotPassword = ({ changePassword, handleSubmit, load }) => {
       setDisabled(true);
     }
   };
-
-  useEffect(() => {
-    if (load === 0 || load === 2 || load === 3) setButton(false);
-  }, [load, button]);
 
   return (
     <form

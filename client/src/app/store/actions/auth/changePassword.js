@@ -1,13 +1,15 @@
 import axios from "../../../api/server";
 import history from "../../../../history";
 
-export const changePassword = ({ email }) => async (dispatch) => {
+export const changePassword = ({ email }, setButton) => async (dispatch) => {
   if (!email) dispatch({ type: "FORM_BLANK" });
   else {
     try {
-      await axios.post("/api/authentication/user/requestChangePassword", {
-        email,
-      });
+      await axios
+        .post("/api/authentication/user/requestChangePassword", {
+          email,
+        })
+        .then(() => setButton(false));
       dispatch({
         type: "CONFIRM_EMAIL",
       });
@@ -15,15 +17,20 @@ export const changePassword = ({ email }) => async (dispatch) => {
       dispatch({
         type: "REGISTER_FAILED",
       });
+      setButton(false);
     }
   }
 };
 
-export const updatePassword = (formValues, token) => async (dispatch) => {
+export const updatePassword = (formValues, token, setButton) => async (
+  dispatch
+) => {
   try {
-    await axios.patch("/api/authentication/user/updatePassword", formValues, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    await axios
+      .patch("/api/authentication/user/updatePassword", formValues, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(() => setButton(false));
 
     dispatch({
       type: "UPDATE_SUCCESS",
@@ -33,6 +40,6 @@ export const updatePassword = (formValues, token) => async (dispatch) => {
     dispatch({
       type: "REGISTER_FAILED",
     });
-    history.push("/");
+    // history.push("/");
   }
 };

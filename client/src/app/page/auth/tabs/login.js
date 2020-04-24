@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import Lottie from "react-lottie";
@@ -19,12 +19,12 @@ import * as spinner from "../../../asset/json/loading/spinner.json";
 
 // Functions
 
-const Login = ({ loginAction, handleSubmit, load }) => {
+const Login = ({ loginAction, handleSubmit }) => {
   const [button, setButton] = useState(false);
 
   const formSubmit = (formProps) => {
     setButton(true);
-    loginAction(formProps);
+    loginAction(formProps, setButton);
   };
 
   const defaultOptions = {
@@ -36,9 +36,9 @@ const Login = ({ loginAction, handleSubmit, load }) => {
     },
   };
 
-  useEffect(() => {
-    if (load === 0 || load === 1) setButton(false);
-  }, [load, button]);
+  // useEffect(() => {
+  //   if (load === 0 || load === 1) setButton(false);
+  // }, [load, button]);
 
   return (
     <div>

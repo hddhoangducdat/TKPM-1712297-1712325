@@ -1,14 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import PhoneIcon from "@material-ui/icons/Phone";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import PersonPinIcon from "@material-ui/icons/PersonPin";
 import FadeIn from "react-fade-in";
 
 import { connect } from "react-redux";
@@ -55,40 +48,8 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `nav-tab-${index}`,
-    "aria-controls": `nav-tabpanel-${index}`,
-  };
-}
-
-function LinkTab(props) {
-  return (
-    <Tab
-      component="a"
-      onClick={(event) => {
-        event.preventDefault();
-      }}
-      {...props}
-    />
-  );
-}
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
-
 const Auth = ({ submit }) => {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
   const [logo, setLogo] = React.useState(defaultLogo);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   React.useEffect(() => {
     if (submit === 1) setLogo(loginFailed);
@@ -151,13 +112,13 @@ const Auth = ({ submit }) => {
           </div>
           <div class="content">
             <section>
-              <Login load={submit} />
+              <Login />
             </section>
             <section>
-              <Register load={submit} />
+              <Register />
             </section>
             <section>
-              <ForgotPassword load={submit} />
+              <ForgotPassword />
             </section>
             <section>
               <h2>Returns</h2>

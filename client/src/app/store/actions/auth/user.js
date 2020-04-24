@@ -12,16 +12,19 @@ export const getCurrentUser = (token) => async (dispatch) => {
   });
 };
 
-export const confirmEmail = (token) => async (dispatch) => {
+export const confirmEmail = (token, setSuccess) => async (dispatch) => {
   try {
-    await axios.get("/api/authentication/user/confirm", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    dispatch({
-      type: "REGISTER_SUCCESS",
-    });
-    history.push("/");
+    await axios
+      .get("/api/authentication/user/confirm", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(() => {
+        setSuccess(true);
+        dispatch({
+          type: "REGISTER_SUCCESS",
+        });
+      })
+      .then(() => history.push("/"));
   } catch (err) {
     history.push("/");
   }

@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Field, reduxForm } from "redux-form";
 import FadeIn from "react-fade-in";
+import Lottie from "react-lottie";
 
 import { connect } from "react-redux";
 
 // Actions
 
 import { updatePassword } from "../../store/actions";
+
+// JSON
+
+import * as spinner from "../../asset/json/loading/spinner.json";
 
 // CSS
 
@@ -17,10 +22,21 @@ import "../../css/emailConfirm/util.css";
 // JSON
 
 const ChangePassword = ({ handleSubmit, updatePassword, match }) => {
+  const [button, setButton] = useState(false);
+
   const [validate, setValidate] = useState({
     password: "wrap-input100 validate-input",
     rePassword: "wrap-input100 validate-input",
   });
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: spinner.default,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
@@ -29,7 +45,7 @@ const ChangePassword = ({ handleSubmit, updatePassword, match }) => {
 
   const formSubmit = (formProps) => {
     const token = match.params.token;
-    updatePassword(formProps, token);
+    updatePassword(formProps, token, setButton);
   };
 
   useEffect(() => {
@@ -113,30 +129,33 @@ const ChangePassword = ({ handleSubmit, updatePassword, match }) => {
             />
             <span className="focus-input100"></span>
           </div>
-
-          <div className="container-contact100-form-btn">
-            {!disabled ? (
-              <button className="contact100-form-btn">
-                <span>
-                  <i
-                    className="fa fa-paper-plane-o m-r-6"
-                    aria-hidden="true"
-                  ></i>
-                  UPDATE
-                </span>
-              </button>
-            ) : (
-              <button className="contact100-form-btn-disabled" disabled>
-                <span>
-                  <i
-                    className="fa fa-paper-plane-o m-r-6"
-                    aria-hidden="true"
-                  ></i>
-                  UPDATE
-                </span>
-              </button>
-            )}
-          </div>
+          {!button ? (
+            <div className="container-contact100-form-btn">
+              {!disabled ? (
+                <button className="contact100-form-btn">
+                  <span>
+                    <i
+                      className="fa fa-paper-plane-o m-r-6"
+                      aria-hidden="true"
+                    ></i>
+                    UPDATE
+                  </span>
+                </button>
+              ) : (
+                <button className="contact100-form-btn-disabled" disabled>
+                  <span>
+                    <i
+                      className="fa fa-paper-plane-o m-r-6"
+                      aria-hidden="true"
+                    ></i>
+                    UPDATE
+                  </span>
+                </button>
+              )}
+            </div>
+          ) : (
+            <Lottie options={defaultOptions} width="102px" height="102px" />
+          )}
         </form>
       </FadeIn>
     </div>
