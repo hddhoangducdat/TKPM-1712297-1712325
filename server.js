@@ -1,12 +1,19 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
+const http = require("http");
 const express = require("express");
 const mongoose = require("mongoose");
+const socketio = require("socket.io");
+const cors = require("cors");
 
 const authRoute = require("./server/routers/userRoute/authRoute");
+const chatRoute = require("./server/routers/chatRoute/chatRoute");
+const userRoute = require("./server/routers/userRoute/userRoute");
 
 const app = express();
+const server = http.createServer(app);
+const io = socketio(server);
 
 mongoose.connect(
   process.env.CONNECTION_STRING,
@@ -16,6 +23,20 @@ mongoose.connect(
   }
 );
 
+io.on("connection", (socket) => {
+  socket.on("join", (chatBoxId) => {
+    socket.join(chatBoxId);
+
+    // socket.emit("message", { text: "I'm join" });
+    // socket.broadcast.to(chatBoxId).emit("message", { text: "sOMBBODY JOIN" });
+  });
+
+  socket.on("sendMessage", ({ userId, message, chatBoxId }) => {
+    io.to(chatBoxId).emit("message", { id: userId, text: message });
+  });
+});
+
+app.use(cors());
 app.use(express.json());
 
 app.use((req, res, next) => {
@@ -32,7 +53,9 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/authentication/user", authRoute);
+app.use("/user", userRoute);
+app.use("/chat", chatRoute);
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`Server started on port ${port}`));
+server.listen(port, () => console.log(`Server started on port ${port}`));

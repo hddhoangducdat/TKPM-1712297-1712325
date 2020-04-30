@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import history from "../../../history";
+import Chat from "../../components/chat/chat";
+import UserList from "../../components/user/list";
+import _ from "lodash";
 
-const home = () => {
+const Home = () => {
+  const [clickChat, setClickChat] = useState(false);
+  // console.log(clickChat);
+
   const onLogOut = () => {
     localStorage.removeItem("jwtToken");
     history.push("/");
   };
 
-  return <button onClick={onLogOut}>Log Out</button>;
+  return (
+    <div>
+      <button onClick={onLogOut}>Log Out</button>
+      <UserList setClickChat={setClickChat} />
+      {clickChat ? <Chat /> : ""}
+    </div>
+  );
 };
 
-export default home;
+export default Home;

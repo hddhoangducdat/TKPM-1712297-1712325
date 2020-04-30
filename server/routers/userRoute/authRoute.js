@@ -5,15 +5,15 @@ const authRoute = express.Router();
 const {
   confirmEmail,
   updatePassword,
-} = require("../../controllers/userController/confirm");
+} = require("../../controllers/authController/confirm");
 
 const {
   register,
   login,
   requestChangePassword,
-} = require("../../controllers/userController/authController");
+} = require("../../controllers/authController/authController");
 
-const getAccount = require("../../controllers/userController/curdInfoController");
+const getAccount = require("../../controllers/authController/curdInfoController");
 
 const tokenValidation = require("../../middlewares/tokenValidation");
 

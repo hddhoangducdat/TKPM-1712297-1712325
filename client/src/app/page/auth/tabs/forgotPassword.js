@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Field, reduxForm } from "redux-form";
-import { connect } from "react-redux";
+
 import Lottie from "react-lottie";
 
 // Actions
 
+import { connect } from "react-redux";
 import { changePassword } from "../../../store/actions";
 
 // JSON
