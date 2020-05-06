@@ -6,10 +6,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const socketio = require("socket.io");
 const cors = require("cors");
+// const socketWeb = require("./server/socket/socket");
 
 const authRoute = require("./server/routers/userRoute/authRoute");
 const chatRoute = require("./server/routers/chatRoute/chatRoute");
 const userRoute = require("./server/routers/userRoute/userRoute");
+// const fileRoute = require("./server/routers/fileRoute/fileRoute");
 
 const app = express();
 const server = http.createServer(app);
@@ -26,9 +28,10 @@ mongoose.connect(
 io.on("connection", (socket) => {
   socket.on("join", (chatBoxId) => {
     socket.join(chatBoxId);
+  });
 
-    // socket.emit("message", { text: "I'm join" });
-    // socket.broadcast.to(chatBoxId).emit("message", { text: "sOMBBODY JOIN" });
+  socket.on("sendFile", ({ fileName, chatBoxId }) => {
+    io.to(chatBoxId).emit("file", fileName);
   });
 
   socket.on("sendMessage", ({ userId, message, chatBoxId }) => {
@@ -55,6 +58,7 @@ app.use((req, res, next) => {
 app.use("/api/authentication/user", authRoute);
 app.use("/user", userRoute);
 app.use("/chat", chatRoute);
+// app.use("/file", fileRoute);w
 
 const port = process.env.PORT || 5000;
 

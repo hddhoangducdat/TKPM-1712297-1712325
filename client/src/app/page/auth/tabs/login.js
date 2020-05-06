@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import Lottie from "react-lottie";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 
 // CSS
 
@@ -19,7 +22,25 @@ import * as spinner from "../../../asset/json/loading/spinner.json";
 
 // Functions
 
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+  },
+  bullet: {
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)",
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+});
+
 const Login = ({ loginAction, handleSubmit }) => {
+  const classes = useStyles();
   const [button, setButton] = useState(false);
 
   const formSubmit = (formProps) => {
@@ -46,6 +67,8 @@ const Login = ({ loginAction, handleSubmit }) => {
         onSubmit={handleSubmit(formSubmit)}
         className="contact100-form validate-form centered"
       >
+        {/* <Card className={classes.root}>
+          <CardContent> */}
         <span className="contact100-form-title">ARE YOU READY!!!</span>
 
         <div className="wrap-input100 validate-input" data-validate="*@*.*">
@@ -84,6 +107,8 @@ const Login = ({ loginAction, handleSubmit }) => {
         ) : (
           <Lottie options={defaultOptions} width="102px" height="102px" />
         )}
+        {/* </CardContent>
+        </Card> */}
       </form>
     </div>
   );

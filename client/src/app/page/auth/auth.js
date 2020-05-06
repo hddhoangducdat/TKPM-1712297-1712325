@@ -120,13 +120,6 @@ const Auth = ({ submit }) => {
             <section>
               <ForgotPassword />
             </section>
-            <section>
-              <h2>Returns</h2>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa
-              dicta vero rerum? Eaque repudiandae architecto libero
-              reprehenderit aliquam magnam ratione quidem? Nobis doloribus
-              molestiae enim deserunt necessitatibus eaque quidem incidunt.
-            </section>
           </div>
         </div>
       </div>

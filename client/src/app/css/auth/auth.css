@@ -30,14 +30,17 @@
 /* Control the right side */
 .right {
   right: 0;
-  background-color: #1b1e2b;
+  background-color: #2a2e42;
 }
 
 .right::before {
   background-repeat: no-repeat;
   background-size: cover;
   /* background: linear-gradient(to right, #66ccff 0%, #cc99ff 100%); */
-  /* background-image: url("../../asset/img/login_background.jpg"); */
+  /* background-image: url("../../asset/img/auth_background.png"); */
+  background-image: url("../../asset/img/476255.png");
+  background-size: 70%;
+  background-position: right;
   content: "";
   display: block;
   position: absolute;
