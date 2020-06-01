@@ -57,7 +57,7 @@ const Register = ({ register, handleSubmit, load }) => {
   }, [validate]);
 
   const onChangeFullName = (e) => {
-    const ktra = /^[A-Za-z]\w{3,20}$/;
+    const ktra = /^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])+$/;
     if (String(e.target.value).match(ktra)) {
       setValidate({
         ...validate,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import { getChatDialog } from "../../store/actions";
 import io from "socket.io-client";
+import history from "../../../history";
 
 //CSS
 
@@ -9,11 +9,15 @@ import "../../css/chat/chatBox.scss";
 
 // Action
 
-import { saveMessage, saveFile } from "../../store/actions";
+import { saveMessage, saveFile, getChatDialog } from "../../store/actions";
+
+// Component
+import SearchList from "../search/list";
 
 let socket;
 
 const Chat = ({
+  getChatDialog,
   chatBoxId,
   dataBaseMessage,
   userId,
@@ -21,9 +25,19 @@ const Chat = ({
   saveFile,
   file,
   setFile,
+  searchUser,
+  chatBox,
+  setProfile,
+  user,
 }) => {
+  const [searchList, setSearchList] = useState([]);
+  const [search, setSearch] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState(dataBaseMessage);
+
+  const [currentChatName, setCurrentChatName] = useState("");
+  const [currentChatAvatar, setCurrentChatAvatar] = useState("");
 
   const ENDPOINT = "localhost:5000";
 
@@ -33,12 +47,19 @@ const Chat = ({
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
+  useEffect(() => {
+    setProfile(user);
+    getChatDialog(chatBox[0], userId, "");
+    setCurrentChatName(chatBox[0].name);
+    setCurrentChatAvatar(chatBox[0].avatar);
+  }, []);
+
   useEffect(scrollToBottom, [messages]);
 
   useEffect(() => {
     socket = io(ENDPOINT);
-
     socket.emit("join", chatBoxId);
+    setMessages(dataBaseMessage);
   }, [chatBoxId]);
 
   useEffect(() => {
@@ -56,10 +77,11 @@ const Chat = ({
         return messages.concat(fileName);
       });
     });
-  }, []);
+  }, [chatBoxId]);
 
   const formSubmit = (e) => {
     e.preventDefault();
+
     if (message) {
       socket.emit("sendMessage", { userId, message, chatBoxId });
       setMessage("");
@@ -70,14 +92,31 @@ const Chat = ({
       });
       const formData = new FormData();
       formData.append("file", file[0]);
-      console.log(formData);
       socket.emit("sendFile", { fileName, chatBoxId });
       setFile([]);
     }
   };
 
+  const onSearch = ({ target: { value } }) => {
+    setSearch(value);
+    setShowSearch(true);
+    const filter = value.toLowerCase();
+
+    if (value !== "") {
+      try {
+        setSearchList(
+          searchUser.filter(({ data: { fullName } }) => {
+            const lc = fullName.toLowerCase();
+            return lc.includes(filter);
+          })
+        );
+      } catch (err) {}
+    } else {
+      setSearchList([]);
+    }
+  };
+
   const messageList = () => {
-    // console.log(messages);
     return messages.map((message, index) => {
       const text =
         message.id === userId
@@ -109,159 +148,69 @@ const Chat = ({
     });
   };
 
+  const onSearchSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const showChatBox = () => {
+    return chatBox.map((c) => {
+      return (
+        <li className="clearfix" key={c.id}>
+          <img src={c.avatar} alt="avatar" width="70" />
+          <div className="about">
+            <div className="name">{c.name}</div>
+            <div className="status">
+              <i className="fa fa-circle online"></i> online
+            </div>
+          </div>
+        </li>
+      );
+    });
+  };
+
   return (
     <div className="container-chat clearfix">
       <div className="people-list" id="people-list">
-        <div className="search">
-          <input type="text" placeholder="search" />
-          <i className="fa fa-search"></i>
-        </div>
-        <ul className="list">
-          <li className="clearfix">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg"
-              alt="avatar"
+        <form onSubmit={onSearchSubmit}>
+          <div className="search">
+            <input
+              autoComplete="off"
+              type="text"
+              name="search"
+              value={search}
+              placeholder="search"
+              onChange={onSearch}
+              onClick={onSearch}
             />
-            <div className="about">
-              <div className="name">Vincent Porter</div>
-              <div className="status">
-                <i className="fa fa-circle online"></i> online
-              </div>
+            <div className="search-list">
+              {showSearch ? (
+                <SearchList
+                  searchList={searchList}
+                  setProfile={setProfile}
+                  setShowSearch={setShowSearch}
+                  // onBlur={() => setShowSearch(false)}
+                />
+              ) : (
+                ""
+              )}
             </div>
-          </li>
 
-          <li className="clearfix">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_02.jpg"
-              alt="avatar"
-            />
-            <div className="about">
-              <div className="name">Aiden Chavez</div>
-              <div className="status">
-                <i className="fa fa-circle offline"></i> left 7 mins ago
-              </div>
-            </div>
-          </li>
-
-          <li className="clearfix">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_03.jpg"
-              alt="avatar"
-            />
-            <div className="about">
-              <div className="name">Mike Thomas</div>
-              <div className="status">
-                <i className="fa fa-circle online"></i> online
-              </div>
-            </div>
-          </li>
-
-          <li className="clearfix">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_04.jpg"
-              alt="avatar"
-            />
-            <div className="about">
-              <div className="name">Erica Hughes</div>
-              <div className="status">
-                <i className="fa fa-circle online"></i> online
-              </div>
-            </div>
-          </li>
-
-          <li className="clearfix">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_05.jpg"
-              alt="avatar"
-            />
-            <div className="about">
-              <div className="name">Ginger Johnston</div>
-              <div className="status">
-                <i className="fa fa-circle online"></i> online
-              </div>
-            </div>
-          </li>
-
-          <li className="clearfix">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_06.jpg"
-              alt="avatar"
-            />
-            <div className="about">
-              <div className="name">Tracy Carpenter</div>
-              <div className="status">
-                <i className="fa fa-circle offline"></i> left 30 mins ago
-              </div>
-            </div>
-          </li>
-
-          <li className="clearfix">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_07.jpg"
-              alt="avatar"
-            />
-            <div className="about">
-              <div className="name">Christian Kelly</div>
-              <div className="status">
-                <i className="fa fa-circle offline"></i> left 10 hours ago
-              </div>
-            </div>
-          </li>
-
-          <li className="clearfix">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_08.jpg"
-              alt="avatar"
-            />
-            <div className="about">
-              <div className="name">Monica Ward</div>
-              <div className="status">
-                <i className="fa fa-circle online"></i> online
-              </div>
-            </div>
-          </li>
-
-          <li className="clearfix">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_09.jpg"
-              alt="avatar"
-            />
-            <div className="about">
-              <div className="name">Dean Henry</div>
-              <div className="status">
-                <i className="fa fa-circle offline"></i> offline since Oct 28
-              </div>
-            </div>
-          </li>
-
-          <li className="clearfix">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_10.jpg"
-              alt="avatar"
-            />
-            <div className="about">
-              <div className="name">Peyton Mckinney</div>
-              <div className="status">
-                <i className="fa fa-circle online"></i> online
-              </div>
-            </div>
-          </li>
-        </ul>
+            <i className="fa fa-search"></i>
+          </div>
+        </form>
+        <ul className="list">{showChatBox()}</ul>
       </div>
       <div className="chat">
         <div className="chat-header clearfix">
-          <img
-            src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg"
-            alt="avatar"
-          />
+          <img src={currentChatAvatar} alt="avatar" width="70" />
 
           <div className="chat-about">
-            <div className="chat-with">Chat with Vincent Porter</div>
+            <div className="chat-with">{currentChatName}</div>
             <div className="chat-num-messages">already 1 902 messages</div>
           </div>
           <i className="fa fa-star"></i>
         </div>
-        <div class="chat-history">
+        <div className="chat-history">
           <ul>{messageList()}</ul>
           <div ref={messagesEndRef} />
         </div>
@@ -287,11 +236,14 @@ const Chat = ({
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
+    user: state.auth.user,
     userId: state.auth.id,
-    chatBoxId: state.chat.chatDialog._id,
-    dataBaseMessage: state.chat.chatDialog.message,
+    chatBoxId: state.chat.id,
+    dataBaseMessage: state.chat.chatDialog,
+    chatBox: state.auth.user.data.chatBox,
+    searchUser: state.user.list,
   };
 };
 

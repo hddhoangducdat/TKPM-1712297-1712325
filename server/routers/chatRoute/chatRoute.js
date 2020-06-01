@@ -8,7 +8,8 @@ const {
 const chatRoute = express();
 
 chatRoute.post("/create", chatDialogCreate);
+
 chatRoute.patch("/chatDialog/save/:id", saveChatDialog);
-chatRoute.get("/", getChatDialog);
+chatRoute.get("/:id", getChatDialog);
 
 module.exports = chatRoute;

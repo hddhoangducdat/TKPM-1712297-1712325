@@ -1,4 +1,5 @@
 const userModel = require("../../models/userModel");
+const chatModel = require("../../models/chatModel");
 const {
   registerValidation,
   loginValidation,
@@ -67,15 +68,33 @@ exports.register = async (req, res) => {
   let salt = await bcrypt.genSalt(10);
   let passwordHash = await bcrypt.hash(req.body.password, salt);
 
+  const chatDialog = new chatModel({
+    message: [],
+  });
+
   const user = new userModel({
     password: passwordHash,
     data: {
       fullName: req.body.fullName,
       avatar:
         "https://library.kissclipart.com/20181001/wbw/kissclipart-gsmnet-ro-clipart-computer-icons-user-avatar-4898c5072537d6e2.png",
+      number: "NONE",
+      gender: "NONE",
+      address: "NONE",
       email: req.body.email,
+      chatBox: [
+        {
+          id: chatDialog._id,
+          name: req.body.fullName,
+          avatar:
+            "https://library.kissclipart.com/20181001/wbw/kissclipart-gsmnet-ro-clipart-computer-icons-user-avatar-4898c5072537d6e2.png",
+          member: [req.body.email],
+        },
+      ],
     },
   });
+
+  chatDialog.save();
 
   const transporter = nodemailer.createTransport({
     service: "gmail",

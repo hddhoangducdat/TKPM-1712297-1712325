@@ -11,6 +11,7 @@ import emailConfirm from "./page/email/emailConfirm";
 import homePage from "./page/home/home";
 import loading from "./components/loading/loading";
 import changePassword from "./page/email/changePassword";
+import startingPage from "./page/starting/starting";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
       <Router history={history}>
         <Switch>
           <Route path="/" exact component={authPage} />
+          <Route path="/starting" exact component={startingPage} />
           <Route path="/loading" exact component={loading} />
           <Route path="/confirmation/:token" exact component={emailConfirm} />
           <Route

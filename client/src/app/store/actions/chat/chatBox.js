@@ -1,28 +1,24 @@
 import axios from "../../../api/server";
 
-export const getChatDialog = (id1, id2, setClickChat) => async (dispatch) => {
+export const getChatDialog = (chatBox, userId, chatUser) => async (
+  dispatch
+) => {
   try {
-    const response = await axios
-      .get(`/chat/?user1=${id1}&user2=${id2}`)
-      .then(({ data }) => {
-        dispatch({
-          type: "GET_CHAT_DIALOG",
-          payload: data,
-        });
-        setClickChat(true);
+    if (chatBox === "") throw "create";
+    const response = await axios.get(`/chat/${chatBox.id}`).then(({ data }) => {
+      dispatch({
+        type: "GET_CHAT_DIALOG",
+        payload: data,
       });
+    });
   } catch (err) {
-    const response = await axios
-      .post("/chat/create", {
-        id1,
-        id2,
-      })
+    await axios
+      .post("/chat/create", { id1: userId, id2: chatUser })
       .then(({ data }) => {
         dispatch({
           type: "CREATE_CHAT_DIALOG",
           payload: data,
         });
-        setClickChat(true);
       });
   }
 };

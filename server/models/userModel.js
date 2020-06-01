@@ -6,6 +6,11 @@ const userSchema = new mongoose.Schema({
     fullName: String,
     avatar: String,
     email: String,
+    number: String,
+    address: String,
+    gender: String,
+    chatBox: Array,
+    friend: Array,
   },
 });
 

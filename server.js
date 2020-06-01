@@ -11,6 +11,7 @@ const cors = require("cors");
 const authRoute = require("./server/routers/userRoute/authRoute");
 const chatRoute = require("./server/routers/chatRoute/chatRoute");
 const userRoute = require("./server/routers/userRoute/userRoute");
+const requestRoute = require("./server/routers/requestRoute/requestRoute");
 // const fileRoute = require("./server/routers/fileRoute/fileRoute");
 
 const app = express();
@@ -19,7 +20,7 @@ const io = socketio(server);
 
 mongoose.connect(
   process.env.CONNECTION_STRING,
-  { useNewUrlParser: true, useUnifiedTopology: true },
+  { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
   () => {
     console.log("DataBase CONNECTED !!!");
   }
@@ -28,6 +29,16 @@ mongoose.connect(
 io.on("connection", (socket) => {
   socket.on("join", (chatBoxId) => {
     socket.join(chatBoxId);
+  });
+
+  socket.on("request", (id) => {
+    socket.join(id);
+  });
+
+  socket.on("sendRequest", ({ id, type, data }) => {
+    if (type === "acceptFriend") {
+      io.to(id).emit(type, data);
+    } else io.to(id).emit(type);
   });
 
   socket.on("sendFile", ({ fileName, chatBoxId }) => {
@@ -58,6 +69,7 @@ app.use((req, res, next) => {
 app.use("/api/authentication/user", authRoute);
 app.use("/user", userRoute);
 app.use("/chat", chatRoute);
+app.use("/request", requestRoute);
 // app.use("/file", fileRoute);w
 
 const port = process.env.PORT || 5000;
