@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "concurrently": "^5.2.0",
     "filepond": "^4.13.5",
     "filepond-plugin-image-exif-orientation": "^1.0.8",
     "filepond-plugin-image-preview": "^4.6.2",
@@ -31,7 +32,7 @@
     "socket.io-client": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"node-sass src/app/asset/sass/main.scss src/app/asset/css/style.css -w\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
