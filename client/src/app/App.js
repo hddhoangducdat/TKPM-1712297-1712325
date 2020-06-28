@@ -6,6 +6,10 @@ import history from "../history";
 
 import authPage from "./pages/auth";
 
+// CSS
+
+// import "./asset/css/style.css";
+
 const App = () => {
   return (
     <div>
