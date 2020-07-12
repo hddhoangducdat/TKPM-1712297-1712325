@@ -1,0 +1,43 @@
+form {
+  display: block;
+  z-index: -1;
+  transition: all 0.5 ease;
+  margin: 0;
+}
+
+input {
+  width: 100%;
+  padding: 11px 10px 11px 13px;
+  display: block;
+  margin: 0;
+  border: none;
+  // background: none;
+  font: 16px/1.4 "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+  border-bottom: solid 0.01rem #d3c8c85b;
+}
+
+.form-action {
+  animation-name: slidein;
+  animation-duration: 0.5s;
+}
+
+.header-action {
+  animation-name: form-appear-top;
+  animation-duration: 1s;
+}
+
+.btn-action {
+  animation-name: form-appear-bottom;
+  animation-duration: 1s;
+}
+
+.btn-action-login {
+  animation-name: form-appear-bottom-login;
+  animation-duration: 1s;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}

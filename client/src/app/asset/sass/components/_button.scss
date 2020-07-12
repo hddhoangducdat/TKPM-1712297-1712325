@@ -1,0 +1,30 @@
+// .signup-action {
+//   transform: translateY(7rem);
+//   transition: all 0.5s ease-in;
+// }
+
+input[type="submit"].secondary,
+input[type="reset"].secondary,
+input[type="button"].secondary,
+button.secondary,
+.button.secondary {
+  background-color: #6b33ed;
+  box-shadow: none !important;
+  color: #ffffff !important;
+}
+
+input[type="submit"].secondary:hover,
+input[type="reset"].secondary:hover,
+input[type="button"].secondary:hover,
+button.secondary:hover,
+.button.secondary:hover {
+  background-color: #6432da !important;
+}
+
+input[type="submit"].secondary:active,
+input[type="reset"].secondary:active,
+input[type="button"].secondary:active,
+button.secondary:active,
+.button.secondary:active {
+  background-color: #6131cf !important;
+}

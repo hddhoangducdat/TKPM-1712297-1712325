@@ -3,10 +3,11 @@
 @import "abstracts/variables";
 
 @import "base/base";
-@import "base/animations";
+@import "base/animation";
 @import "base/utilities";
-@import "base/typography";
-
-@import "pages/auth";
+@import "base/typograph";
 
 @import "components/button";
+@import "components/form";
+
+@import "pages/auth";

@@ -1,0 +1,99 @@
+@keyframes slidein {
+  from {
+    margin-left: 100%; }
+  to {
+    margin-left: 0%; } }
+
+@keyframes form-appear-top {
+  from {
+    margin-bottom: 0; }
+  to {
+    margin-bottom: 1rem; } }
+
+@keyframes form-appear-bottom {
+  from { }
+  to {
+    margin-top: 10rem; } }
+
+@keyframes form-appear-bottom-login {
+  from { }
+  to {
+    margin-top: 7rem; } }
+
+.util-margin-bottom-small {
+  margin-bottom: 1rem; }
+
+.util-margin-top-small {
+  margin-top: 1rem; }
+
+.auth-form {
+  width: 20rem; }
+
+.inner {
+  transform: translateY(-2rem); }
+
+input[type="submit"].secondary,
+input[type="reset"].secondary,
+input[type="button"].secondary,
+button.secondary,
+.button.secondary {
+  background-color: #6b33ed;
+  box-shadow: none !important;
+  color: #ffffff !important; }
+
+input[type="submit"].secondary:hover,
+input[type="reset"].secondary:hover,
+input[type="button"].secondary:hover,
+button.secondary:hover,
+.button.secondary:hover {
+  background-color: #6432da !important; }
+
+input[type="submit"].secondary:active,
+input[type="reset"].secondary:active,
+input[type="button"].secondary:active,
+button.secondary:active,
+.button.secondary:active {
+  background-color: #6131cf !important; }
+
+form {
+  display: block;
+  z-index: -1;
+  transition: all 0.5 ease;
+  margin: 0; }
+
+input {
+  width: 100%;
+  padding: 11px 10px 11px 13px;
+  display: block;
+  margin: 0;
+  border: none;
+  font: 16px/1.4 "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+  border-bottom: solid 0.01rem #d3c8c85b; }
+
+.form-action {
+  animation-name: slidein;
+  animation-duration: 0.5s; }
+
+.header-action {
+  animation-name: form-appear-top;
+  animation-duration: 1s; }
+
+.btn-action {
+  animation-name: form-appear-bottom;
+  animation-duration: 1s; }
+
+.btn-action-login {
+  animation-name: form-appear-bottom-login;
+  animation-duration: 1s; }
+
+textarea:focus,
+input:focus {
+  outline: none; }
+
+#banner {
+  background-image: url("../img/background1.jpeg");
+  background-size: cover; }
+
+body {
+  overflow: hidden; }

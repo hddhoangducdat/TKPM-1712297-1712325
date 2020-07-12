@@ -1,0 +1,37 @@
+@keyframes slidein {
+  from {
+    margin-left: 100%;
+  }
+
+  to {
+    margin-left: 0%;
+  }
+}
+
+@keyframes form-appear-top {
+  from {
+    margin-bottom: 0;
+  }
+
+  to {
+    margin-bottom: 1rem;
+  }
+}
+
+@keyframes form-appear-bottom {
+  from {
+  }
+
+  to {
+    margin-top: 10rem;
+  }
+}
+
+@keyframes form-appear-bottom-login {
+  from {
+  }
+
+  to {
+    margin-top: 7rem;
+  }
+}
