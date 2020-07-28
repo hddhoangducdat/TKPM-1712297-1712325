@@ -2,6 +2,10 @@ import React, { useState } from "react";
 
 import "../../app/asset/css/style.css";
 
+import ForgotPassword from "../components/auth/forgotPassword";
+import PanelAuth from "../components/auth/panelAuth";
+import Banner from "../layout/auth/banner";
+
 const Auth = () => {
   const [onClick1, setOnClick1] = useState(false);
   const [onClick2, setOnClick2] = useState(false);
@@ -19,157 +23,29 @@ const Auth = () => {
         </h1>
         <nav id="nav">
           <ul>
-            <li className="special">
-              <a href="#banner" className="menuToggle">
-                {onClick2 ? (
-                  <span
-                    onClick={() => {
-                      setOnClick1(false);
-                      setOnClick2(false);
-                      setTimeout(() => {
-                        setOnClick3(true);
-                      }, 1000);
-                      setOnClick4(true);
-                    }}
-                    className="button secondary button-signup button-color-blue util-margin-top-small"
-                  >
-                    Login
-                  </span>
-                ) : onClick4 ? (
-                  <span
-                    onClick={() => {
-                      setOnClick4(false);
-                      setOnClick3(false);
-                      setTimeout(() => {
-                        setOnClick1(true);
-                      }, 1000);
-                      setOnClick2(true);
-                    }}
-                    className="button secondary button-signup button-color-blue util-margin-top-small"
-                  >
-                    Register
-                  </span>
-                ) : (
-                  <div></div>
-                )}
-              </a>
-            </li>
-            <li className="special">
-              <a href="#menu" className="menuToggle">
-                <span className="button util-margin-top-small">
-                  Forgot Password
-                </span>
-              </a>
-              <div id="menu">
-                <ul>
-                  <li>
-                    <a href="index.html">Please give us your </a>
-                  </li>
-                  <li>
-                    <a href="generic.html">Generic</a>
-                  </li>
-                  <li>
-                    <a href="elements.html">Elements</a>
-                  </li>
-                  <li>
-                    <a href="#">Sign Up</a>
-                  </li>
-                  <li>
-                    <a href="#">Log In</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
+            <PanelAuth
+              onClick2={onClick2}
+              onClick4={onClick4}
+              setOnClick1={setOnClick1}
+              setOnClick2={setOnClick2}
+              setOnClick3={setOnClick3}
+              setOnClick4={setOnClick4}
+            />
+            <ForgotPassword />
           </ul>
         </nav>
       </header>
 
-      <section id="banner">
-        <div className="inner">
-          <h2>Connect</h2>
-          <p
-            className={
-              onClick2
-                ? "header-action util-margin-bottom-small"
-                : onClick4
-                ? "header-action util-margin-bottom-small"
-                : "util-margin-bottom-small"
-            }
-          >
-            Perfect place for your team
-            <br />
-            Try optimize your work and social life
-          </p>
-          <ul className="actions special">
-            <li className="auth-form">
-              {onClick1 ? (
-                <form className="form-action">
-                  <input placeholder="Email" type="email"></input>
-                  <input placeholder="Password" type="password"></input>
-                  <input
-                    placeholder="Username"
-                    className="util-margin-bottom-small"
-                    type="username"
-                  ></input>
-                </form>
-              ) : (
-                <div></div>
-              )}
-              {onClick3 ? (
-                <form className="form-action">
-                  <input placeholder="Email" type="email"></input>
-                  <input
-                    placeholder="Password"
-                    type="password"
-                    className="util-margin-bottom-small"
-                  ></input>
-                </form>
-              ) : (
-                <div></div>
-              )}
-              {onClick4 ? (
-                <div></div>
-              ) : (
-                <a
-                  href="#banner"
-                  className={
-                    onClick2
-                      ? "button primary button-signup btn-action"
-                      : "button primary button-signup"
-                  }
-                  onClick={() => {
-                    setTimeout(() => {
-                      setOnClick1(true);
-                    }, 1000);
-                    setOnClick2(true);
-                  }}
-                >
-                  Get Started
-                </a>
-              )}
-              {onClick2 ? (
-                <div></div>
-              ) : (
-                <a
-                  href="#banner"
-                  className={onClick4 ? "btn-action-login button" : "button"}
-                  onClick={() => {
-                    setTimeout(() => {
-                      setOnClick3(true);
-                    }, 1000);
-                    setOnClick4(true);
-                  }}
-                >
-                  Log In
-                </a>
-              )}
-            </li>
-          </ul>
-        </div>
-        <a href="#one" className="more scrolly">
-          Login by Gmail
-        </a>
-      </section>
+      <Banner
+        onClick1={onClick1}
+        onClick2={onClick2}
+        onClick3={onClick3}
+        onClick4={onClick4}
+        setOnClick1={setOnClick1}
+        setOnClick2={setOnClick2}
+        setOnClick3={setOnClick3}
+        setOnClick4={setOnClick4}
+      />
 
       <section id="one" className="main style2 right dark fullscreen">
         <div class="content box style2">

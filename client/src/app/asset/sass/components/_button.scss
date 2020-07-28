@@ -28,3 +28,29 @@ button.secondary:active,
 .button.secondary:active {
   background-color: #6131cf !important;
 }
+
+input[type="submit"].powerful,
+input[type="reset"].powerful,
+input[type="button"].powerful,
+button.powerful,
+.button.powerful {
+  background-color: #1294fd;
+  box-shadow: none !important;
+  color: #ffffff !important;
+}
+
+input[type="submit"].powerful:hover,
+input[type="reset"].powerful:hover,
+input[type="button"].powerful:hover,
+button.powerful:hover,
+.button.powerful:hover {
+  background-color: #188ae7 !important;
+}
+
+input[type="submit"].powerful:active,
+input[type="reset"].powerful:active,
+input[type="button"].powerful:active,
+button.powerful:active,
+.button.powerful:active {
+  background-color: #0981e2 !important;
+}
