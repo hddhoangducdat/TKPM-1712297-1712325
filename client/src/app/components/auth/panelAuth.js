@@ -1,39 +1,40 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  LOGIN_CLICK_1,
+  LOGIN_CLICK_2,
+  REGISTER_CLICK_2,
+  REGISTER_CLICK_1,
+} from "../../store/value";
 
-const PanelAuth = ({
-  onClick2,
-  onClick4,
-  setOnClick1,
-  setOnClick2,
-  setOnClick3,
-  setOnClick4,
-}) => {
+const PanelAuth = () => {
+  const { loginClick2, registerClick2 } = useSelector(
+    (state) => state.utils.auth
+  );
+  const dispatch = useDispatch();
+
   return (
     <li className="special">
       <a href="#banner" className="menuToggle">
-        {onClick2 ? (
+        {registerClick2 ? (
           <span
             onClick={() => {
-              setOnClick1(false);
-              setOnClick2(false);
               setTimeout(() => {
-                setOnClick3(true);
+                dispatch({ type: LOGIN_CLICK_1 });
               }, 1000);
-              setOnClick4(true);
+              dispatch({ type: LOGIN_CLICK_2 });
             }}
             className="button secondary button-signup button-color-blue util-margin-top-small"
           >
             Login
           </span>
-        ) : onClick4 ? (
+        ) : loginClick2 ? (
           <span
             onClick={() => {
-              setOnClick4(false);
-              setOnClick3(false);
               setTimeout(() => {
-                setOnClick1(true);
+                dispatch({ type: REGISTER_CLICK_1 });
               }, 1000);
-              setOnClick2(true);
+              dispatch({ type: REGISTER_CLICK_2 });
             }}
             className="button secondary button-signup button-color-blue util-margin-top-small"
           >

@@ -1,24 +1,32 @@
 import React from "react";
+import history from "../../../history";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  LOGIN_CLICK_1,
+  LOGIN_CLICK_2,
+  REGISTER_CLICK_1,
+  REGISTER_CLICK_2,
+  PANEL_HIDE_BUTTON,
+} from "../../store/value";
 
-const Banner = ({
-  onClick1,
-  onClick2,
-  onClick3,
-  onClick4,
-  setOnClick1,
-  setOnClick2,
-  setOnClick3,
-  setOnClick4,
-}) => {
+const Banner = () => {
+  const {
+    loginClick1,
+    loginClick2,
+    registerClick1,
+    registerClick2,
+  } = useSelector((state) => state.utils.auth);
+  const dispatch = useDispatch();
+
   return (
     <section id="banner">
       <div className="inner">
         <h2>Connect</h2>
         <p
           className={
-            onClick2
+            loginClick2
               ? "header-action util-margin-bottom-small"
-              : onClick4
+              : registerClick2
               ? "header-action util-margin-bottom-small"
               : "util-margin-bottom-small"
           }
@@ -29,7 +37,7 @@ const Banner = ({
         </p>
         <ul className="actions special">
           <li className="auth-form">
-            {onClick1 ? (
+            {registerClick1 ? (
               <form className="form-action">
                 <input placeholder="Email" type="email"></input>
                 <input placeholder="Password" type="password"></input>
@@ -42,7 +50,7 @@ const Banner = ({
             ) : (
               <div></div>
             )}
-            {onClick3 ? (
+            {loginClick1 ? (
               <form className="form-action">
                 <input placeholder="Email" type="email"></input>
                 <input
@@ -54,37 +62,41 @@ const Banner = ({
             ) : (
               <div></div>
             )}
-            {onClick4 ? (
+            {loginClick2 ? (
               <div></div>
             ) : (
               <a
                 href="#banner"
                 className={
-                  onClick2
+                  registerClick2
                     ? "button primary button-signup btn-action"
                     : "button primary button-signup"
                 }
                 onClick={() => {
                   setTimeout(() => {
-                    setOnClick1(true);
+                    dispatch({ type: REGISTER_CLICK_1 });
                   }, 1000);
-                  setOnClick2(true);
+                  dispatch({ type: REGISTER_CLICK_2 });
                 }}
               >
                 Get Started
               </a>
             )}
-            {onClick2 ? (
+            {registerClick2 ? (
               <div></div>
             ) : (
               <a
                 href="#banner"
-                className={onClick4 ? "btn-action-login button" : "button"}
+                className={loginClick2 ? "btn-action-login button" : "button"}
                 onClick={() => {
-                  setTimeout(() => {
-                    setOnClick3(true);
-                  }, 1000);
-                  setOnClick4(true);
+                  if (loginClick1) {
+                    history.push("/home");
+                  } else {
+                    setTimeout(() => {
+                      dispatch({ type: LOGIN_CLICK_1 });
+                    }, 1000);
+                    dispatch({ type: LOGIN_CLICK_2 });
+                  }
                 }}
               >
                 Log In
@@ -93,7 +105,11 @@ const Banner = ({
           </li>
         </ul>
       </div>
-      <a href="#one" className="more scrolly">
+      <a
+        href="#one"
+        className="more scrolly"
+        onClick={() => dispatch({ type: PANEL_HIDE_BUTTON })}
+      >
         Login by Gmail
       </a>
     </section>
