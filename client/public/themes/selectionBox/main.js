@@ -1,23 +1,26 @@
-/*Dropdown Menu*/
-$(".dropdown").click(function () {
+/*dropdown-selection-box Menu*/
+$(".dropdown-selection-box").click(function () {
   $(this).attr("tabindex", 1).focus();
   $(this).toggleClass("active");
-  $(this).find(".dropdown-menu").slideToggle(300);
+  $(this).find(".dropdown-selection-box-menu").slideToggle(300);
 });
-$(".dropdown").focusout(function () {
+$(".dropdown-selection-box").focusout(function () {
   $(this).removeClass("active");
-  $(this).find(".dropdown-menu").slideUp(300);
+  $(this).find(".dropdown-selection-box-menu").slideUp(300);
 });
-$(".dropdown .dropdown-menu li").click(function () {
-  $(this).parents(".dropdown").find("span").text($(this).text());
-  $(this).parents(".dropdown").find("input").attr("value", $(this).attr("id"));
+$(".dropdown-selection-box .dropdown-selection-box-menu li").click(function () {
+  $(this).parents(".dropdown-selection-box").find("span").text($(this).text());
+  $(this)
+    .parents(".dropdown-selection-box")
+    .find("input")
+    .attr("value", $(this).attr("id"));
 });
-/*End Dropdown Menu*/
+/*End dropdown-selection-box Menu*/
 
-$(".dropdown-menu li").click(function () {
+$(".dropdown-selection-box-menu li").click(function () {
   var input =
       "<strong>" +
-      $(this).parents(".dropdown").find("input").val() +
+      $(this).parents(".dropdown-selection-box").find("input").val() +
       "</strong>",
     msg = '<span class="msg">Hidden input value: ';
   $(".msg").html(msg + input + "</span>");

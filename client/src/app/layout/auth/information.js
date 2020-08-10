@@ -15,25 +15,25 @@ const Information = () => {
           <input placeholder="Full Name" type="text"></input>
           <input placeholder="Phone Number" type="text"></input>
 
-          <div className="dropdown">
+          <div className="dropdown-selection-box">
             <div className="select">
               <span>Select Gender</span>
               <i className="fa fa-chevron-left"></i>
             </div>
             <input type="hidden" name="gender" />
-            <ul className="dropdown-menu">
+            <ul className="dropdown-selection-box-menu">
               <li id="male">Male</li>
               <li id="female">Female</li>
             </ul>
           </div>
 
-          <div className="dropdown util-margin-bottom-small">
+          <div className="dropdown-selection-box util-margin-bottom-small">
             <div className="select">
               <span>Select Province</span>
               <i className="fa fa-chevron-left"></i>
             </div>
             <input type="hidden" name="gender" />
-            <ul className="dropdown-menu">
+            <ul className="dropdown-selection-box-menu">
               <li id="male">Male</li>
               <li id="female">Female</li>
             </ul>
