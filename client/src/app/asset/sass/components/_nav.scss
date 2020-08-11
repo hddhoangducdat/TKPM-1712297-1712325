@@ -52,8 +52,26 @@
 }
 
 .search-panel {
-  color: #ffffff;
-  background-color: #5061b4;
+  align-items: center;
+  display: flex;
+  position: relative;
+  width: 100%;
+
+  &-icon {
+    margin: 0 1rem;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    // padding: 10px;
+  }
+
+  &-input {
+    color: #ffffff;
+    background-color: #5061b4;
+    height: 100%;
+    padding-left: 70px;
+    padding-right: 50px;
+  }
 }
 
 ::placeholder {
@@ -85,11 +103,14 @@
   height: 100%;
   color: #fbfcfe;
   display: flex;
+  position: relative;
 
   align-items: center;
 
   img {
+    position: absolute;
     fill: #fbfcfe;
+    right: 1rem;
   }
 }
 

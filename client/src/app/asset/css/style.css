@@ -224,8 +224,21 @@ input:focus {
     fill: #050505; }
 
 .search-panel {
-  color: #ffffff;
-  background-color: #5061b4; }
+  align-items: center;
+  display: flex;
+  position: relative;
+  width: 100%; }
+  .search-panel-icon {
+    margin: 0 1rem;
+    position: absolute;
+    width: 40px;
+    height: 40px; }
+  .search-panel-input {
+    color: #ffffff;
+    background-color: #5061b4;
+    height: 100%;
+    padding-left: 70px;
+    padding-right: 50px; }
 
 ::placeholder {
   color: #a9b2dd;
@@ -250,9 +263,12 @@ input:focus {
   height: 100%;
   color: #fbfcfe;
   display: flex;
+  position: relative;
   align-items: center; }
   .messenger-bar img {
-    fill: #fbfcfe; }
+    position: absolute;
+    fill: #fbfcfe;
+    right: 1rem; }
 
 .padding-nav {
   width: 10px; }
@@ -308,6 +324,107 @@ input:focus {
   transform: translateX(110%);
   transition: all 500ms ease; }
 
+.profile-container {
+  color: black;
+  background-color: #ffffff;
+  height: 100%;
+  width: 100%; }
+
+.profile-header {
+  width: 100%;
+  display: block; }
+
+.avatar-upload {
+  position: relative;
+  max-width: 130px;
+  margin: 25px auto;
+  transform: translateY(-100px); }
+  .avatar-upload .avatar-edit {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    top: 10px; }
+    .avatar-upload .avatar-edit input {
+      display: none; }
+      .avatar-upload .avatar-edit input + label {
+        display: inline-block;
+        width: 34px;
+        height: 34px;
+        margin-bottom: 0;
+        border-radius: 100%;
+        background: #ffffff;
+        border: 1px solid transparent;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+        cursor: pointer;
+        font-weight: normal;
+        transition: all 0.2s ease-in-out; }
+        .avatar-upload .avatar-edit input + label:hover {
+          background: #f1f1f1;
+          border-color: #d6d6d6; }
+        .avatar-upload .avatar-edit input + label:after {
+          content: "\f030";
+          font-family: "FontAwesome";
+          color: #757575;
+          position: absolute;
+          top: 4px;
+          left: 0;
+          right: 0;
+          text-align: center;
+          margin: auto; }
+  .avatar-upload .avatar-preview {
+    width: 130px;
+    height: 130px;
+    position: relative;
+    border-radius: 100%;
+    border: 6px solid #ffffff;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1); }
+    .avatar-upload .avatar-preview > div {
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center; }
+
+.profile-panel {
+  display: flex;
+  align-self: center;
+  align-items: center;
+  margin-left: 3rem;
+  border-radius: 40%;
+  padding: 0 1rem;
+  border-top-right-radius: 18px;
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 65%; }
+  .profile-panel:hover {
+    filter: brightness(1.2);
+    background-color: #5162b6; }
+  .profile-panel:active {
+    filter: brightness(1.2);
+    background-color: #5162b6; }
+    .profile-panel:active span {
+      color: #448aff; }
+  .profile-panel .avatar-panel {
+    width: 35px;
+    height: 35px;
+    position: relative;
+    border-radius: 100%; }
+    .profile-panel .avatar-panel > div {
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center; }
+  .profile-panel span {
+    margin-left: 0.6rem;
+    font-weight: 600;
+    color: #ffffff; }
+
 #banner {
   background-image: url("../img/background1.jpeg");
   background-size: cover; }
@@ -324,6 +441,7 @@ body {
   overflow: hidden; }
 
 .home-container {
+  background-color: #f0f2f5;
   color: black;
   width: 100%;
   height: 100vh;
