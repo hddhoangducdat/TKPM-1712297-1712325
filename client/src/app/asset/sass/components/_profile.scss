@@ -1,15 +1,107 @@
-.profile-container {
-  color: black;
-  background-color: #ffffff;
-  height: 100%;
-  width: 100%;
-}
+.profile {
+  &-container {
+    // transform: translateY(-120px);
+    color: black;
+    background-color: #ffffff;
+    height: 100%;
+    width: 100%;
 
-.profile-header {
-  width: 100%;
-  display: block;
+    display: block;
+    text-align: center;
 
-  .image-cover {
-    // width: 70px;
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: black;
+      margin-bottom: auto;
+    }
+
+    p {
+      color: rgb(119, 108, 108);
+      margin-bottom: 2rem;
+    }
+  }
+
+  &-header {
+    width: 100%;
+    display: block;
+    // height: 35%;
+
+    .image-cover {
+      // width: 100px;
+      margin-bottom: 0rem;
+    }
+  }
+
+  &-info {
+    // height: 500px;
+    // overflow-y: auto;
+    // display: inline-flex;
+    transform: translateY(-120px);
+    // align-content: center;
+
+    &-photo {
+      display: flex;
+      justify-content: center;
+    }
+
+    &-picture {
+      margin-bottom: 1rem;
+      display: inline-flex;
+      // width: 100%;
+
+      img:not(:last-child) {
+        width: 90px;
+        height: 90px;
+        border-radius: 0.8rem;
+        margin-right: 1rem;
+        cursor: pointer;
+      }
+
+      &-more {
+        cursor: pointer;
+        margin-left: 1rem;
+        position: relative;
+        width: 90px;
+        height: 90px;
+        margin-left: 0;
+        background-color: rgb(144, 241, 46);
+        border-radius: 0.8rem;
+        // text-align: center;
+
+        &-content {
+          color: white;
+          font-weight: 700;
+          font-size: 1.5rem;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+
+      &-friend {
+        background-color: #f126ae;
+      }
+    }
+
+    &-friend {
+      display: flex;
+      justify-content: center;
+    }
+
+    &-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+
+      border-top: 1px solid rgba(53, 50, 50, 0.548);
+      border-bottom: 1px solid rgba(58, 55, 55, 0.555);
+
+      width: 90%;
+
+      margin-bottom: 1rem;
+    }
   }
 }

@@ -23,8 +23,8 @@
 
   width: $button-size;
   height: $button-size;
-  background-color: #e4e6eb;
-  border-radius: 50%;
+  // background-color: #e4e6eb;
+  // border-radius: 50%;
   padding: 5px;
   margin: 2px;
   display: flex;
@@ -47,8 +47,19 @@
     fill: $text-color;
     width: 27px;
     height: 27px;
-    fill: #050505;
+    fill: #ffffff;
   }
+}
+
+.dot-icon {
+  cursor: pointer;
+  // color: #fbfcfe;
+  right: 1.2rem;
+  font-size: 3rem;
+  font-weight: 700;
+
+  position: absolute;
+  top: 9px;
 }
 
 .search-panel {
@@ -62,6 +73,8 @@
     position: absolute;
     width: 40px;
     height: 40px;
+    right: 10px;
+    cursor: pointer;
     // padding: 10px;
   }
 
@@ -69,8 +82,8 @@
     color: #ffffff;
     background-color: #5061b4;
     height: 100%;
-    padding-left: 70px;
-    padding-right: 50px;
+    padding-left: 30px;
+    padding-right: 80px;
   }
 }
 

@@ -1,20 +1,28 @@
 import React from "react";
 
 import NavBar from "../../components/nav/navBar";
-import NavItem from "../../components/nav/navItem";
 
-import dot from "../../asset/icons/dot.png";
-import dotIcon from "../../asset/icons/dot.svg";
+import { ReactComponent as MessengerIcon } from "../../asset/icons/messenger.svg";
+
+import Messenger from "../messenger";
 
 const Right = () => {
   return (
-    <NavBar>
-      <div className="messenger-bar">
-        {/* <NavItem icon={<MessengerIcon />} /> */}
-        <p>Messenger</p>
-        <img src={dotIcon} alt="" width="30x" height="30px" />
-      </div>
-    </NavBar>
+    <div className="right">
+      <NavBar>
+        <div className="messenger-bar">
+          <li className="nav-item">
+            <a href="#j" className="icon-button">
+              <MessengerIcon />
+            </a>
+          </li>
+          <p>Messenger</p>
+          <div className="dot-icon">...</div>
+        </div>
+      </NavBar>
+
+      <Messenger />
+    </div>
   );
 };
 

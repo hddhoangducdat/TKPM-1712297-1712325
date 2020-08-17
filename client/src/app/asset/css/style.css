@@ -203,8 +203,6 @@ input:focus {
 .icon-button {
   width: calc($nav-size * 0.5);
   height: calc($nav-size * 0.5);
-  background-color: #e4e6eb;
-  border-radius: 50%;
   padding: 5px;
   margin: 2px;
   display: flex;
@@ -221,7 +219,15 @@ input:focus {
     fill: #dadce1;
     width: 27px;
     height: 27px;
-    fill: #050505; }
+    fill: #ffffff; }
+
+.dot-icon {
+  cursor: pointer;
+  right: 1.2rem;
+  font-size: 3rem;
+  font-weight: 700;
+  position: absolute;
+  top: 9px; }
 
 .search-panel {
   align-items: center;
@@ -232,13 +238,15 @@ input:focus {
     margin: 0 1rem;
     position: absolute;
     width: 40px;
-    height: 40px; }
+    height: 40px;
+    right: 10px;
+    cursor: pointer; }
   .search-panel-input {
     color: #ffffff;
     background-color: #5061b4;
     height: 100%;
-    padding-left: 70px;
-    padding-right: 50px; }
+    padding-left: 30px;
+    padding-right: 80px; }
 
 ::placeholder {
   color: #a9b2dd;
@@ -328,20 +336,79 @@ input:focus {
   color: black;
   background-color: #ffffff;
   height: 100%;
-  width: 100%; }
+  width: 100%;
+  display: block;
+  text-align: center; }
+  .profile-container h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: black;
+    margin-bottom: auto; }
+  .profile-container p {
+    color: #776c6c;
+    margin-bottom: 2rem; }
 
 .profile-header {
   width: 100%;
   display: block; }
+  .profile-header .image-cover {
+    margin-bottom: 0rem; }
+
+.profile-info {
+  transform: translateY(-120px); }
+  .profile-info-photo {
+    display: flex;
+    justify-content: center; }
+  .profile-info-picture {
+    margin-bottom: 1rem;
+    display: inline-flex; }
+    .profile-info-picture img:not(:last-child) {
+      width: 90px;
+      height: 90px;
+      border-radius: 0.8rem;
+      margin-right: 1rem;
+      cursor: pointer; }
+    .profile-info-picture-more {
+      cursor: pointer;
+      margin-left: 1rem;
+      position: relative;
+      width: 90px;
+      height: 90px;
+      margin-left: 0;
+      background-color: #90f12e;
+      border-radius: 0.8rem; }
+      .profile-info-picture-more-content {
+        color: white;
+        font-weight: 700;
+        font-size: 1.5rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); }
+    .profile-info-picture-friend {
+      background-color: #f126ae; }
+  .profile-info-friend {
+    display: flex;
+    justify-content: center; }
+  .profile-info-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-top: 1px solid rgba(53, 50, 50, 0.548);
+    border-bottom: 1px solid rgba(58, 55, 55, 0.555);
+    width: 90%;
+    margin-bottom: 1rem; }
 
 .avatar-upload {
   position: relative;
-  max-width: 130px;
+  max-width: 150px;
   margin: 25px auto;
-  transform: translateY(-100px); }
+  transform: translateY(-120px); }
   .avatar-upload .avatar-edit {
     position: absolute;
     right: 0;
+    top: 2px;
     z-index: 1;
     top: 10px; }
     .avatar-upload .avatar-edit input {
@@ -366,17 +433,16 @@ input:focus {
           font-family: "FontAwesome";
           color: #757575;
           position: absolute;
-          top: 4px;
+          top: 2px;
           left: 0;
           right: 0;
           text-align: center;
           margin: auto; }
   .avatar-upload .avatar-preview {
-    width: 130px;
-    height: 130px;
+    width: 150px;
+    height: 150px;
     position: relative;
     border-radius: 100%;
-    border: 6px solid #ffffff;
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1); }
     .avatar-upload .avatar-preview > div {
       width: 100%;
@@ -424,6 +490,47 @@ input:focus {
     margin-left: 0.6rem;
     font-weight: 600;
     color: #ffffff; }
+
+.messenger-container {
+  height: 100vh;
+  width: 100%;
+  background-color: #ffffff;
+  position: relative; }
+
+.messenger-search {
+  bottom: 0;
+  position: absolute;
+  align-items: center;
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100px; }
+  .messenger-search-icon {
+    margin: 0 1rem;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 10px;
+    cursor: pointer;
+    border-radius: 100%;
+    background-color: #448aff;
+    padding: 0.5rem;
+    fill: #ffffff; }
+    .messenger-search-icon svg {
+      transform: translate(10%, -90%);
+      width: 12px;
+      height: 12px; }
+  .messenger-search-input {
+    border-top: solid #bbb9b942 1px;
+    color: #bebebe;
+    background-color: #ffffff;
+    height: 100%;
+    padding-left: 30px;
+    padding-right: 80px; }
+
+.messenger-list {
+  width: 100%;
+  height: 82vh; }
 
 #banner {
   background-image: url("../img/background1.jpeg");

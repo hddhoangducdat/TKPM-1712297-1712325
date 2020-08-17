@@ -1,0 +1,50 @@
+.messenger-container {
+  height: 100vh;
+  width: 100%;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.messenger-search {
+  bottom: 0;
+  position: absolute;
+
+  align-items: center;
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100px;
+  &-icon {
+    margin: 0 1rem;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 10px;
+    cursor: pointer;
+    // padding: 10px;
+    border-radius: 100%;
+    background-color: #448aff;
+    padding: 0.5rem;
+    fill: #ffffff;
+
+    svg {
+      transform: translate(10%, -90%);
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  &-input {
+    border-top: solid #bbb9b942 1px;
+    color: #bebebe;
+    background-color: #ffffff;
+    height: 100%;
+    padding-left: 30px;
+    padding-right: 80px;
+  }
+}
+
+.messenger-list {
+  width: 100%;
+  height: 82vh;
+}
