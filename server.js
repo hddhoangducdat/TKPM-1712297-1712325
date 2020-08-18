@@ -68,8 +68,9 @@ app.use((req, res, next) => {
 
 app.use("/api/authentication/user", authRoute);
 app.use("/user", userRoute);
+app.use("/relationship", relationshipRoute);
 app.use("/chat", chatRoute);
-app.use("/request", requestRoute);
+app.use("/message", messageRoute);
 // app.use("/file", fileRoute);w
 
 const port = process.env.PORT || 5000;
