@@ -530,7 +530,59 @@ input:focus {
 
 .messenger-list {
   width: 100%;
-  height: 82vh; }
+  height: 82vh;
+  overflow-y: scroll; }
+  .messenger-list-ul {
+    width: 100%;
+    overflow-x: hidden; }
+    .messenger-list-ul-detail {
+      cursor: pointer;
+      box-sizing: border-box;
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      padding: 8px;
+      padding-bottom: 14px;
+      border-radius: 0.6rem; }
+      .messenger-list-ul-detail__img {
+        position: relative;
+        display: flex;
+        margin-left: 0.5rem;
+        margin-right: 1rem; }
+        .messenger-list-ul-detail__img__online {
+          position: absolute;
+          border-radius: 100%;
+          width: 11px;
+          height: 11px;
+          background-color: #58ac04;
+          bottom: 0;
+          right: 0; }
+      .messenger-list-ul-detail img {
+        width: 36px;
+        height: 36px;
+        border-radius: 100%;
+        align-items: center; }
+      .messenger-list-ul-detail:hover {
+        background-color: #dddbdb44; }
+      .messenger-list-ul-detail__text {
+        display: block; }
+        .messenger-list-ul-detail__text__name {
+          font-size: 1rem;
+          font-weight: 500; }
+        .messenger-list-ul-detail__text__noti {
+          font-size: 0.9rem;
+          font-weight: normal;
+          word-break: break-word;
+          overflow: hidden;
+          color: #65676b;
+          text-overflow: ellipsis;
+          line-height: 1.2308;
+          -webkit-font-smoothing: antialiased;
+          white-space: nowrap;
+          max-width: 100%; }
+
+.messenger-chatbox {
+  position: absolute; }
 
 #banner {
   background-image: url("../img/background1.jpeg");
