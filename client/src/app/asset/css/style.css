@@ -491,6 +491,15 @@ input:focus {
     font-weight: 600;
     color: #ffffff; }
 
+.icon-color-primary svg {
+  fill: #0084ff; }
+
+.icon-color-phone svg {
+  fill: #0084ff; }
+
+.icon-color-red svg {
+  fill: #f74545; }
+
 .messenger-container {
   height: 100vh;
   width: 100%;
@@ -505,6 +514,12 @@ input:focus {
   position: relative;
   width: 100%;
   height: 100px; }
+  .messenger-search input {
+    height: 100%;
+    border-top: solid #05050527 1px;
+    padding-left: 2rem;
+    padding-right: 5rem;
+    font-size: 20px; }
   .messenger-search-icon {
     margin: 0 1rem;
     position: absolute;
@@ -520,13 +535,6 @@ input:focus {
       transform: translate(10%, -90%);
       width: 12px;
       height: 12px; }
-  .messenger-search-input {
-    border-top: solid #bbb9b942 1px;
-    color: #bebebe;
-    background-color: #ffffff;
-    height: 100%;
-    padding-left: 30px;
-    padding-right: 80px; }
 
 .messenger-list {
   width: 100%;
@@ -582,7 +590,230 @@ input:focus {
           max-width: 100%; }
 
 .messenger-chatbox {
-  position: absolute; }
+  bottom: 75px;
+  transform: translateX(-25px);
+  position: absolute;
+  background-color: #ffffff;
+  border-top-left-radius: 3%;
+  border-top-right-radius: 3%;
+  border: solid #65676b21 1px;
+  width: 328px;
+  height: 455px; }
+  .messenger-chatbox-nav {
+    width: 100%;
+    height: 48px;
+    padding: 8px;
+    border-bottom: solid #65676b2f 1px; }
+    .messenger-chatbox-nav-info {
+      display: inline-flex; }
+      .messenger-chatbox-nav-info img {
+        width: 32px;
+        height: 32px;
+        border-radius: 100%;
+        margin-right: 10px; }
+      .messenger-chatbox-nav-info__name {
+        font-size: 15px;
+        color: #050505; }
+      .messenger-chatbox-nav-info__icon {
+        position: absolute;
+        right: 1rem;
+        max-width: 100px; }
+        .messenger-chatbox-nav-info__icon__detail {
+          width: 30px;
+          height: 30px;
+          border-radius: 100%;
+          padding: 0 5.5px; }
+          .messenger-chatbox-nav-info__icon__detail:hover {
+            background-color: #e4e6eb; }
+          .messenger-chatbox-nav-info__icon__detail svg {
+            width: 17px;
+            height: 17px; }
+  .messenger-chatbox-contain {
+    width: 100%;
+    height: 354px;
+    line-height: 1.34; }
+    .messenger-chatbox-contain-none {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center; }
+      .messenger-chatbox-contain-none img {
+        height: 300px; }
+      .messenger-chatbox-contain-none__text {
+        font-weight: 700;
+        font-size: 17px; }
+    .messenger-chatbox-contain-list {
+      height: 100%;
+      overflow-y: scroll; }
+      .messenger-chatbox-contain-list li {
+        padding-left: 0;
+        display: inline-flex;
+        font-size: 15px;
+        margin-top: 8px; }
+      .messenger-chatbox-contain-list__left {
+        width: 100%; }
+        .messenger-chatbox-contain-list__left__detail div:not(:first-child) {
+          margin-top: 8px; }
+        .messenger-chatbox-contain-list__left__ava {
+          align-self: flex-end; }
+          .messenger-chatbox-contain-list__left__ava img {
+            width: 28px;
+            height: 28px;
+            border-radius: 100%;
+            margin: 8px;
+            margin-bottom: 0;
+            bottom: 0; }
+        .messenger-chatbox-contain-list__left__img img {
+          margin-right: 22px;
+          max-width: 202px;
+          border-radius: 18px;
+          cursor: pointer;
+          border: solid rgba(56, 88, 152, 0.212) 1px; }
+        .messenger-chatbox-contain-list__left__file {
+          display: inline-flex;
+          cursor: pointer;
+          padding-top: 7px;
+          padding-left: 12px;
+          padding-right: 12px;
+          padding-bottom: 8px;
+          overflow-y: hidden;
+          overflow-x: hidden;
+          word-break: break-word;
+          border-bottom-left-radius: 18px;
+          border-top-right-radius: 18px;
+          border-bottom-right-radius: 18px;
+          border-top-left-radius: 18px;
+          background-color: #e4e6eb;
+          color: #050505;
+          font-weight: 700;
+          max-width: 165px; }
+          .messenger-chatbox-contain-list__left__file__icon {
+            width: 32px;
+            height: 32px;
+            align-self: center;
+            padding: 8px;
+            border-radius: 100%;
+            background-color: #ffffff;
+            margin-right: 10px; }
+            .messenger-chatbox-contain-list__left__file__icon svg {
+              width: 16px;
+              height: 16px;
+              fill: #050505; }
+        .messenger-chatbox-contain-list__left__text {
+          padding-top: 7px;
+          padding-left: 12px;
+          padding-right: 12px;
+          padding-bottom: 8px;
+          overflow-y: hidden;
+          overflow-x: hidden;
+          word-break: break-word;
+          border-bottom-left-radius: 18px;
+          border-top-right-radius: 18px;
+          border-bottom-right-radius: 18px;
+          border-top-left-radius: 18px;
+          position: relative;
+          background-color: #e4e6eb;
+          color: #050505;
+          max-width: 165px; }
+      .messenger-chatbox-contain-list__right {
+        width: 100%;
+        align-content: center;
+        justify-content: flex-end; }
+        .messenger-chatbox-contain-list__right img {
+          margin-right: 22px;
+          max-width: 202px;
+          border-radius: 18px;
+          cursor: pointer;
+          border: solid rgba(56, 88, 152, 0.212) 1px; }
+        .messenger-chatbox-contain-list__right__text {
+          margin-right: 22px;
+          padding-top: 7px;
+          padding-left: 12px;
+          padding-right: 12px;
+          padding-bottom: 8px;
+          overflow-y: hidden;
+          overflow-x: hidden;
+          word-break: break-word;
+          border-bottom-left-radius: 18px;
+          border-top-right-radius: 18px;
+          border-bottom-right-radius: 18px;
+          border-top-left-radius: 18px;
+          position: relative;
+          color: #ffffff;
+          background-color: #0084ff;
+          max-width: 204px; }
+        .messenger-chatbox-contain-list__right__file {
+          margin-right: 22px;
+          display: inline-flex;
+          cursor: pointer;
+          padding-top: 7px;
+          padding-left: 12px;
+          padding-right: 12px;
+          padding-bottom: 8px;
+          overflow-y: hidden;
+          overflow-x: hidden;
+          word-break: break-word;
+          border-bottom-left-radius: 18px;
+          border-top-right-radius: 18px;
+          border-bottom-right-radius: 18px;
+          border-top-left-radius: 18px;
+          background-color: #e4e6eb;
+          color: #050505;
+          font-weight: 700;
+          max-width: 165px; }
+          .messenger-chatbox-contain-list__right__file__icon {
+            width: 32px;
+            height: 32px;
+            align-self: center;
+            padding: 8px;
+            border-radius: 100%;
+            background-color: #ffffff;
+            margin-right: 10px; }
+            .messenger-chatbox-contain-list__right__file__icon svg {
+              width: 16px;
+              height: 16px;
+              fill: #050505; }
+  .messenger-chatbox-input {
+    overflow-y: hidden;
+    width: 100%;
+    height: 53px;
+    display: inline-flex;
+    align-items: center; }
+    .messenger-chatbox-input-detail {
+      display: inline-flex; }
+      .messenger-chatbox-input-detail__form {
+        position: relative; }
+        .messenger-chatbox-input-detail__form input {
+          border-radius: 20px;
+          background-color: #f0f2f5;
+          padding: 8px;
+          padding-left: 1rem;
+          padding-right: 3.5rem; }
+        .messenger-chatbox-input-detail__form a {
+          right: 1rem;
+          position: absolute; }
+        .messenger-chatbox-input-detail__form__icon {
+          width: 32px;
+          height: 32px;
+          padding: 8px;
+          border-radius: 100%;
+          margin-left: 5px; }
+          .messenger-chatbox-input-detail__form__icon svg {
+            width: 21px;
+            height: 21px;
+            fill: #0084ff; }
+      .messenger-chatbox-input-detail__icon {
+        width: 32px;
+        height: 32px;
+        padding: 8px;
+        border-radius: 100%;
+        margin-left: 5px; }
+        .messenger-chatbox-input-detail__icon:hover {
+          background-color: #c5c5c54d; }
+        .messenger-chatbox-input-detail__icon svg {
+          width: 21px;
+          height: 21px;
+          fill: #0084ff; }
 
 #banner {
   background-image: url("../img/background1.jpeg");
