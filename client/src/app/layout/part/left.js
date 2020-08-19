@@ -9,7 +9,7 @@ const Left = () => {
     <div className="profile-container">
       <NavBar>
         <div className="logo-container">
-          <img src={logo} alt="" width="40px" height="30px" />
+          <img src={logo} alt="" width="40px" height="40px" />
         </div>
         <div className="search-panel">
           <input

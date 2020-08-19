@@ -1,0 +1,16 @@
+.main-container {
+  display: flex;
+  width: 100%;
+  // height: 100vh;
+  overflow-y: auto;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 20px;
+
+  justify-content: center;
+}
+
+.home-page {
+  width: 688px;
+  height: 90vh;
+}
