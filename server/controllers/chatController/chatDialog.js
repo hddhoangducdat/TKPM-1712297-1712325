@@ -1,6 +1,6 @@
-const chatBoxModel = require("../model/chatBoxModel");
-const userModel = require("../model/userModel");
-const messageModel = require("../model/messageModel");
+const chatBoxModel = require("../../models/chatModel");
+const userModel = require("../../models/userModel");
+const messageModel = require("../../models/messageModel");
 
 exports.getChatDialog = async (req, res) => {
   await chatBoxModel.findById(req.params._id, function (err, docs) {

@@ -7,7 +7,7 @@ const {
   getRequestFriend,
   unfriend,
   cancleRequest,
-} = require("../controllers/relationshipController");
+} = require("../../controllers/relationshipController/relationshipController");
 
 const relationshipRoute = express();
 
