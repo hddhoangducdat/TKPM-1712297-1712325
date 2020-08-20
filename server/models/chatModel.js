@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
-const chatSchema = new mongoose.Schema({
+const chatBoxSchema = new mongoose.Schema({
   message: Array,
+  member: Array,
+  name: String,
+  avatar: String,
+  isGroup: Boolean,
 });
 
-module.exports = mongoose.model("Chat", chatSchema);
+module.exports = mongoose.model("Chat", chatBoxSchema);
