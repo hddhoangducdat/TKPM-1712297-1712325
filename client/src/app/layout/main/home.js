@@ -140,15 +140,13 @@ const Home = () => {
                 <EmojiIcon />
               </a>
             </div>
-            <ul className="home-page-list-status__comment__list">
-              <li className="home-page-list-status__comment__list__container">
+            <div className="home-page-list-status__comment__list">
+              <div className="home-page-list-status__comment__list__container">
                 <img
-                  scr="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/54463133_104992784011639_7082721617398202368_o.jpg?_nc_cat=110&_nc_sid=09cbfe&_nc_ohc=vSuORAJS7moAX_Axz2y&_nc_ht=scontent.fsgn5-3.fna&oh=a7f27492245291f0d96fc15ac9b063c7&oe=5F60A433"
-                  width="30px"
-                  height="30px"
+                  src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/54463133_104992784011639_7082721617398202368_o.jpg?_nc_cat=110&_nc_sid=09cbfe&_nc_ohc=vSuORAJS7moAX_Axz2y&_nc_ht=scontent.fsgn5-3.fna&oh=a7f27492245291f0d96fc15ac9b063c7&oe=5F60A433"
                   alt=""
                 />
-                {/* 
+
                 <div className="home-page-list-status__comment__list__container__other">
                   <div className="home-page-list-status__comment__list__container__box">
                     <div className="home-page-list-status__comment__list__container__box__name">
@@ -163,16 +161,53 @@ const Home = () => {
                     </div>
                   </div>
                   <div className="home-page-list-status__comment__list__container__choice">
-                    <a href="#">
-                      <LikeIcon />
-                    </a>
-                    <a href="#">
-                      <CommentIcon />
-                    </a>
+                    <div className="home-page-list-status__comment__list__container__choice__component">
+                      <a href="#">
+                        <LikeIcon />
+                      </a>
+                      <p>23</p>
+                    </div>
+                    <div className="home-page-list-status__comment__list__container__choice__component">
+                      <a href="#">
+                        <CommentIcon />
+                      </a>
+                      <p>10</p>
+                    </div>
                   </div>
-                </div> */}
-              </li>
-            </ul>
+                </div>
+              </div>
+              <div className="home-page-list-status__comment__list__container">
+                <img
+                  src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/54463133_104992784011639_7082721617398202368_o.jpg?_nc_cat=110&_nc_sid=09cbfe&_nc_ohc=vSuORAJS7moAX_Axz2y&_nc_ht=scontent.fsgn5-3.fna&oh=a7f27492245291f0d96fc15ac9b063c7&oe=5F60A433"
+                  alt=""
+                />
+
+                <div className="home-page-list-status__comment__list__container__other">
+                  <div className="home-page-list-status__comment__list__container__box">
+                    <div className="home-page-list-status__comment__list__container__box__name">
+                      Keven B. Taongan
+                    </div>
+                    <div className="home-page-list-status__comment__list__container__box__text">
+                      Is anyone even watching???
+                    </div>
+                  </div>
+                  <div className="home-page-list-status__comment__list__container__choice">
+                    <div className="home-page-list-status__comment__list__container__choice__component">
+                      <a href="#">
+                        <LikeIcon />
+                      </a>
+                      <p>23</p>
+                    </div>
+                    <div className="home-page-list-status__comment__list__container__choice__component">
+                      <a href="#">
+                        <CommentIcon />
+                      </a>
+                      <p>10</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </li>
         <li className="home-page-list-status">

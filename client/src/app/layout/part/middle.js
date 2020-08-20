@@ -9,6 +9,9 @@ import { ReactComponent as BellIcon } from "../../asset/img/icon/bell.svg";
 import { ReactComponent as HomeIcon } from "../../asset/img/icon/construction.svg";
 
 import Home from "../main/home";
+import Notification from "../main/notification";
+import Group from "../main/group";
+import Calendar from "../main/calendar";
 
 const Middle = () => {
   return (
@@ -37,7 +40,10 @@ const Middle = () => {
       </NavBar>
 
       <div className="main-container">
-        <Home />
+        {/* <Home /> */}
+        {/* <Notification /> */}
+        {/* <Group /> */}
+        <Calendar />
       </div>
 
       {/* <div className="main-footer"></div> */}

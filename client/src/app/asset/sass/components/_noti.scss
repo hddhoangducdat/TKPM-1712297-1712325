@@ -1,0 +1,92 @@
+.notification-page {
+  width: 100%;
+  &-list {
+    width: 100%;
+    display: block;
+
+    &-card {
+      &:hover {
+        background-color: #fafafa;
+      }
+
+      cursor: pointer;
+      position: relative;
+      background-color: #ffffff;
+      margin-bottom: 1rem;
+      width: 100%;
+      padding: 10px 16px;
+      display: inline-flex;
+      border-radius: 18px;
+      border-left: solid #65676b3a 0.3px;
+      border-right: solid #65676b3a 0.3px;
+      border-bottom: solid #65676b3a 1.3px;
+      align-items: center;
+
+      &__image {
+        margin-right: 1rem;
+        position: relative;
+
+        &__ava {
+          width: 56px;
+          height: 56px;
+          border-radius: 100%;
+        }
+
+        &__icon {
+          width: 28px;
+          height: 28px;
+          position: absolute;
+          bottom: 0.6px;
+          right: 0.1px;
+        }
+      }
+
+      &-contain {
+        line-height: 20px;
+        &__text {
+          color: #050505;
+          font-size: 15px;
+          span {
+            font-weight: 600;
+            margin-right: 6px;
+          }
+        }
+        &__subtext {
+          color: #65676b;
+          font-size: 13px;
+        }
+
+        &__seen {
+          color: #1877f2;
+        }
+      }
+
+      &__button {
+        position: absolute;
+        right: 1rem;
+        display: inline-flex;
+
+        button {
+          font-size: 13px;
+          width: 150px;
+          height: 38px;
+          border-radius: 18px;
+          margin-bottom: 5px;
+          text-transform: none;
+          border: none;
+        }
+
+        &__accept {
+          background-color: #1877f2;
+          &:hover {
+            background-color: rgba(26, 114, 228, 0.678);
+          }
+        }
+        &__refuse {
+          color: #050505;
+          background-color: #e4e6eb;
+        }
+      }
+    }
+  }
+}
