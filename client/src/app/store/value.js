@@ -16,3 +16,5 @@ export const DISABLE_ALL = "DISABLE_ALL";
 
 export const SEARCH = "SEARCH";
 export const SEARCH_RELATIONSHIP = "SEARCH_RELATIONSHIP";
+export const GET_CHATBOX_DATA = "GET_CHATBOX_DATA";
+export const RENDER_MESSAGE = "RENDER_MESSAGE";

@@ -6,13 +6,17 @@ export const login = (formValues, setLoading) => async (dispatch) => {
     const response = await axios
       .post("/api/authentication/user/login", formValues)
       .then((response) => {
-        setLoading(false);
+        if (setLoading) {
+          setLoading(false);
+        }
         const { token } = response.data;
         localStorage.setItem("jwtToken", token);
         dispatch(setCurrentUserAuthen(token));
       });
   } catch (err) {
-    setLoading(false);
+    if (setLoading) {
+      setLoading(false);
+    }
     dispatch({
       type: "LOGIN_FAILED",
     });

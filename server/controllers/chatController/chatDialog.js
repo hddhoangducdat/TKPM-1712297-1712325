@@ -2,6 +2,12 @@ const chatBoxModel = require("../../models/chatModel");
 const userModel = require("../../models/userModel");
 const messageModel = require("../../models/messageModel");
 
+exports.saveMessge = async (req, res) => {
+  let chatBox = await chatBoxModel.findById(req.body.id);
+  chatBox.message = [...chatBox.message, req.body.message];
+  await chatBox.save();
+};
+
 exports.getChatDialog = async (req, res) => {
   await chatBoxModel.findById(req.params._id, function (err, docs) {
     if (err) return res.status(404).send(err);
@@ -63,23 +69,6 @@ exports.checkIsExisted = async (req, res) => {
       }
     })
     .catch((err) => res.status(400).json("Error : " + err));
-};
-
-exports.saveMessage = async (req, res) => {
-  const chatModel = await chatBoxModel.findById(req.params._id);
-
-  //console.log(chatModel.message.length);
-  const arrMessageNew = [...chatModel.message, req.body.messageId];
-  await chatBoxModel.findOneAndUpdate(
-    { _id: req.params._id },
-    { message: arrMessageNew },
-    { new: true },
-    function (err, docs) {
-      if (err) return res.status(400).json("Error: " + err);
-      if (docs) return res.json(docs);
-      return res.status(404).json("Error : Not Found");
-    }
-  );
 };
 
 exports.createChatGroupDialog = async (req, res) => {

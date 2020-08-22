@@ -1,5 +1,5 @@
 const userModel = require("../../models/userModel");
-const chatModel = require("../../models/chatModel");
+const chatBoxModel = require("../../models/chatModel");
 const {
   registerValidation,
   loginValidation,
@@ -10,6 +10,7 @@ const nodemailer = require("nodemailer");
 const _ = require("lodash");
 
 exports.create = async (req, res) => {
+  console.log(req.body);
   let salt = await bcrypt.genSalt(10);
   let passwordHash = await bcrypt.hash(req.body.password, salt);
 
@@ -22,6 +23,32 @@ exports.create = async (req, res) => {
     phoneNumber: req.body.phoneNumber,
     fullName: req.body.fullName,
   });
+
+  const chatDialog = new chatBoxModel({
+    message: [
+      {
+        text: "You can chat with yourself",
+        type: "text",
+        from: user._id,
+      },
+    ],
+    member: [user._id],
+    isGroup: false,
+  });
+
+  user.chatBox = [
+    {
+      id: chatDialog._id,
+      name: user.userName,
+      avatar: user.avatar,
+      noti: "You can chat with yourself",
+    },
+  ];
+
+  console.log(user);
+  console.log(chatDialog);
+
+  await chatDialog.save();
 
   await user.save();
 
@@ -85,7 +112,9 @@ exports.register = async (req, res) => {
   if (emailExist) return res.status(400).send("Email already exists !!!");
 
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.EMAIL_ADDRESS,
       pass: process.env.EMAIL_PASSWORD,
@@ -94,17 +123,20 @@ exports.register = async (req, res) => {
 
   const otp = Math.floor(Math.random() * 9999);
 
+  console.log(req.body);
+
   const mailOptions = {
-    from: "DC<hddhoangducdat@gmail.com>",
+    from: "Connect<hddhoangducdat@gmail.com>",
     to: req.body.email,
     subject: "We send you OPT code for verify",
     html: `<h2>Hello ${req.body.userName}, Here's the otp code we need you to type in our website</h2>
     <br />  <h1>${otp}</h1>`,
   };
 
-  transporter.sendMail(mailOptions, (err, data) => {
+  transporter.sendMail(mailOptions, function (err, data) {
     if (err) {
-      res.status(400).send("Error occcured");
+      res.status(401).send("Error occcured");
+      console.log(err);
     } else res.send({ otp: otp.toString() });
   });
 };

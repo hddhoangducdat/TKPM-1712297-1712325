@@ -67,14 +67,25 @@ exports.acceptFriend = async (req, res) => {
     }
   );
 
+  const user1 = await userModel.findById(userId1);
+  const user2 = await userModel.findById(userId2);
+
   const chatDialog = new chatBoxModel({
-    message: [],
+    message: [
+      {
+        text: `Hello`,
+        type: "text",
+        from: userId1,
+      },
+      {
+        text: `Hi`,
+        type: "text",
+        from: userId2,
+      },
+    ],
     member: [userId1, userId2],
     isGroup: false,
   });
-
-  const user1 = await userModel.findById(userId1);
-  const user2 = await userModel.findById(userId2);
 
   user1.chatBox = [
     ...user1.chatBox,
@@ -82,6 +93,7 @@ exports.acceptFriend = async (req, res) => {
       id: chatDialog._id,
       name: user2.userName,
       avatar: user2.avatar,
+      noti: `${user1.userName} is your friend, message him now`,
     },
   ];
 
@@ -91,6 +103,7 @@ exports.acceptFriend = async (req, res) => {
       id: chatDialog._id,
       name: user1.userName,
       avatar: user1.avatar,
+      noti: `${user2.userName} is your friend, message him now`,
     },
   ];
 

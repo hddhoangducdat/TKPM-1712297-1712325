@@ -67,7 +67,7 @@
 .messenger-list {
   width: 100%;
   height: 82vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   // bottom: 0;
 
   &-ul {
@@ -75,6 +75,7 @@
     overflow-x: hidden;
     &-detail {
       // margin-right: 5rem;
+
       cursor: pointer;
       box-sizing: border-box;
       width: 100%;
@@ -114,6 +115,10 @@
       }
 
       &__text {
+        overflow: hidden;
+        max-width: 270px;
+        text-overflow: ellipsis;
+
         display: block;
         &__name {
           font-size: 1rem;
@@ -126,7 +131,7 @@
           word-break: break-word;
           overflow: hidden;
           color: #65676b;
-          text-overflow: ellipsis;
+
           line-height: 1.2308;
 
           -webkit-font-smoothing: antialiased;
@@ -226,7 +231,7 @@
     &-list {
       height: 100%;
 
-      overflow-y: scroll;
+      overflow-y: auto;
       li {
         padding-left: 0;
         display: inline-flex;
@@ -462,6 +467,10 @@
         }
       }
 
+      button {
+        margin: none;
+      }
+
       &__icon {
         width: 32px;
         height: 32px;
@@ -471,6 +480,7 @@
         border-radius: 100%;
         // background-color: #ffffff;
         // margin-right: 5px;
+        margin: none;
         margin-left: 5px;
 
         &:hover {

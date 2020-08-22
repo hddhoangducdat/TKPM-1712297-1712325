@@ -84,7 +84,10 @@ const Verify = ({ handleSubmit, createAccount }) => {
                 <div> </div>
               )}
 
-              <button className="button secondary  button-finished">
+              <button
+                className="button secondary  button-finished"
+                onClick={() => window.scrollTo(0, 0)}
+              >
                 Finished
               </button>
             </div>
