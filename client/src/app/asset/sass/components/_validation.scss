@@ -1,0 +1,55 @@
+@keyframes validationStart {
+  0% {
+    height: 0px;
+    margin-bottom: 0px;
+  }
+
+  100% {
+    height: 61px;
+    margin-bottom: 16px;
+  }
+}
+
+@keyframes validationClose {
+  0% {
+    height: 61px;
+    margin-bottom: 16px;
+  }
+
+  100% {
+    height: 0px;
+    margin-bottom: 0px;
+  }
+}
+
+.validation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 16px;
+  background-color: #00000054;
+  color: #ffffff;
+  border-radius: 5px;
+  font-size: 14px;
+
+  &-open {
+    animation: validationStart 1s ease-out;
+    margin-bottom: 16px;
+    height: 61px;
+    padding: 14px 15px;
+  }
+  &-close {
+    animation: validationClose 1s ease-out;
+    margin-bottom: 0px;
+    height: 0px;
+  }
+}
+
+.form-action-container {
+  // position: relative;
+}
+
+.validation-color {
+  background-color: #ed4933;
+  color: #ffffff;
+}

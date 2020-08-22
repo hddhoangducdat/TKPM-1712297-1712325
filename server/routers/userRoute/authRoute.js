@@ -9,6 +9,7 @@ const {
 
 const {
   register,
+  create,
   login,
   requestChangePassword,
 } = require("../../controllers/authController/authController");
@@ -20,6 +21,8 @@ const tokenValidation = require("../../middlewares/tokenValidation");
 authRoute.post("/register", register);
 
 authRoute.post("/login", login);
+
+authRoute.post("/create", create);
 
 authRoute.post("/requestChangePassword", requestChangePassword);
 

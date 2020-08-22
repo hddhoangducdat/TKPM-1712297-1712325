@@ -71,10 +71,15 @@
   &-icon {
     margin: 0 1rem;
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     right: 10px;
     cursor: pointer;
+
+    svg {
+      width: 25px;
+      height: 25px;
+    }
     // padding: 10px;
   }
 
@@ -84,6 +89,12 @@
     height: 100%;
     padding-left: 30px;
     padding-right: 80px;
+  }
+
+  &-onchange {
+    border-bottom: none;
+    background-color: #f5f5f5;
+    color: #050505;
   }
 }
 

@@ -1,15 +1,8 @@
 const express = require("express");
-
-const {
-  getMessage,
-  createMessage,
-  deleteMessage,
-} = require("../controllers/messageController");
+const { saveMessge } = require("../../controllers/chatController/chatDialog");
 
 const messageRoute = express();
 
-messageRoute.get("/:_id", getMessage);
-messageRoute.post("/", createMessage);
-messageRoute.delete("/_:id", deleteMessage);
+messageRoute.patch("/save", saveMessge);
 
 module.exports = messageRoute;

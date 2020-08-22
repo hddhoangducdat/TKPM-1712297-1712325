@@ -1,4 +1,4 @@
-import { REGISTER_CLICK_1, LOGIN_CLICK_2 } from "../../../value";
+import { REGISTER_CLICK_1, LOGIN_CLICK_2, DISABLE_ALL } from "../../../value";
 
 export default (state = false, action) => {
   switch (action.type) {
@@ -6,6 +6,9 @@ export default (state = false, action) => {
       return true;
 
     case LOGIN_CLICK_2:
+      return false;
+
+    case DISABLE_ALL:
       return false;
 
     default:

@@ -4,7 +4,7 @@ import history from "../history";
 
 // Pages
 import authPage from "./pages/auth";
-import homePage from "./pages/home";
+import mainPage from "./pages/main";
 
 const App = () => {
   return (
@@ -12,7 +12,7 @@ const App = () => {
       <Router history={history}>
         <Switch>
           <Route path="/" exact component={authPage} />
-          <Route auth="/home" exact component={homePage} />
+          <Route auth="/home" exact component={mainPage} />
         </Switch>
       </Router>
     </div>

@@ -1,8 +1,8 @@
 import React from "react";
 
-import Left from "../layout/home/left";
-import Middle from "../layout/home/middle";
-import Right from "../layout/home/right";
+import Left from "../layout/part/left";
+import Middle from "../layout/part/middle";
+import Right from "../layout/part/right";
 
 const Home = () => {
   return (

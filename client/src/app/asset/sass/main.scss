@@ -7,7 +7,6 @@
 @import "base/utilities";
 @import "base/typograph";
 
-@import "components/button";
 @import "components/form";
 @import "components/opt";
 @import "components/nav";
@@ -15,6 +14,16 @@
 @import "components/profile";
 @import "components/avatar";
 @import "components/messenger";
+@import "components/tab";
+@import "components/post";
+@import "components/status";
+@import "components/footer";
+@import "components/noti";
+@import "components/group";
+@import "components/calendar";
+@import "components/validation";
+@import "components/button";
 
 @import "pages/auth";
 @import "pages/home";
+@import "pages/container";

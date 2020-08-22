@@ -1,5 +1,5 @@
 const userModel = require("../../models/userModel");
-const chatModel = require("../../models/chatModel");
+const chatBoxModel = require("../../models/chatModel");
 const {
   registerValidation,
   loginValidation,
@@ -8,6 +8,52 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const _ = require("lodash");
+
+exports.create = async (req, res) => {
+  console.log(req.body);
+  let salt = await bcrypt.genSalt(10);
+  let passwordHash = await bcrypt.hash(req.body.password, salt);
+
+  const user = new userModel({
+    password: passwordHash,
+    userName: req.body.userName,
+    gender: req.body.gender,
+    address: req.body.address,
+    email: req.body.email,
+    phoneNumber: req.body.phoneNumber,
+    fullName: req.body.fullName,
+  });
+
+  const chatDialog = new chatBoxModel({
+    message: [
+      {
+        text: "You can chat with yourself",
+        type: "text",
+        from: user._id,
+      },
+    ],
+    member: [user._id],
+    isGroup: false,
+  });
+
+  user.chatBox = [
+    {
+      id: chatDialog._id,
+      name: user.userName,
+      avatar: user.avatar,
+      noti: "You can chat with yourself",
+    },
+  ];
+
+  console.log(user);
+  console.log(chatDialog);
+
+  await chatDialog.save();
+
+  await user.save();
+
+  res.send("Register Success");
+};
 
 exports.requestChangePassword = async (req, res) => {
   let user = await userModel.findOne({
@@ -61,85 +107,49 @@ exports.register = async (req, res) => {
   }
 
   let emailExist = await userModel.findOne({
-    "data.email": req.body.email,
+    email: req.body.email,
   });
   if (emailExist) return res.status(400).send("Email already exists !!!");
 
-  let salt = await bcrypt.genSalt(10);
-  let passwordHash = await bcrypt.hash(req.body.password, salt);
-
-  const chatDialog = new chatModel({
-    message: [],
-  });
-
-  const user = new userModel({
-    password: passwordHash,
-    data: {
-      fullName: req.body.fullName,
-      avatar:
-        "https://library.kissclipart.com/20181001/wbw/kissclipart-gsmnet-ro-clipart-computer-icons-user-avatar-4898c5072537d6e2.png",
-      number: "NONE",
-      gender: "NONE",
-      address: "NONE",
-      email: req.body.email,
-      chatBox: [
-        {
-          id: chatDialog._id,
-          name: req.body.fullName,
-          avatar:
-            "https://library.kissclipart.com/20181001/wbw/kissclipart-gsmnet-ro-clipart-computer-icons-user-avatar-4898c5072537d6e2.png",
-          member: [req.body.email],
-        },
-      ],
-    },
-  });
-
-  chatDialog.save();
-
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.EMAIL_ADDRESS,
       pass: process.env.EMAIL_PASSWORD,
     },
   });
 
-  jwt.sign(
-    {
-      user,
-    },
-    process.env.EMAIL_SECRET,
-    {
-      expiresIn: "1h",
-    },
-    (err, emailToken) => {
-      const urlConfirm = `http://localhost:3000/confirmation/${emailToken}`;
+  const otp = Math.floor(Math.random() * 9999);
 
-      const mailOptions = {
-        from: "DC<hddhoangducdat@gmail.com>",
-        to: req.body.email,
-        subject: "Please confirm your password",
-        html: `<h1>Hello ${req.body.fullName}, Click the button to continue your email confirmation</h1>
-        <br />  <a href="${urlConfirm}">Confirm !!!</a>`,
-      };
+  console.log(req.body);
 
-      transporter.sendMail(mailOptions, (err, data) => {
-        if (err) {
-          res.status(401).send("Error occcured ", err);
-        } else res.send(emailToken);
-      });
-    }
-  );
+  const mailOptions = {
+    from: "Connect<hddhoangducdat@gmail.com>",
+    to: req.body.email,
+    subject: "We send you OPT code for verify",
+    html: `<h2>Hello ${req.body.userName}, Here's the otp code we need you to type in our website</h2>
+    <br />  <h1>${otp}</h1>`,
+  };
+
+  transporter.sendMail(mailOptions, function (err, data) {
+    if (err) {
+      res.status(401).send("Error occcured");
+      console.log(err);
+    } else res.send({ otp: otp.toString() });
+  });
 };
 
 exports.login = async (req, res) => {
+  console.log(req.body);
   const { error } = await loginValidation(req.body);
   if (error) {
     res.status(400).send(error.details[0].message);
   }
 
   let user = await userModel.findOne({
-    "data.email": req.body.email,
+    email: req.body.email,
   });
   if (!user) return res.status(400).send("Wrong Email or Pasword !");
 

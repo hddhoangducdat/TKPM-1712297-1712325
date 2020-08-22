@@ -5,6 +5,10 @@ const { google } = require("googleapis");
 const OAuth2Data = require("../../../credentials.json");
 const path = require("path");
 const { client_secret, client_id, redirect_uris } = OAuth2Data.installed;
+const {
+  getRelationShip,
+} = require("../relationshipController/relationshipController");
+
 const oAuth2Client = new google.auth.OAuth2(
   client_id,
   client_secret,
@@ -79,11 +83,8 @@ exports.createUser = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  await userModel.findById(req.params._id, function (err, docs) {
-    if (err) res.status(400).json("Error: " + err);
-    if (docs) res.json(docs);
-    res.status(404).json("Error: Not found");
-  });
+  await userModel.findBy;
+  userRoute.get("/:_id", getUser);
 };
 
 exports.getAll = async (req, res) => {
@@ -198,4 +199,18 @@ exports.updateNewUser = async (req, res) => {
 
   await user.save();
   res.send(user);
+};
+
+exports.searchUser = async (req, res) => {
+  await userModel
+    .find()
+    .select("userName avatar")
+    .exec()
+    .then((users) => {
+      const list = users.filter((user) =>
+        user.userName.includes(req.params.key)
+      );
+      res.send(list);
+    })
+    .catch((err) => res.status(400).send(err));
 };

@@ -7,11 +7,13 @@ const {
   updateNewUser,
   updateAvatar,
   getAvatar,
+  searchUser,
 } = require("../../controllers/userController/userController");
 
 const userRoute = express();
 
 userRoute.post("/", createUser);
+userRoute.post("/search/:key", searchUser);
 userRoute.get("/:_id", getUser);
 userRoute.get("/", getAll);
 userRoute.patch("/update/starting/:_id", updateNewUser);

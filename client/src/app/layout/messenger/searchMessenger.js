@@ -6,7 +6,7 @@ const SearchMessenger = () => {
     <div className="messenger-search">
       <input
         className="messenger-search-input"
-        placeholder="Search Connect..."
+        placeholder="Find your conversation"
         type="email"
       ></input>
 
