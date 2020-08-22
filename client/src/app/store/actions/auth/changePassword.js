@@ -15,7 +15,7 @@ export const changePassword = ({ email }, setButton) => async (dispatch) => {
       });
     } catch (err) {
       dispatch({
-        type: "REGISTER_FAILED",
+        type: "CHANGE_PASSWORD_FAILED",
       });
       setButton(false);
     }

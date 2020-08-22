@@ -1,5 +1,6 @@
 import axios from "../../../api/server";
 import history from "../../../../history";
+import { login } from "./login";
 import jwt from "jsonwebtoken";
 
 export const getCurrentUser = (token) => async (dispatch) => {
@@ -14,21 +15,31 @@ export const getCurrentUser = (token) => async (dispatch) => {
   } catch (err) {}
 };
 
-export const confirmEmail = (token, setSuccess) => async (dispatch) => {
+export const createAccount = (register, info) => async (dispatch) => {
   try {
     await axios
-      .get("/api/authentication/user/confirm", {
-        headers: { Authorization: `Bearer ${token}` },
+      .post("/api/authentication/user/create", {
+        email: register.email,
+        password: register.password,
+        userName: register.userName,
+        fullName: info.fullName,
+        phoneNumber: info.phoneNumber,
+        gender: info.gender,
+        address: info.address,
       })
       .then(() => {
-        setSuccess(true);
         dispatch({
           type: "REGISTER_SUCCESS",
         });
-      })
-      .then(() => history.push("/"));
+        dispatch(
+          login({
+            email: register.email,
+            password: register.password,
+          })
+        );
+      });
   } catch (err) {
-    history.push("/");
+    console.log(err);
   }
 };
 
@@ -40,9 +51,8 @@ export const setCurrentUserAuthen = (token) => async (dispatch, state) => {
         type: "SET_CURRENT_USER_AUTHEN",
         payload: _id,
       });
-      state().auth.user.data.number === "NONE"
-        ? history.push("/starting")
-        : history.push("/home");
+
+      history.push("/home");
     });
   } else
     dispatch({

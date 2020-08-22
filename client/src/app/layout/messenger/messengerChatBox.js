@@ -7,7 +7,7 @@ import { ReactComponent as DocumentIcon } from "../../asset/img/icon/document.sv
 import SmartPhoneIcon from "../../asset/img/icon/smartphone.svg";
 import ChatBoxInput from "../../components/chatBox/chatBoxInput";
 
-const MessengerChatBox = () => {
+const MessengerChatBox = ({ setChatBox }) => {
   return (
     <div className="messenger-chatbox">
       <div className="messenger-chatbox-nav">
@@ -34,6 +34,9 @@ const MessengerChatBox = () => {
             <a
               href="#"
               className="messenger-chatbox-nav-info__icon__detail icon-color-red"
+              onClick={() => {
+                setChatBox(false);
+              }}
             >
               <CloseIcon />
             </a>

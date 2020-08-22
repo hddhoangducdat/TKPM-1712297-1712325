@@ -6,8 +6,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true, lowercase: true },
   gender: Boolean,
   phoneNumber: String,
-  dateOfBirth: Date,
-  country: String,
+  address: String,
   avatar: {
     type: String,
     default: `https://drive.google.com/uc?id=1jjBoYG9Lm5WRSsEu2VAZ8_qxk14Gbbdc&export=download`,

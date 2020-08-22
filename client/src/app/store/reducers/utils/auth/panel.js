@@ -1,4 +1,8 @@
-import { PANEL_HIDE_BUTTON, PANEL_SHOW_BUTTON } from "../../../value";
+import {
+  PANEL_HIDE_BUTTON,
+  PANEL_SHOW_BUTTON,
+  DISABLE_ALL,
+} from "../../../value";
 
 export default (state = true, action) => {
   switch (action.type) {
@@ -6,6 +10,10 @@ export default (state = true, action) => {
       return true;
     case PANEL_HIDE_BUTTON:
       return false;
+
+    case DISABLE_ALL:
+      return true;
+
     default:
       return state;
   }

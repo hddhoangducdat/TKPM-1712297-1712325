@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchMessenger from "./searchMessenger";
 import MessengerList from "./messengerList";
 import MessengerChatBox from "./messengerChatBox";
 
 const Messenger = () => {
+  const [chatBox, setChatBox] = useState(false);
+
   return (
     <div className="messenger-container">
-      <MessengerList />
+      <MessengerList setChatBox={setChatBox} />
       <SearchMessenger />
-      <MessengerChatBox />
+      {chatBox ? <MessengerChatBox setChatBox={setChatBox} /> : <div></div>}
     </div>
   );
 };

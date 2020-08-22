@@ -3,6 +3,23 @@
 //   transition: all 0.5s ease-in;
 // }
 
+.button-signup {
+  width: 100%;
+}
+
+.button-signin {
+  width: 100%;
+}
+
+.resize-button {
+  width: 100%;
+}
+
+.button-finished {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
 input[type="submit"].secondary,
 input[type="reset"].secondary,
 input[type="button"].secondary,

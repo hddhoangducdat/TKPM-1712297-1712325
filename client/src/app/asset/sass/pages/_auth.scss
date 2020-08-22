@@ -1,11 +1,57 @@
 #banner {
   background-image: url("../img/background1.jpeg");
   background-size: cover;
+
+  button {
+    width: 100%;
+  }
+}
+
+#wrapper #dialog #form {
+  max-width: 300px;
 }
 
 #one {
   background-image: url("../img/background2.png");
   background-size: cover;
+
+  div {
+    header {
+      width: 480px;
+    }
+
+    form {
+      display: block;
+
+      input {
+        width: 480px;
+      }
+
+      .dropdown-selection-box {
+        width: 240px;
+
+        .select {
+          width: 100%;
+          position: relative;
+          display: inline-flex;
+
+          i {
+            right: 1rem;
+            position: absolute;
+            align-self: center;
+          }
+        }
+      }
+
+      a {
+        button {
+          width: 668px;
+
+          margin: 0px;
+        }
+      }
+    }
+  }
 }
 
 #two {
