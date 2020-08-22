@@ -6,7 +6,7 @@ export const searchUserRelation = (user, index) => async (
   getState
 ) => {
   const response = await axios.get(
-    `/relationship/${user._id}/${getState().auth.id}`
+    `/relationship/${getState().auth.id}/${user._id}`
   );
   dispatch({
     type: SEARCH_RELATIONSHIP,

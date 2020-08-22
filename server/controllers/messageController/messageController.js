@@ -1,11 +1,8 @@
 const messageModel = require("../model/messageModel");
 
 exports.getMessage = async (req, res) => {
-  await messageModel.findById(req.params._id, function (err, docs) {
-    if (err) return res.status(403).send("Error when finding...");
-    if (docs) return res.json(docs);
-    return res.status(404).send("Not found");
-  });
+  const result = await chatModel.findById(req.params._id);
+  res.send(result);
 };
 
 exports.deleteMessage = async (req, res) => {
@@ -17,13 +14,6 @@ exports.deleteMessage = async (req, res) => {
 };
 
 exports.createMessage = async (req, res) => {
-  const model = new messageModel({
-    text: req.body.text,
-    fromUser: req.body.userId,
-    time: req.body.time,
-    chatBox: req.body.chatBoxId,
-  });
-
   try {
     if (!model["time"] instanceof Date) {
       throw "Error!";

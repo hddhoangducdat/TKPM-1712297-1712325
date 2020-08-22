@@ -12,6 +12,7 @@ const authRoute = require("./server/routers/userRoute/authRoute");
 const chatRoute = require("./server/routers/chatRoute/chatRoute");
 const userRoute = require("./server/routers/userRoute/userRoute");
 const relationshipRoute = require("./server/routers/relationshipRoute/relationshipRoute");
+const messageRoute = require("./server/routers/chatRoute/messageRoute");
 // const fileRoute = require("./server/routers/fileRoute/fileRoute");
 
 const app = express();
@@ -32,27 +33,39 @@ mongoose.connect(
 );
 
 io.on("connection", (socket) => {
-  socket.on("join", (chatBoxId) => {
-    socket.join(chatBoxId);
+  socket.on("chatbox", (id) => {
+    // console.log(socket.id);
+    console.log(id);
+    socket.join(`ChatBox-${id}`);
+  });
+  socket.on("disconnect", () => {});
+
+  socket.on("send-message", ({ id, messageObj }, callback) => {
+    io.to(`ChatBox-${id}`).emit("receive-message", messageObj);
+    callback();
   });
 
-  socket.on("request", (id) => {
-    socket.join(id);
-  });
+  // socket.on("join", (chatBoxId) => {
+  //   socket.join(chatBoxId);
+  // });
 
-  socket.on("sendRequest", ({ id, type, data }) => {
-    if (type === "acceptFriend") {
-      io.to(id).emit(type, data);
-    } else io.to(id).emit(type);
-  });
+  // socket.on("request", (id) => {
+  //   socket.join(id);
+  // });
 
-  socket.on("sendFile", ({ fileName, chatBoxId }) => {
-    io.to(chatBoxId).emit("file", fileName);
-  });
+  // socket.on("sendRequest", ({ id, type, data }) => {
+  //   if (type === "acceptFriend") {
+  //     io.to(id).emit(type, data);
+  //   } else io.to(id).emit(type);
+  // });
 
-  socket.on("sendMessage", ({ userId, message, chatBoxId }) => {
-    io.to(chatBoxId).emit("message", { id: userId, text: message });
-  });
+  // socket.on("sendFile", ({ fileName, chatBoxId }) => {
+  //   io.to(chatBoxId).emit("file", fileName);
+  // });
+
+  // socket.on("sendMessage", ({ userId, message, chatBoxId }) => {
+  //   io.to(chatBoxId).emit("message", { id: userId, text: message });
+  // });
 });
 
 app.use(cors());
@@ -75,7 +88,7 @@ app.use("/api/authentication/user", authRoute);
 app.use("/user", userRoute);
 app.use("/relationship", relationshipRoute);
 app.use("/chat", chatRoute);
-//app.use("/message", messageRoute);
+app.use("/message", messageRoute);
 // app.use("/file", fileRoute);w
 
 const port = process.env.PORT || 5000;
@@ -95,6 +108,7 @@ const SCOPES = ["https://www.googleapis.com/auth/drive"];
 const TOKEN_PATH = "token.json";
 
 const OAuth2Data = require("./credentials.json");
+
 const { client_secret, client_id, redirect_uris } = OAuth2Data.installed;
 const oAuth2Client = new google.auth.OAuth2(
   client_id,
