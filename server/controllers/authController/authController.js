@@ -85,7 +85,9 @@ exports.register = async (req, res) => {
   if (emailExist) return res.status(400).send("Email already exists !!!");
 
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.EMAIL_ADDRESS,
       pass: process.env.EMAIL_PASSWORD,
@@ -93,6 +95,8 @@ exports.register = async (req, res) => {
   });
 
   const otp = Math.floor(Math.random() * 9999);
+
+  console.log(req.body);
 
   const mailOptions = {
     from: "DC<hddhoangducdat@gmail.com>",
@@ -102,9 +106,10 @@ exports.register = async (req, res) => {
     <br />  <h1>${otp}</h1>`,
   };
 
-  transporter.sendMail(mailOptions, (err, data) => {
+  transporter.sendMail(mailOptions, function (err, data) {
     if (err) {
-      res.status(400).send("Error occcured");
+      res.status(401).send("Error occcured");
+      console.log(err);
     } else res.send({ otp: otp.toString() });
   });
 };
