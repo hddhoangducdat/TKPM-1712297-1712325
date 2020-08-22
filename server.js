@@ -92,13 +92,10 @@ app.use("/api/authentication/user", authRoute);
 app.use("/user", userRoute);
 app.use("/relationship", relationshipRoute);
 app.use("/chat", chatRoute);
-<<<<<<< HEAD
 //app.use("/message", messageRoute);
 app.use("/file", fileRoute);
-=======
 app.use("/message", messageRoute);
 // app.use("/file", fileRoute);w
->>>>>>> 72a03a695796bc2a7c0fd8a870177c30c650b73e
 
 const port = process.env.PORT || 5000;
 
