@@ -39,7 +39,7 @@ const multerStorage = multer.diskStorage({
       "..",
       "..",
       "..",
-      "/public/img/users"
+      "/client/public/img/users"
     );
     cb(null, filePath);
   },
