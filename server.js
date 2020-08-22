@@ -12,6 +12,7 @@ const authRoute = require("./server/routers/userRoute/authRoute");
 const chatRoute = require("./server/routers/chatRoute/chatRoute");
 const userRoute = require("./server/routers/userRoute/userRoute");
 const relationshipRoute = require("./server/routers/relationshipRoute/relationshipRoute");
+const fileRoute = require("./server/routers/fileRoute/fileRoute");
 // const fileRoute = require("./server/routers/fileRoute/fileRoute");
 
 const app = express();
@@ -76,7 +77,7 @@ app.use("/user", userRoute);
 app.use("/relationship", relationshipRoute);
 app.use("/chat", chatRoute);
 //app.use("/message", messageRoute);
-// app.use("/file", fileRoute);w
+app.use("/file", fileRoute);
 
 const port = process.env.PORT || 5000;
 
