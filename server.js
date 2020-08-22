@@ -13,7 +13,8 @@ const chatRoute = require("./server/routers/chatRoute/chatRoute");
 const userRoute = require("./server/routers/userRoute/userRoute");
 const relationshipRoute = require("./server/routers/relationshipRoute/relationshipRoute");
 const fileRoute = require("./server/routers/fileRoute/fileRoute");
-// const fileRoute = require("./server/routers/fileRoute/fileRoute");
+const postRoute = require("./server/routers/userRoute/postRoute");
+const notiRoute = require("./server/routers/notiRoute/notiRoute");
 
 const app = express();
 const server = http.createServer(app);
@@ -76,8 +77,9 @@ app.use("/api/authentication/user", authRoute);
 app.use("/user", userRoute);
 app.use("/relationship", relationshipRoute);
 app.use("/chat", chatRoute);
-//app.use("/message", messageRoute);
 app.use("/file", fileRoute);
+app.use("/post", postRoute);
+app.use("/notification", notiRoute);
 
 const port = process.env.PORT || 5000;
 
