@@ -4,6 +4,7 @@ import auth from "./auth";
 import utils from "./utils";
 import search from "./search";
 import chat from "./chat";
+import status from "./status";
 
 const createReducer = (asyncReducers) =>
   combineReducers({
@@ -12,6 +13,7 @@ const createReducer = (asyncReducers) =>
     auth,
     search,
     chat,
+    status,
     ...asyncReducers,
   });
 

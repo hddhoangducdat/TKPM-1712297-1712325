@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { ReactComponent as PhotoIcon } from "../../asset/img/icon/photopost.svg";
 import { ReactComponent as EmojiIcon } from "../../asset/img/icon/emoji.svg";
@@ -8,17 +8,31 @@ import { ReactComponent as SaveIcon } from "../../asset/img/icon/save.svg";
 import { ReactComponent as ShareIcon } from "../../asset/img/icon/share.svg";
 import { ReactComponent as LikeIcon } from "../../asset/img/icon/heart.svg";
 import { ReactComponent as CommentIcon } from "../../asset/img/icon/comment.svg";
+import { useDispatch, useSelector, connect } from "react-redux";
+import { POST_ON } from "../../store/value";
 
-const Home = () => {
+import { getStatus } from "../../store/actions";
+
+const Home = ({ getStatus }) => {
+  const dispatch = useDispatch();
+  const { avatar, status } = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    if (status instanceof Array) {
+      status.map((s) => {
+        getStatus(s);
+      });
+    }
+  }, [status]);
+
   return (
     <div className="home-page">
       <div className="home-page-post">
         <div className="home-page-post__top">
-          <img
-            src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/54463133_104992784011639_7082721617398202368_o.jpg?_nc_cat=110&_nc_sid=09cbfe&_nc_ohc=vSuORAJS7moAX_Axz2y&_nc_ht=scontent.fsgn5-3.fna&oh=a7f27492245291f0d96fc15ac9b063c7&oe=5F60A433"
-            alt=""
-          />
-          <button>Tell your friends what are you up to</button>
+          <img src={avatar} alt="" />
+          <button onClick={() => dispatch({ type: POST_ON })}>
+            Tell your friends what are you up to
+          </button>
         </div>
 
         <div className="home-page-post__bottom">
@@ -303,4 +317,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default connect(null, { getStatus })(Home);

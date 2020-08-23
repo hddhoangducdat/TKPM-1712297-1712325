@@ -79,6 +79,64 @@ const MessengerChatBox = ({ setChatBox, chatBox }) => {
                   </li>
                 );
               }
+            } else if (m.type === "file") {
+              if (m.from === id) {
+                return (
+                  <li className="messenger-chatbox-contain-list__right">
+                    <div className="messenger-chatbox-contain-list__right__file">
+                      <a
+                        href={m.url}
+                        className="messenger-chatbox-contain-list__right__file__icon"
+                      >
+                        <DocumentIcon />
+                      </a>
+                      <div className="messenger-chatbox-contain-list__right__file__text">
+                        {m.text}
+                      </div>
+                    </div>
+                  </li>
+                );
+              } else
+                return (
+                  <li className="messenger-chatbox-contain-list__left">
+                    <div className="messenger-chatbox-contain-list__left__ava">
+                      <img src={chatBox.avatar} alt="" />
+                    </div>
+                    <div className="messenger-chatbox-contain-list__left__detail">
+                      <div className="messenger-chatbox-contain-list__left__file">
+                        <a
+                          href={m.url}
+                          className="messenger-chatbox-contain-list__left__file__icon"
+                        >
+                          <DocumentIcon />
+                        </a>
+                        <div className="messenger-chatbox-contain-list__left__file__text">
+                          {m.text}
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                );
+            } else if (m.type === "picture") {
+              if (m.from === id) {
+                return (
+                  <li className="messenger-chatbox-contain-list__right">
+                    <img src={m.url} alt="" />
+                  </li>
+                );
+              } else
+                return (
+                  <li className="messenger-chatbox-contain-list__left">
+                    <div className="messenger-chatbox-contain-list__left__ava">
+                      <img src={chatBox.avatar} alt="" />
+                    </div>
+                    <div className="messenger-chatbox-contain-list__left__detail">
+                      <div className="messenger-chatbox-contain-list__left__img">
+                        <img src={m.url} alt="" />
+                      </div>
+                    </div>
+                  </li>
+                );
             }
           })}
           {/* <li className="messenger-chatbox-contain-list__left">

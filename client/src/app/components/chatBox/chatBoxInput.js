@@ -1,13 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { ReactComponent as UploadFileIcon } from "../../asset/img/icon/uploadfile.svg";
 import { ReactComponent as PhotoIcon } from "../../asset/img/icon/photo.svg";
 import { ReactComponent as SendIcon } from "../../asset/img/icon/send.svg";
 import { ReactComponent as EmojiIcon } from "../../asset/img/icon/emoji.svg";
 
-import { RENDER_MESSAGE } from "../../store/value";
+import {
+  RENDER_MESSAGE,
+  CHAT_BOX_FILE_ON,
+  SET_SOCKET,
+} from "../../store/value";
 
 import { saveMessage } from "../../store/actions";
 
@@ -17,6 +21,7 @@ import { useSelector, useDispatch, connect } from "react-redux";
 let socket;
 
 const ChatBoxInput = ({ id, saveMessage }) => {
+  const [fileRender, setFileRender] = useState(<div></div>);
   const userId = useSelector((state) => state.auth.id);
   const [chat, setChat] = React.useState("");
   const ENDPOINT = "localhost:5000";
@@ -38,6 +43,8 @@ const ChatBoxInput = ({ id, saveMessage }) => {
   useEffect(() => {
     socket = io(ENDPOINT);
 
+    dispatch({ type: SET_SOCKET, payload: socket });
+
     socket.emit(`chatbox`, id);
 
     return () => {
@@ -56,7 +63,13 @@ const ChatBoxInput = ({ id, saveMessage }) => {
   return (
     <form className="messenger-chatbox-input" onSubmit={onSendMessage}>
       <div className="messenger-chatbox-input-detail">
-        <a href="#" className="messenger-chatbox-input-detail__icon">
+        <a
+          href="#"
+          className="messenger-chatbox-input-detail__icon"
+          onClick={() => {
+            dispatch({ type: CHAT_BOX_FILE_ON });
+          }}
+        >
           <PhotoIcon />
         </a>
         <a href="#" className="messenger-chatbox-input-detail__icon">

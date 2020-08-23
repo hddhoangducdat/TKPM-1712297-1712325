@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
     default: `https://drive.google.com/uc?id=1jjBoYG9Lm5WRSsEu2VAZ8_qxk14Gbbdc&export=download`,
   },
   chatBox: Array,
+  status: Array,
 });
 
 module.exports = mongoose.model("User", userSchema);

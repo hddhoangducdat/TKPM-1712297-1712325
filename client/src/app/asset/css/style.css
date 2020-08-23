@@ -1695,12 +1695,8 @@ button.powerful:active,
 #one {
   background-image: url("../img/background2.png");
   background-size: cover; }
-  #one div header {
-    width: 480px; }
   #one div form {
     display: block; }
-    #one div form input {
-      width: 480px; }
     #one div form .dropdown-selection-box {
       width: 240px; }
       #one div form .dropdown-selection-box .select {
@@ -1723,6 +1719,7 @@ body {
   overflow: hidden; }
 
 .home-container {
+  position: relative;
   background-color: #f0f2f5;
   color: #050505;
   width: 100%;
@@ -1739,6 +1736,68 @@ ul {
 a {
   color: #dadce1;
   text-decoration: none; }
+
+.middle-blur {
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background-color: #00000067; }
+  .middle-blur-sub {
+    position: relative;
+    width: 100%;
+    height: 100%; }
+  .middle-blur-focus-out {
+    z-index: 101;
+    width: 100%;
+    height: 100%; }
+  .middle-blur .chat-box-file {
+    z-index: 102;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px; }
+    .middle-blur .chat-box-file-input {
+      max-height: 500px; }
+    .middle-blur .chat-box-file button {
+      float: right; }
+  .middle-blur .post-input {
+    padding: 16px;
+    background-color: #ffffff;
+    z-index: 102;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    width: 480px; }
+    .middle-blur .post-input-file {
+      background-color: #ffffff; }
+    .middle-blur .post-input-text {
+      color: #050505;
+      font-size: 15px;
+      width: 100%;
+      padding: 8px 16px;
+      border: none; }
+    .middle-blur .post-input-button {
+      width: 100%;
+      margin: none;
+      background-color: #1877f2;
+      margin-bottom: none;
+      border: none;
+      border-radius: 10px; }
+    .middle-blur .post-input-header {
+      height: 59px;
+      font-size: 20px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0px 16px; }
+      .middle-blur .post-input-header__text {
+        padding-bottom: 16px;
+        text-align: center; }
 
 .main-container {
   display: flex;

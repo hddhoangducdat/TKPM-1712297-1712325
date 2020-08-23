@@ -96,50 +96,53 @@ exports.getAll = async (req, res) => {
 };
 
 exports.updateAvatar = async (req, res) => {
-  //username && email not update
-  let filteredBody = filterObj(req.body, "username", "email");
-
-  userUploadAvatar(req, res, function (err) {
-    if (err) throw err;
-    console.log(req.file.path);
-    const drive = google.drive({
-      version: "v3",
-      auth: oAuth2Client,
-    });
-
-    const filemetadata = {
-      name: req.file.filename,
-      parents: [targetFolderId],
-    };
-
-    const media = {
-      mimeType: req.file.mimetype,
-      body: fs.createReadStream(req.file.path),
-    };
-
-    drive.files.create(
-      { resource: filemetadata, media: media, fields: "id" },
-      async (err, file) => {
-        if (err) throw err;
-
-        //delete the file image
-        fs.unlinkSync(req.file.path);
-        // update
-        filteredBody.avatar = `https://drive.google.com/uc?id=${file.data.id}&export=download`;
-        await userModel.findByIdAndUpdate(
-          req.params._id,
-          filteredBody,
-          { new: true, runValidators: true },
-          function (err, docs) {
-            if (err) return res.status(400).json("Error: " + err);
-            if (docs) return res.json(docs);
-            return res.status(404).json("Error: Not found");
-          }
-        );
-        console.log(`File id: ${file.data.id}`);
-      }
-    );
+  await userModel.findByIdAndUpdate(req.params._id, {
+    avatar: req.body.url,
   });
+  //username && email not update
+  // let filteredBody = filterObj(req.body, "username", "email");
+
+  // userUploadAvatar(req, res, function (err) {
+  //   if (err) throw err;
+  //   console.log(req.file.path);
+  //   const drive = google.drive({
+  //     version: "v3",
+  //     auth: oAuth2Client,
+  //   });
+
+  //   const filemetadata = {
+  //     name: req.file.filename,
+  //     parents: [targetFolderId],
+  //   };
+
+  //   const media = {
+  //     mimeType: req.file.mimetype,
+  //     body: fs.createReadStream(req.file.path),
+  //   };
+
+  //   drive.files.create(
+  //     { resource: filemetadata, media: media, fields: "id" },
+  //     async (err, file) => {
+  //       if (err) throw err;
+
+  //       //delete the file image
+  //       fs.unlinkSync(req.file.path);
+  //       // update
+  //       filteredBody.avatar = `https://drive.google.com/uc?id=${file.data.id}&export=download`;
+  //       await userModel.findByIdAndUpdate(
+  //         req.params._id,
+  //         filteredBody,
+  //         { new: true, runValidators: true },
+  //         function (err, docs) {
+  //           if (err) return res.status(400).json("Error: " + err);
+  //           if (docs) return res.json(docs);
+  //           return res.status(404).json("Error: Not found");
+  //         }
+  //       );
+  //       console.log(`File id: ${file.data.id}`);
+  //     }
+  //   );
+  // });
 };
 
 exports.getAvatar = (req, res) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, connect } from "react-redux";
 
 import Pic1 from "../../asset/img/tmp/pic1.jpeg";
 import Pic2 from "../../asset/img/tmp/pic2.jpg";
@@ -9,7 +9,9 @@ import Ava1 from "../../asset/img/tmp/ava1.jpg";
 import Ava2 from "../../asset/img/tmp/ava2.jpg";
 import Ava3 from "../../asset/img/tmp/ava3.jpg";
 
-const Profile = () => {
+import { uploadAvatar } from "../../store/actions";
+
+const Profile = ({ uploadAvatar }) => {
   const { user } = useSelector((state) => state.auth);
 
   return (
@@ -23,7 +25,15 @@ const Profile = () => {
         ></img>
         <div className="avatar-upload">
           <div className="avatar-edit">
-            <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" />
+            <input
+              type="file"
+              id="imageUpload"
+              accept=".png, .jpg, .jpeg"
+              onChange={(e) => {
+                console.log(e.target.files);
+                uploadAvatar(e.target.files[0]);
+              }}
+            />
             <label for="imageUpload"></label>
           </div>
           <div className="avatar-preview">
@@ -68,4 +78,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default connect(null, { uploadAvatar })(Profile);

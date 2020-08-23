@@ -47,12 +47,6 @@ exports.acceptFriend = async (req, res) => {
   const userId1 = req.body.id1 > req.body.id2 ? req.body.id2 : req.body.id1;
   const userId2 = req.body.id1 < req.body.id2 ? req.body.id2 : req.body.id1;
 
-  const updateRelationship = {
-    userId1: userId1,
-    userId2: userId2,
-    type: "friend",
-  };
-
   await userRelationshipModel.findOneAndUpdate(
     {
       userId1,

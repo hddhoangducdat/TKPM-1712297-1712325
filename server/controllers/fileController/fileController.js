@@ -33,13 +33,7 @@ function getAccessToken(oAuth2Client) {
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const filePath = path.join(
-      __dirname,
-      "..",
-      "..",
-      "..",
-      "/client/public/files"
-    );
+    const filePath = path.join(__dirname, "..", "..", "..", "../../");
     cb(null, filePath);
   },
   filename: (req, file, cb) => {
@@ -96,10 +90,24 @@ exports.uploadFile = async (req, res) => {
 };
 
 exports.getFile = async (req, res) => {
-  await fileModel.findById(req.params._id, function (err, docs) {
-    if (err) return res.status(400).json("Error: " + err);
-    if (docs) return res.json(docs);
-    return res.status(400).json("Not found!");
+  const { fileName, userId, fileUrl } = await fileModel.findById(
+    req.params._id
+  );
+  const token = fileName.split(".");
+  let type;
+  if (
+    token[token.length - 1] === "png" ||
+    token[token.length - 1] === "jpg" ||
+    token[token.length - 1] === "jpeg"
+  )
+    type = "picture";
+  else type = "file";
+  token[token.length - 1];
+  res.send({
+    type,
+    fileName,
+    userId,
+    fileUrl,
   });
 };
 
@@ -109,7 +117,7 @@ exports.uploadFilestoDrive = async (req, res, next) => {
     auth: oAuth2Client,
   });
 
-  req.body.files = [];
+  req.body.fileModels = [];
   await Promise.all(
     req.files.map(async (e) => {
       const filemetadata = {
@@ -131,7 +139,7 @@ exports.uploadFilestoDrive = async (req, res, next) => {
       await modelFile.save();
       const id = modelFile._id;
 
-      req.body.files.push(id);
+      req.body.fileModels.push(id);
 
       await drive.files.create(
         { resource: filemetadata, media: media, fields: "id" },
@@ -143,10 +151,11 @@ exports.uploadFilestoDrive = async (req, res, next) => {
 
           // upload model.fileUrl
           const fileUrl = `https://drive.google.com/uc?id=${file.data.id}&export=download`;
-          const model = await fileModel.findById(id);
-          model.fileUrl = fileUrl;
-          model.markModified("fileUrl");
-          await model.save();
+
+          await fileModel.findByIdAndUpdate(id, {
+            fileUrl,
+          });
+          // model.markModified("fileUrl");
         }
       );
     })
@@ -158,10 +167,10 @@ exports.uploadFilestoDrive = async (req, res, next) => {
 exports.uploadFiles = async (req, res) => {
   const _arrObj = [];
   await Promise.all(
-    req.body.files.map(async (e) => {
+    req.body.fileModels.map(async (e) => {
       const file = await fileModel.findById(e);
       _arrObj.push(file);
     })
   );
-  res.json(_arrObj);
+  res.send(_arrObj);
 };
