@@ -1,7 +1,6 @@
 const userRelationshipModel = require("../../models/userRelationshipModel");
 const chatBoxModel = require("../../models/chatModel");
 const userModel = require("../../models/userModel");
-const notiModel = require("../../models/notiModel");
 exports.addFriend = async (req, res) => {
   const userId1 =
     req.body.host > req.body.toUser ? req.body.toUser : req.body.host;
@@ -15,6 +14,7 @@ exports.addFriend = async (req, res) => {
 
   await relationship.save();
 
+  // mai lam tiep
   res.send(relationship);
 };
 
