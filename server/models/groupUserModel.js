@@ -7,6 +7,7 @@ const dataGroupModel = new mongoose.Schema({
   deadlines: Array,
   member: Array,
   quantity: { type: Number, default: 1 },
+  chatGroup: { type: String },
 });
 
 const groupUserSchema = new mongoose.Schema({

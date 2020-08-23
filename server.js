@@ -91,14 +91,9 @@ app.use("/user", userRoute);
 app.use("/relationship", relationshipRoute);
 app.use("/chat", chatRoute);
 app.use("/file", fileRoute);
-<<<<<<< HEAD
-app.use("/message", messageRoute);
 app.use("/status", statusRoute);
-// app.use("/file", fileRoute);w
-=======
 app.use("/post", postRoute);
 app.use("/group", groupRoute);
->>>>>>> backend-chanh
 
 const port = process.env.PORT || 5000;
 

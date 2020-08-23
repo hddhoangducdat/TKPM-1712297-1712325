@@ -8,6 +8,8 @@ const { google } = require("googleapis");
 const OAuth2Data = require("../../../credentials.json");
 const { Types } = require("mongoose");
 const groupRoute = require("../../routers/groupRoute/groupRoute");
+const { resolve } = require("path");
+const { chat } = require("googleapis/build/src/apis/chat");
 const { client_secret, client_id, redirect_uris } = OAuth2Data.installed;
 const oAuth2Client = new google.auth.OAuth2(
   client_id,
@@ -88,6 +90,8 @@ const createChatDialog = async (req, filePath) => {
   ];
 
   await userAdmin.save();
+
+  return chatDialog._id;
 };
 
 exports.createGroupUser = async (req, res, next) => {
@@ -97,9 +101,16 @@ exports.createGroupUser = async (req, res, next) => {
     console.log(req.file.filename);
     next();
   } else {
-    createChatDialog(req, avatarDefault);
+    const chatId = createChatDialog(req, avatarDefault);
+    await chatId.then((docs) => {
+      filteredBody.data = {
+        member: [req.body.admin],
+        chatGroup: docs,
+      };
+    });
 
-    filteredBody.data = { member: [req.body.admin] };
+    console.log(filteredBody);
+
     const newModel = new groupUserModel(filteredBody);
     await newModel
       .save()
@@ -130,9 +141,16 @@ exports.uploadImageCover = async (req, res) => {
       // update
       const filteredBody = filterObj(req.body, "groupName", "admin");
       filteredBody.avatar = `https://drive.google.com/uc?id=${file.data.id}&export=download`;
-      filteredBody.data = { member: [req.body.admin] };
 
-      createChatDialog(req, filteredBody.avatar);
+      const chatId = createChatDialog(req, filteredBody.avatar);
+      await chatId.then((docs) => {
+        filteredBody.data = {
+          member: [req.body.admin],
+          chatGroup: docs,
+        };
+      });
+
+      console.log(filteredBody);
 
       const newModel = new groupUserModel(filteredBody);
       await newModel
@@ -150,10 +168,34 @@ exports.addMember = async (req, res) => {
   const groupUser = await groupUserModel.findById(req.params._id);
 
   if (groupUser.admin === host) {
-    // cho phep add
+    // Add member to group
     groupUser.data.member = [...groupUser.data.member, newMember];
     groupUser.markModified("data.member");
+
     await groupUser.save();
+
+    //Create chatBox in member
+
+    const newGroupMember = await userModel.findById(req.body.member);
+
+    newGroupMember.chatBox = [
+      ...newGroupMember.chatBox,
+      {
+        id: groupUser.data.chatGroup,
+        name: groupUser.groupName,
+        avatar: groupUser.avatar,
+      },
+    ];
+
+    await newGroupMember.save();
+    //add member to chatGroup
+    const chatGroupDialog = await chatBoxModel.findById(
+      groupUser.data.chatGroup
+    );
+
+    chatGroupDialog.member = [...chatGroupDialog.member, newGroupMember._id];
+    chatGroupDialog.markModified("member");
+    await chatGroupDialog.save();
     res.json(groupUser);
   } else {
     // khong phai admin
