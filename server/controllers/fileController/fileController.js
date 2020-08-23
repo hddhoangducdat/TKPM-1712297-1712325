@@ -4,8 +4,6 @@ const fs = require("fs");
 const path = require("path");
 const { google } = require("googleapis");
 const OAuth2Data = require("../../../credentials.json");
-const { resolve } = require("path");
-const { model } = require("../../models/fileModel");
 const { client_secret, client_id, redirect_uris } = OAuth2Data.installed;
 const oAuth2Client = new google.auth.OAuth2(
   client_id,

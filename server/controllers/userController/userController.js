@@ -49,7 +49,7 @@ const multerStorage = multer.diskStorage({
   },
 });
 
-const multerFiler = (req, file, cb) => {
+const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image")) {
     cb(null, true);
   } else {
@@ -57,7 +57,7 @@ const multerFiler = (req, file, cb) => {
   }
 };
 
-const upload = multer({ storage: multerStorage, fileFilter: multerFiler });
+const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
 
 const userUploadAvatar = upload.single("photo");
 
