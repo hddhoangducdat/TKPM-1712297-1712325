@@ -6,20 +6,20 @@ import { ReactComponent as AcceptIcon } from "../../asset/img/icon/yes.svg";
 import { deleteRela, acceptFriend } from "../../store/actions";
 import { connect } from "react-redux";
 
-const Accept = ({ index, id, deleteRela, acceptFriend }) => {
+const Accept = ({ index, user, deleteRela, acceptFriend }) => {
   return (
     <div>
       <a
         className="search-panel-dropdown-detail__icon__pending"
         href="#"
-        onClick={() => acceptFriend(id, index)}
+        onClick={() => acceptFriend(user, index)}
       >
         <AcceptIcon />
       </a>
       <a
         className="search-panel-dropdown-detail__icon__cancle"
         href="#"
-        onClick={() => deleteRela(id, index)}
+        onClick={() => deleteRela(user, index)}
       >
         <CancleIcon />
       </a>

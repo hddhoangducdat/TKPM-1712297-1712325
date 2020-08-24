@@ -66,6 +66,24 @@
         width: 100%;
         font-size: 15px;
         color: #050505;
+        textarea {
+          max-height: 100%;
+          background-color: #ffffff;
+          overflow: hidden;
+          width: 100%;
+          box-sizing: border-box;
+          // direction: rtl;
+          display: block;
+          max-width: 100%;
+          line-height: 1.5;
+          padding: 15px 15px 30px;
+          border: none;
+          font-size: 15px;
+          color: #050505;
+          // transition: box-shadow 0.5s ease;
+          // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          font-smoothing: subpixel-antialiased;
+        }
       }
       &__pic {
         display: flex;

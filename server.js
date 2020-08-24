@@ -13,6 +13,7 @@ const chatRoute = require("./server/routers/chatRoute/chatRoute");
 const userRoute = require("./server/routers/userRoute/userRoute");
 const statusRoute = require("./server/routers/statusRoute/statusRoute");
 const relationshipRoute = require("./server/routers/relationshipRoute/relationshipRoute");
+const notiRoute = require("./server/routers/notiRoute/notiRoute");
 // <<<<<<< HEAD
 const fileRoute = require("./server/routers/fileRoute/fileRoute");
 // =======
@@ -39,15 +40,22 @@ mongoose.connect(
 
 io.on("connection", (socket) => {
   socket.on("chatbox", (id) => {
-    // console.log(socket.id);
-    console.log(id);
     socket.join(`ChatBox-${id}`);
   });
+
+  socket.on("noti", (id) => {
+    socket.join(`noti-${id}`);
+  });
+
   socket.on("disconnect", () => {});
 
   socket.on("send-message", ({ id, messageObj }, callback) => {
     io.to(`ChatBox-${id}`).emit("receive-message", messageObj);
     callback();
+  });
+
+  socket.on("send-noti", (noti) => {
+    io.to(`noti-${noti.to}`).emit("receive-noti", noti);
   });
 
   // socket.on("join", (chatBoxId) => {
@@ -97,6 +105,7 @@ app.use("/chat", chatRoute);
 app.use("/file", fileRoute);
 app.use("/message", messageRoute);
 app.use("/status", statusRoute);
+app.use("/noti", notiRoute);
 // app.use("/file", fileRoute);w
 
 const port = process.env.PORT || 5000;

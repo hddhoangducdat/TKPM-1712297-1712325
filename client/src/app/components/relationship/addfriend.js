@@ -4,12 +4,12 @@ import { ReactComponent as AddFriendIcon } from "../../asset/img/icon/add-friend
 import { addFriend } from "../../store/actions";
 import { connect } from "react-redux";
 
-const AddFriend = ({ index, id, addFriend }) => {
+const AddFriend = ({ index, user, addFriend }) => {
   return (
     <a
       className="search-panel-dropdown-detail__icon__addfriend"
       href="#"
-      onClick={() => addFriend(id, index)}
+      onClick={() => addFriend(user, index)}
     >
       <AddFriendIcon />
     </a>

@@ -6,7 +6,7 @@ import { ReactComponent as CancleIcon } from "../../asset/img/icon/closedrop.svg
 import { deleteRela } from "../../store/actions";
 import { connect } from "react-redux";
 
-const Pending = ({ index, id, deleteRela }) => {
+const Pending = ({ index, user, deleteRela }) => {
   return (
     <div>
       <a className="search-panel-dropdown-detail__icon__pending" href="#">
@@ -15,7 +15,7 @@ const Pending = ({ index, id, deleteRela }) => {
       <a
         className="search-panel-dropdown-detail__icon__cancle"
         href="#"
-        onClick={() => deleteRela(id, index)}
+        onClick={() => deleteRela(user, index)}
       >
         <CancleIcon />
       </a>

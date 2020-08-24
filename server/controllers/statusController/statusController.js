@@ -12,8 +12,7 @@ exports.createStatus = async (req, res) => {
     userId2: user._id,
     type: "friend",
   });
-  console.log(friend1);
-  console.log(friend2);
+
   const status = new statusModel({
     text: req.body.text,
     avatar: user.avatar,

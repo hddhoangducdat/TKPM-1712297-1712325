@@ -961,6 +961,20 @@ input:focus {
   width: 100%;
   font-size: 15px;
   color: #050505; }
+  .home-page-list-status__contain textarea {
+    max-height: 100%;
+    background-color: #ffffff;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+    max-width: 100%;
+    line-height: 1.5;
+    padding: 15px 15px 30px;
+    border: none;
+    font-size: 15px;
+    color: #050505;
+    font-smoothing: subpixel-antialiased; }
 
 .home-page-list-status__pic {
   display: flex;
@@ -1691,6 +1705,9 @@ button.powerful:active,
 
 #wrapper #dialog #form {
   max-width: 300px; }
+
+.button-margin {
+  margin-bottom: 1rem; }
 
 #one {
   background-image: url("../img/background2.png");

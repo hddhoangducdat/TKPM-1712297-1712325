@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { connect } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 
 import NavBar from "../../components/nav/navBar";
 
@@ -10,15 +10,22 @@ import { ReactComponent as CalendarIcon } from "../../asset/img/icon/calendar.sv
 import { ReactComponent as BellIcon } from "../../asset/img/icon/bell.svg";
 import { ReactComponent as HomeIcon } from "../../asset/img/icon/construction.svg";
 
-import { logout } from "../../store/actions";
+import { logout, saveNoti } from "../../store/actions";
 
 import Home from "../main/home";
 import Notification from "../main/notification";
 import Group from "../main/group";
 import Calendar from "../main/calendar";
+import io from "socket.io-client";
 
-const Middle = ({ logout }) => {
+import { SET_NOTI_SOCKET, RENDER_NOTI } from "../../store/value";
+
+let socket;
+
+const Middle = ({ logout, saveNoti }) => {
+  const { id } = useSelector((state) => state.auth);
   const [render, setRender] = useState(<Home />);
+  const ENDPOINT = "localhost:5000";
   const [tab, setTab] = useState([
     "nav-tab-detail nav-tab-color",
     "nav-tab-detail",
@@ -26,6 +33,29 @@ const Middle = ({ logout }) => {
     "nav-tab-detail",
     "nav-tab-detail",
   ]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+
+    socket.emit(`noti`, id);
+
+    dispatch({ type: SET_NOTI_SOCKET, payload: socket });
+
+    return () => {
+      socket.emit("disconnect");
+      socket.off();
+    };
+  }, [ENDPOINT, id]);
+
+  useEffect(() => {
+    socket.on("receive-noti", (noti) => {
+      console.log(noti);
+      dispatch({ type: RENDER_NOTI, payload: noti });
+      saveNoti(noti);
+    });
+  }, [id]);
 
   const colorTab = (x) => {
     setTab(
@@ -105,4 +135,4 @@ const Middle = ({ logout }) => {
   );
 };
 
-export default connect(null, { logout })(Middle);
+export default connect(null, { logout, saveNoti })(Middle);

@@ -5,5 +5,5 @@ export const getStatus = (id) => async (dispatch) => {
   console.log(id);
   const response = await axios.get(`/status/get/${id}`);
   console.log(response.data);
-  dispatch({ type: SAVE_STATUS, action: response.data });
+  dispatch({ type: SAVE_STATUS, payload: response.data });
 };

@@ -27,3 +27,6 @@ export const POST_ON = "POST_ON";
 export const POST_OFF = "POST_OFF";
 export const POST_SAVE = "POST_SAVE";
 export const SAVE_STATUS = "SAVE_STATUS";
+export const SET_NOTI_SOCKET = "SET_NOTI_SOCKET";
+export const RENDER_NOTI = "RENDER_NOTI";
+export const RENDER_NOTI_ALL = "RENDER_NOTI_ALL";

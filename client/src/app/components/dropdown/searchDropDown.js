@@ -35,13 +35,13 @@ const SearchDropDown = () => {
           </div>
           <div className="search-panel-dropdown-detail__icon">
             {user.relationship === "none" ? (
-              <AddFriend index={index} id={user._id} />
+              <AddFriend index={index} user={user} />
             ) : user.relationship === "friend" ? (
-              <Friend index={index} id={user._id} />
+              <Friend index={index} user={user} />
             ) : user.relationship === "pending" ? (
-              <Pending index={index} id={user._id} />
+              <Pending index={index} user={user} />
             ) : user.relationship === "accept" ? (
-              <Accept index={index} id={user._id} />
+              <Accept index={index} user={user} />
             ) : (
               <div />
             )}

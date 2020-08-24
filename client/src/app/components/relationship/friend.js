@@ -6,7 +6,7 @@ import { ReactComponent as UnFriendIcon } from "../../asset/img/icon/delete.svg"
 import { deleteRela } from "../../store/actions";
 import { connect } from "react-redux";
 
-const Friend = ({ index, id, deleteRela }) => {
+const Friend = ({ index, user, deleteRela }) => {
   return (
     <div>
       <a className="search-panel-dropdown-detail__icon__friend" href="#">
@@ -15,7 +15,7 @@ const Friend = ({ index, id, deleteRela }) => {
       <a
         className="search-panel-dropdown-detail__icon__cancle"
         href="#"
-        onClick={() => deleteRela(id, index)}
+        onClick={() => deleteRela(user, index)}
       >
         <UnFriendIcon />
       </a>

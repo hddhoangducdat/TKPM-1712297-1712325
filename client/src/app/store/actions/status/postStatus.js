@@ -16,7 +16,7 @@ export const postStatus = (text, file) => async (dispatch, getState) => {
     }).then((response) => {
       dispatch(createPost(text, response.data.fileUrl));
     });
+  } else {
+    dispatch(createPost(text, ""));
   }
-
-  dispatch(createPost(text, ""));
 };

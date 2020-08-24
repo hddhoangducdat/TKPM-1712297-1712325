@@ -89,8 +89,8 @@ const Register = ({ handleSubmit, register }) => {
             <button
               className={
                 registerClick2
-                  ? "button primary button-signup btn-action"
-                  : "button primary button-signup"
+                  ? "button primary button-signup btn-action button-margin"
+                  : "button primary button-signup button-margin"
               }
               onClick={() => onRegister()}
             >
