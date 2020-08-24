@@ -7,6 +7,7 @@ const {
   getRequestFriend,
   unfriend,
   cancleRequest,
+  getFriend,
 } = require("../../controllers/relationshipController/relationshipController");
 
 const relationshipRoute = express();
@@ -16,5 +17,6 @@ relationshipRoute.get("/:id1/:id2", getRequestFriend);
 relationshipRoute.patch("/acceptRequest", acceptFriend);
 relationshipRoute.delete("/cancle/:id1/:id2", cancleRequest);
 relationshipRoute.delete("/unfriend", unfriend);
+relationshipRoute.get("/get/friend/:_id", getFriend);
 
 module.exports = relationshipRoute;

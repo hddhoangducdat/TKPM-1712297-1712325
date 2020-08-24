@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 
 import { ReactComponent as AddGroupIcon } from "../../asset/icons/add-group.svg";
@@ -17,14 +18,22 @@ import { ReactComponent as TeamIcon } from "../../asset/img/icon/team.svg";
 import { ReactComponent as EyeIcon } from "../../asset/img/icon/eye.svg";
 import { ReactComponent as LockIcon } from "../../asset/img/icon/lock.svg";
 import { ReactComponent as FileIcon } from "../../asset/img/icon/file.svg";
+import { useDispatch } from "react-redux";
+import { GROUP_ON } from "../../store/value";
 
 const Group = () => {
   const [detail, setDetail] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <div className="group-page">
       <div className="group-page-add">
-        <a href="#">
+        <a
+          href="#"
+          onClick={() => {
+            dispatch({ type: GROUP_ON });
+          }}
+        >
           <AddGroupIcon />
         </a>
       </div>

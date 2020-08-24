@@ -16,10 +16,8 @@ const relationshipRoute = require("./server/routers/relationshipRoute/relationsh
 const notiRoute = require("./server/routers/notiRoute/notiRoute");
 // <<<<<<< HEAD
 const fileRoute = require("./server/routers/fileRoute/fileRoute");
-// =======
-const messageRoute = require("./server/routers/chatRoute/messageRoute");
-// >>>>>>> 72a03a695796bc2a7c0fd8a870177c30c650b73e
-// const fileRoute = require("./server/routers/fileRoute/fileRoute");
+const postRoute = require("./server/routers/userRoute/postRoute");
+const groupRoute = require("./server/routers/groupRoute/groupRoute");
 
 const app = express();
 const server = http.createServer(app);
@@ -101,12 +99,13 @@ app.use("/api/authentication/user", authRoute);
 app.use("/user", userRoute);
 app.use("/relationship", relationshipRoute);
 app.use("/chat", chatRoute);
-//app.use("/message", messageRoute);
 app.use("/file", fileRoute);
-app.use("/message", messageRoute);
 app.use("/status", statusRoute);
 app.use("/noti", notiRoute);
 // app.use("/file", fileRoute);w
+
+app.use("/post", postRoute);
+app.use("/group", groupRoute);
 
 const port = process.env.PORT || 5000;
 

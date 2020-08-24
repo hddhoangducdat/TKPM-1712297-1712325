@@ -12,7 +12,7 @@ import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { useSelector, useDispatch, connect } from "react-redux";
-import { POST_OFF, POST_SAVE } from "../../store/value";
+import { POST_SAVE, POST_OFF, GROUP_OFF, GROUP_SAVE } from "../../store/value";
 import { postStatus } from "../../store/actions";
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
@@ -27,7 +27,9 @@ const PostForm = ({ postStatus }) => {
       <div className="middle-blur-sub">
         <div
           className="middle-blur-focus-out"
-          onClick={() => dispatch({ type: POST_OFF })}
+          onClick={() => {
+            dispatch({ type: POST_OFF });
+          }}
         ></div>
         <div className="post-input">
           <div className="post-input-header">

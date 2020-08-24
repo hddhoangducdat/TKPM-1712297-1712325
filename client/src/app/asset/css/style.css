@@ -1436,6 +1436,60 @@ input:focus {
       width: 40px;
       height: 40px; }
 
+.post-group-input {
+  background-color: #f2f0f5;
+  border-radius: 30px;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem; }
+
+.friend-list {
+  width: 100%;
+  overflow: auto;
+  max-height: 400px; }
+  .friend-list-detail {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    position: relative; }
+    .friend-list-detail img {
+      margin-right: 1rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 100%; }
+    .friend-list-detail__text {
+      font-size: 15px;
+      font-weight: 600; }
+    .friend-list-detail__svg {
+      position: absolute;
+      display: inline-flex;
+      right: 0px; }
+      .friend-list-detail__svg a {
+        margin-right: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 100%; }
+        .friend-list-detail__svg a svg {
+          width: 10px;
+          height: 10px; }
+      .friend-list-detail__svg__plus {
+        background-color: #e4e6eb; }
+        .friend-list-detail__svg__plus:hover {
+          filter: brightness(105%); }
+      .friend-list-detail__svg__tick {
+        fill: #3cff00;
+        background-color: #3cff002f; }
+        .friend-list-detail__svg__tick:hover {
+          background-color: #3cff0028; }
+      .friend-list-detail__svg__close {
+        fill: #ff0000;
+        background-color: rgba(255, 0, 0, 0.13); }
+        .friend-list-detail__svg__close:hover {
+          background-color: rgba(255, 0, 0, 0.116); }
+
 .container-calendar {
   display: flex;
   height: 90vh;

@@ -5,3 +5,4 @@ export * from "./message";
 export * from "./file";
 export * from "./status";
 export * from "./noti";
+export * from "./friend";

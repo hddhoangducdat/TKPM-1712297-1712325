@@ -14,6 +14,8 @@ exports.addFriend = async (req, res) => {
   }); // host send request, wait accept
 
   await relationship.save();
+
+  // mai lam tiep
   res.send(relationship);
 };
 
@@ -148,4 +150,40 @@ exports.unfriend = async (req, res) => {
     if (data) res.send(data);
     return res.status(404).send("");
   });
+};
+
+exports.getFriend = async (req, res) => {
+  const friend1 = await userRelationshipModel.find({
+    userId1: req.params._id,
+    type: "friend",
+  });
+  const friend2 = await userRelationshipModel.find({
+    userId1: req.params._id,
+    type: "friend",
+  });
+
+  // console.log(friend1);
+  // console.log(friend2);
+  let friend = [];
+
+  await Promise.all(
+    friend1.map(async (f) => {
+      const result = await userModel
+        .findById(f.userId2, "userName avatar")
+        .then(() => {
+          friend = [...friend, result];
+          console.log(friend);
+        })
+        .catch((err) => {});
+    })
+  );
+
+  await Promise.all(
+    friend2.map(async (f) => {
+      const result = await userModel.findById(f.userId1, "userName avatar");
+      friend = [...friend, result];
+    })
+  );
+
+  res.send(friend);
 };
