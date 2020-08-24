@@ -14,7 +14,7 @@ const userRoute = require("./server/routers/userRoute/userRoute");
 const statusRoute = require("./server/routers/statusRoute/statusRoute");
 const relationshipRoute = require("./server/routers/relationshipRoute/relationshipRoute");
 const fileRoute = require("./server/routers/fileRoute/fileRoute");
-const postRoute = require("./server/routers/userRoute/postRoute");
+const deadlineRoute = require("./server/routers/userRoute/deadlineRoute");
 const groupRoute = require("./server/routers/groupRoute/groupRoute");
 
 const app = express();
@@ -92,7 +92,7 @@ app.use("/relationship", relationshipRoute);
 app.use("/chat", chatRoute);
 app.use("/file", fileRoute);
 app.use("/status", statusRoute);
-app.use("/post", postRoute);
+app.use("/deadline", deadlineRoute);
 app.use("/group", groupRoute);
 
 const port = process.env.PORT || 5000;
