@@ -104,7 +104,6 @@ app.use("/status", statusRoute);
 app.use("/noti", notiRoute);
 // app.use("/file", fileRoute);w
 
-app.use("/post", postRoute);
 app.use("/deadline", deadlineRoute);
 app.use("/group", groupRoute);
 

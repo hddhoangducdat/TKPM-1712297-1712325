@@ -1,6 +1,15 @@
 const mongoose = require("mongoose");
 const { intersection } = require("lodash");
 
+const chatBoxModel = new mongoose.Schema({
+  _id: false,
+  id: String,
+  name: String,
+  avatar: String,
+  seen: Boolean,
+  noti: String,
+});
+
 const userSchema = new mongoose.Schema({
   userName: { type: String, unique: true, required: true, lowercase: true },
   password: { type: String, required: [true, "Please provide a password"] },
@@ -16,7 +25,7 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  chatBox: Array,
+  chatBox: { type: [chatBoxModel], default: () => [{}] },
   status: Array,
 });
 
