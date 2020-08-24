@@ -16,7 +16,7 @@ const relationshipRoute = require("./server/routers/relationshipRoute/relationsh
 const notiRoute = require("./server/routers/notiRoute/notiRoute");
 // <<<<<<< HEAD
 const fileRoute = require("./server/routers/fileRoute/fileRoute");
-const postRoute = require("./server/routers/userRoute/postRoute");
+const deadlineRoute = require("./server/routers/userRoute/deadlineRoute");
 const groupRoute = require("./server/routers/groupRoute/groupRoute");
 
 const app = express();
@@ -105,6 +105,7 @@ app.use("/noti", notiRoute);
 // app.use("/file", fileRoute);w
 
 app.use("/post", postRoute);
+app.use("/deadline", deadlineRoute);
 app.use("/group", groupRoute);
 
 const port = process.env.PORT || 5000;
