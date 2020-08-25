@@ -1,4 +1,5 @@
 import axios from "../../../api/server";
+import { ADD_GROUP } from "../../value";
 
 export const createGroup = (friend, file, name) => async (
   dispatch,
@@ -22,6 +23,16 @@ export const createGroup = (friend, file, name) => async (
       "Content-Type": "multipart/form-data",
     },
   }).then((response) => {
-    console.log(response.data);
+    dispatch({ type: ADD_GROUP, payload: response.data });
+    friend.map((f) => {
+      const noti = {
+        from: getState().auth.id,
+        to: f._id,
+        userName: getState().auth.user.userName,
+        avatar: getState().auth.user.avatar,
+        type: "add-group",
+      };
+      getState().auth.socket.emit("send-noti", noti);
+    });
   });
 };

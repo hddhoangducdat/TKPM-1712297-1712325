@@ -7,10 +7,12 @@ import chat from "./chat";
 import status from "./status";
 import noti from "./noti";
 import friend from "./friend";
+import group from "./group";
 
 const createReducer = (asyncReducers) =>
   combineReducers({
     form: formReducer,
+    group,
     utils,
     auth,
     search,

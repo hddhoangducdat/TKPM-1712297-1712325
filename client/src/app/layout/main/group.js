@@ -20,6 +20,7 @@ import { ReactComponent as LockIcon } from "../../asset/img/icon/lock.svg";
 import { ReactComponent as FileIcon } from "../../asset/img/icon/file.svg";
 import { useDispatch } from "react-redux";
 import { GROUP_ON } from "../../store/value";
+import GroupList from "../../components/group/groupList";
 
 const Group = () => {
   const [detail, setDetail] = useState(false);
@@ -39,100 +40,7 @@ const Group = () => {
       </div>
 
       {!detail ? (
-        <ul className="group-page-card">
-          <input
-            className="group-page-card-input"
-            placeholder="Search your specific group"
-          ></input>
-          <li
-            className="group-page-card-detail"
-            onClick={() => setDetail(true)}
-          >
-            <div className="group-page-card-detail__img">
-              <img
-                src="https://www.facebook.com/images/groups/Null-Header-1640x500-2x.png"
-                alt=""
-              />
-            </div>
-            <div className="group-page-card-detail__info">
-              <div className="group-page-card-detail__info__text">
-                Phân tích và quản lý yêu cầu
-              </div>
-              <div className="group-page-card-detail__info__subtext">
-                489 members
-              </div>
-            </div>
-            <button className="group-page-card-detail__button">Leave</button>
-          </li>
-          <li className="group-page-card-detail">
-            <div className="group-page-card-detail__img">
-              <img
-                src="https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.0-9/s960x960/57572676_2324059237841850_3952189271820992512_o.jpg?_nc_cat=100&_nc_sid=825194&_nc_ohc=7Y33Tncn3rgAX_-rvDD&_nc_ht=scontent.fsgn5-5.fna&_nc_tp=7&oh=2a0bf1a3f519d6ba998c470871525d1c&oe=5F652213"
-                alt=""
-              />
-            </div>
-            <div className="group-page-card-detail__info">
-              <div className="group-page-card-detail__info__text">
-                Phân tích và quản lý yêu cầu
-              </div>
-              <div className="group-page-card-detail__info__subtext">
-                489 members
-              </div>
-            </div>
-            <button className="group-page-card-detail__button">Leave</button>
-          </li>
-          <li className="group-page-card-detail">
-            <div className="group-page-card-detail__img">
-              <img
-                src="https://www.facebook.com/images/groups/Null-Header-1640x500-2x.png"
-                alt=""
-              />
-            </div>
-            <div className="group-page-card-detail__info">
-              <div className="group-page-card-detail__info__text">
-                Phân tích và quản lý yêu cầu
-              </div>
-              <div className="group-page-card-detail__info__subtext">
-                489 members
-              </div>
-            </div>
-            <button className="group-page-card-detail__button">Leave</button>
-          </li>
-          <li className="group-page-card-detail">
-            <div className="group-page-card-detail__img">
-              <img
-                src="https://www.facebook.com/images/groups/Null-Header-1640x500-2x.png"
-                alt=""
-              />
-            </div>
-            <div className="group-page-card-detail__info">
-              <div className="group-page-card-detail__info__text">
-                Phân tích và quản lý yêu cầu
-              </div>
-              <div className="group-page-card-detail__info__subtext">
-                489 members
-              </div>
-            </div>
-            <button className="group-page-card-detail__button">Leave</button>
-          </li>
-          <li className="group-page-card-detail">
-            <div className="group-page-card-detail__img">
-              <img
-                src="https://www.facebook.com/images/groups/Null-Header-1640x500-2x.png"
-                alt=""
-              />
-            </div>
-            <div className="group-page-card-detail__info">
-              <div className="group-page-card-detail__info__text">
-                Phân tích và quản lý yêu cầu
-              </div>
-              <div className="group-page-card-detail__info__subtext">
-                489 members
-              </div>
-            </div>
-            <button className="group-page-card-detail__button">Leave</button>
-          </li>
-        </ul>
+        <GroupList setDetail={setDetail} />
       ) : (
         <div className="group-page-home">
           <div className="group-page-home-back">

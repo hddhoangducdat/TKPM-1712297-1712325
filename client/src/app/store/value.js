@@ -36,3 +36,5 @@ export const RENDER_NOTI_ALL = "RENDER_NOTI_ALL";
 export const GET_FRIEND = "GET_FRIEND";
 export const REMOVE_FRIEND_FROM_GROUP = "REMOVE_FRIEND_FROM_GROUP";
 export const ADD_FRIEND_TO_GROUP = "ADD_FRIEND_TO_GROUP";
+export const ADD_GROUP = "ADD_GROUP";
+export const GET_GROUP = "GET_GROUP";

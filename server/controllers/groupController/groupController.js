@@ -59,7 +59,7 @@ const filterObj = (obj, ...allowedFileds) => {
   return newObj;
 };
 
-const createChatDialog = async (req, filePath) => {
+const createChatDialog = async (req, filePath, id) => {
   const member =
     req.body.member instanceof Array ? req.body.member : [req.body.member];
   const chatDialog = new chatBoxModel({
@@ -74,14 +74,14 @@ const createChatDialog = async (req, filePath) => {
   await Promise.all(
     member.map(async (m) => {
       const user = await userModel.findById(m);
-      // console.log(user);
       user.chatBox = [
-        ...user.chatBox,
         {
           id: chatDialog._id,
           name: req.body.groupName,
           avatar: filePath,
+          groupId: id,
         },
+        ...user.chatBox,
       ];
       await user.save();
     })
@@ -98,21 +98,25 @@ exports.createGroupUser = async (req, res, next) => {
     //Upload image
     next();
   } else {
-    const chatId = createChatDialog(req, avatarDefault);
+    const newModel = new groupUserModel(filteredBody);
+
+    const chatId = createChatDialog(req, avatarDefault, newModel._id);
     await chatId.then((docs) => {
-      filteredBody.data = {
+      newModel.data = {
         member,
         chatGroup: docs,
       };
+
+      res.json({
+        id: chatDialog._id,
+        name: req.body.groupName,
+        avatar: avatarDefault,
+        groupId: newModel._id,
+        member: member.length,
+      });
     });
 
-    console.log(filteredBody);
-
-    const newModel = new groupUserModel(filteredBody);
-    await newModel
-      .save()
-      .then((docs) => res.json(docs))
-      .catch((err) => res.status(400).json("Error: " + err));
+    await newModel.save();
   }
 };
 
