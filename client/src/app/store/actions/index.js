@@ -6,3 +6,4 @@ export * from "./file";
 export * from "./status";
 export * from "./noti";
 export * from "./friend";
+export * from "./group";

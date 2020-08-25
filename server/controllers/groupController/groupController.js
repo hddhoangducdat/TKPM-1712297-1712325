@@ -6,10 +6,7 @@ const fs = require("fs");
 const path = require("path");
 const { google } = require("googleapis");
 const OAuth2Data = require("../../../credentials.json");
-const { Types } = require("mongoose");
-const groupRoute = require("../../routers/groupRoute/groupRoute");
-const { resolve } = require("path");
-const { chat } = require("googleapis/build/src/apis/chat");
+
 const { client_secret, client_id, redirect_uris } = OAuth2Data.installed;
 const oAuth2Client = new google.auth.OAuth2(
   client_id,
@@ -31,13 +28,7 @@ fs.readFile(TOKEN_PATH, (err, token) => {
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const filePath = path.join(
-      __dirname,
-      "..",
-      "..",
-      "..",
-      "/client/public/files"
-    );
+    const filePath = path.join(__dirname, "..", "..", "..", "/");
     cb(null, filePath);
   },
   filename: (req, file, cb) => {
@@ -69,42 +60,48 @@ const filterObj = (obj, ...allowedFileds) => {
 };
 
 const createChatDialog = async (req, filePath) => {
+  const member =
+    req.body.member instanceof Array ? req.body.member : [req.body.member];
   const chatDialog = new chatBoxModel({
     message: [],
-    member: [req.body.admin],
+    member,
     name: req.body.groupName,
     isGroup: true,
   });
 
   await chatDialog.save();
 
-  const userAdmin = await userModel.findById(req.body.admin);
-
-  userAdmin.chatBox = [
-    ...userAdmin.chatBox,
-    {
-      id: chatDialog._id,
-      name: req.body.groupName,
-      avatar: filePath,
-    },
-  ];
-
-  await userAdmin.save();
+  await Promise.all(
+    member.map(async (m) => {
+      const user = await userModel.findById(m);
+      // console.log(user);
+      user.chatBox = [
+        ...user.chatBox,
+        {
+          id: chatDialog._id,
+          name: req.body.groupName,
+          avatar: filePath,
+        },
+      ];
+      await user.save();
+    })
+  );
 
   return chatDialog._id;
 };
 
 exports.createGroupUser = async (req, res, next) => {
-  const filteredBody = filterObj(req.body, "groupName", "admin");
+  const member =
+    req.body.member instanceof Array ? req.body.member : [req.body.member];
+  const filteredBody = filterObj(req.body, "groupName", "admin", "member");
   if (req.file !== undefined) {
     //Upload image
-    console.log(req.file.filename);
     next();
   } else {
     const chatId = createChatDialog(req, avatarDefault);
     await chatId.then((docs) => {
       filteredBody.data = {
-        member: [req.body.admin],
+        member,
         chatGroup: docs,
       };
     });
@@ -120,6 +117,8 @@ exports.createGroupUser = async (req, res, next) => {
 };
 
 exports.uploadImageCover = async (req, res) => {
+  const member =
+    req.body.member instanceof Array ? req.body.member : [req.body.member];
   const drive = google.drive({
     version: "v3",
     auth: oAuth2Client,
@@ -145,7 +144,7 @@ exports.uploadImageCover = async (req, res) => {
       const chatId = createChatDialog(req, filteredBody.avatar);
       await chatId.then((docs) => {
         filteredBody.data = {
-          member: [req.body.admin],
+          member,
           chatGroup: docs,
         };
       });

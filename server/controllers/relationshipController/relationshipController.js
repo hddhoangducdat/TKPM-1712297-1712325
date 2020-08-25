@@ -158,21 +158,22 @@ exports.getFriend = async (req, res) => {
     type: "friend",
   });
   const friend2 = await userRelationshipModel.find({
-    userId1: req.params._id,
+    userId2: req.params._id,
     type: "friend",
   });
 
-  // console.log(friend1);
-  // console.log(friend2);
+  console.log(friend1);
+  console.log(friend2);
   let friend = [];
 
   await Promise.all(
     friend1.map(async (f) => {
-      const result = await userModel
+      await userModel
         .findById(f.userId2, "userName avatar")
-        .then(() => {
+        .then((result) => {
+          console.log(result);
+
           friend = [...friend, result];
-          console.log(friend);
         })
         .catch((err) => {});
     })
@@ -180,10 +181,21 @@ exports.getFriend = async (req, res) => {
 
   await Promise.all(
     friend2.map(async (f) => {
-      const result = await userModel.findById(f.userId1, "userName avatar");
-      friend = [...friend, result];
+      await userModel
+        .findById(f.userId2, "userName avatar")
+        .then((result) => {
+          console.log(result);
+          friend = [...friend, result];
+        })
+        .catch((err) => {});
     })
   );
 
-  res.send(friend);
+  console.log(friend);
+
+  res.send(
+    friend.map((f) => {
+      return f._doc;
+    })
+  );
 };

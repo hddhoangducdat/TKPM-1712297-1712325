@@ -12,24 +12,41 @@ import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { useSelector, useDispatch, connect } from "react-redux";
-import { GROUP_OFF, GROUP_SAVE } from "../../store/value";
+import {
+  GROUP_OFF,
+  GROUP_SAVE,
+  REMOVE_FRIEND_FROM_GROUP,
+  ADD_FRIEND_TO_GROUP,
+} from "../../store/value";
 import { ReactComponent as PlusIcon } from "../../asset/img/icon/plus.svg";
 import { ReactComponent as TickIcon } from "../../asset/img/icon/tick1.svg";
 import { ReactComponent as CancleIcon } from "../../asset/img/icon/close.svg";
 
-import { getFriends } from "../../store/actions";
+import { getFriends, createGroup } from "../../store/actions";
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
-const GroupCreate = ({ getFriends }) => {
+const GroupCreate = ({ getFriends, createGroup }) => {
   const [file, setFile] = useState([]);
   const [text, setText] = useState("");
-  const [member, setMember] = useState([]);
+  const [name, setName] = useState("");
+  const { friend } = useSelector((state) => state);
+  const [arr, setArr] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setMember(getFriends());
+    getFriends();
   }, [1]);
+
+  useEffect(() => {
+    setArr(
+      friend.map((f) => {
+        return false;
+      })
+    );
+  }, [friend.length]);
+
+  console.log(arr);
 
   return (
     <div className="middle-blur">
@@ -42,8 +59,19 @@ const GroupCreate = ({ getFriends }) => {
         ></div>
         <div className="post-input">
           <div className="post-input-header">
-            <div className="post-input-header__text">CREATE GROUP</div>
+            <div className="post-input-header__text">
+              <input
+                className="post-group-input-name"
+                type="text"
+                value={name}
+                placeholder="Your group's name"
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
+            </div>
           </div>
+
           <input
             className="post-group-input"
             type="text"
@@ -54,116 +82,64 @@ const GroupCreate = ({ getFriends }) => {
             }}
           />
           <ul className="friend-list">
-            <li className="friend-list-detail">
-              <img
-                src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/54463133_104992784011639_7082721617398202368_o.jpg?_nc_cat=110&_nc_sid=09cbfe&_nc_ohc=mrVqREjJfGUAX8PBmZf&_nc_ht=scontent.fsgn5-3.fna&oh=1f58869b76473ffee3cbaf05a4b381d7&oe=5F688D33"
-                alt=""
-              />
-              <div className="friend-list-detail__text">Hoàng Đức Đạt</div>
-              <div className="friend-list-detail__svg">
-                <a href="#" className="friend-list-detail__svg__tick">
-                  <TickIcon />
-                </a>
-                <a href="#" className="friend-list-detail__svg__close">
-                  <CancleIcon />
-                </a>
-              </div>
-            </li>
-            <li className="friend-list-detail">
-              <img
-                src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/54463133_104992784011639_7082721617398202368_o.jpg?_nc_cat=110&_nc_sid=09cbfe&_nc_ohc=mrVqREjJfGUAX8PBmZf&_nc_ht=scontent.fsgn5-3.fna&oh=1f58869b76473ffee3cbaf05a4b381d7&oe=5F688D33"
-                alt=""
-              />
-              <div className="friend-list-detail__text">Hoàng Đức Đạt</div>
-              <a href="#">
-                <PlusIcon />
-              </a>
-            </li>
-            <li className="friend-list-detail">
-              <img
-                src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/54463133_104992784011639_7082721617398202368_o.jpg?_nc_cat=110&_nc_sid=09cbfe&_nc_ohc=mrVqREjJfGUAX8PBmZf&_nc_ht=scontent.fsgn5-3.fna&oh=1f58869b76473ffee3cbaf05a4b381d7&oe=5F688D33"
-                alt=""
-              />
-              <div className="friend-list-detail__text">Hoàng Đức Đạt</div>
-              <a href="#">
-                <PlusIcon />
-              </a>
-            </li>
-            <li className="friend-list-detail">
-              <img
-                src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/54463133_104992784011639_7082721617398202368_o.jpg?_nc_cat=110&_nc_sid=09cbfe&_nc_ohc=mrVqREjJfGUAX8PBmZf&_nc_ht=scontent.fsgn5-3.fna&oh=1f58869b76473ffee3cbaf05a4b381d7&oe=5F688D33"
-                alt=""
-              />
-              <div className="friend-list-detail__text">Hoàng Đức Đạt</div>
-              <a href="#">
-                <PlusIcon />
-              </a>
-            </li>
-            <li className="friend-list-detail">
-              <img
-                src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/54463133_104992784011639_7082721617398202368_o.jpg?_nc_cat=110&_nc_sid=09cbfe&_nc_ohc=mrVqREjJfGUAX8PBmZf&_nc_ht=scontent.fsgn5-3.fna&oh=1f58869b76473ffee3cbaf05a4b381d7&oe=5F688D33"
-                alt=""
-              />
-              <div className="friend-list-detail__text">Hoàng Đức Đạt</div>
-              <a href="#">
-                <PlusIcon />
-              </a>
-            </li>
-            <li className="friend-list-detail">
-              <img
-                src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/54463133_104992784011639_7082721617398202368_o.jpg?_nc_cat=110&_nc_sid=09cbfe&_nc_ohc=mrVqREjJfGUAX8PBmZf&_nc_ht=scontent.fsgn5-3.fna&oh=1f58869b76473ffee3cbaf05a4b381d7&oe=5F688D33"
-                alt=""
-              />
-              <div className="friend-list-detail__text">Hoàng Đức Đạt</div>
-              <a href="#">
-                <PlusIcon />
-              </a>
-            </li>
-            <li className="friend-list-detail">
-              <img
-                src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/54463133_104992784011639_7082721617398202368_o.jpg?_nc_cat=110&_nc_sid=09cbfe&_nc_ohc=mrVqREjJfGUAX8PBmZf&_nc_ht=scontent.fsgn5-3.fna&oh=1f58869b76473ffee3cbaf05a4b381d7&oe=5F688D33"
-                alt=""
-              />
-              <div className="friend-list-detail__text">Hoàng Đức Đạt</div>
-              <a href="#">
-                <PlusIcon />
-              </a>
-            </li>
-            <li className="friend-list-detail">
-              <img
-                src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/54463133_104992784011639_7082721617398202368_o.jpg?_nc_cat=110&_nc_sid=09cbfe&_nc_ohc=mrVqREjJfGUAX8PBmZf&_nc_ht=scontent.fsgn5-3.fna&oh=1f58869b76473ffee3cbaf05a4b381d7&oe=5F688D33"
-                alt=""
-              />
-              <div className="friend-list-detail__text">Hoàng Đức Đạt</div>
-              <div className="friend-list-detail__svg">
-                <a href="#">
-                  <PlusIcon />
-                </a>
-                <a href="#">
-                  <PlusIcon />
-                </a>
-              </div>
-            </li>
-            <li className="friend-list-detail">
-              <img
-                src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/54463133_104992784011639_7082721617398202368_o.jpg?_nc_cat=110&_nc_sid=09cbfe&_nc_ohc=mrVqREjJfGUAX8PBmZf&_nc_ht=scontent.fsgn5-3.fna&oh=1f58869b76473ffee3cbaf05a4b381d7&oe=5F688D33"
-                alt=""
-              />
-              <div className="friend-list-detail__text">Hoàng Đức Đạt</div>
-              <a href="#">
-                <PlusIcon />
-              </a>
-            </li>
-            <li className="friend-list-detail">
-              <img
-                src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/54463133_104992784011639_7082721617398202368_o.jpg?_nc_cat=110&_nc_sid=09cbfe&_nc_ohc=mrVqREjJfGUAX8PBmZf&_nc_ht=scontent.fsgn5-3.fna&oh=1f58869b76473ffee3cbaf05a4b381d7&oe=5F688D33"
-                alt=""
-              />
-              <div className="friend-list-detail__text">Hoàng Đức Đạt</div>
-              <a href="#">
-                <PlusIcon />
-              </a>
-            </li>
+            {friend instanceof Array ? (
+              friend.map((m, index) => {
+                return (
+                  <li key={index} className="friend-list-detail">
+                    <img src={m.avatar} alt="" />
+                    <div className="friend-list-detail__text">{m.userName}</div>
+                    {arr[index] ? (
+                      <div className="friend-list-detail__svg">
+                        <a href="#" className="friend-list-detail__svg__tick">
+                          <TickIcon />
+                        </a>
+                        <a
+                          href="#"
+                          className="friend-list-detail__svg__close"
+                          onClick={() => {
+                            dispatch({
+                              type: REMOVE_FRIEND_FROM_GROUP,
+                              payload: index,
+                            });
+                            const tmp = arr.map((f, i) => {
+                              if (i === index) {
+                                return false;
+                              } else return f;
+                            });
+                            setArr(tmp);
+                          }}
+                        >
+                          <CancleIcon />
+                        </a>
+                      </div>
+                    ) : (
+                      <div className="friend-list-detail__svg">
+                        <a
+                          href="#"
+                          className="friend-list-detail__svg__plus"
+                          onClick={() => {
+                            dispatch({
+                              type: ADD_FRIEND_TO_GROUP,
+                              payload: index,
+                            });
+                            const tmp = arr.map((f, i) => {
+                              if (i === index) {
+                                return true;
+                              } else return f;
+                            });
+                            setArr(tmp);
+                          }}
+                        >
+                          <PlusIcon />
+                        </a>
+                      </div>
+                    )}
+                  </li>
+                );
+              })
+            ) : (
+              <div></div>
+            )}
           </ul>
           <FilePond
             className="post-input-file"
@@ -180,6 +156,10 @@ const GroupCreate = ({ getFriends }) => {
             href="#"
             className="button post-input-button"
             onClick={() => {
+              const result = friend.filter((f, i) => {
+                return arr[i];
+              });
+              createGroup(result, file[0].file, name);
               dispatch({ type: GROUP_SAVE });
             }}
           >
@@ -191,4 +171,4 @@ const GroupCreate = ({ getFriends }) => {
   );
 };
 
-export default connect(null, { getFriends })(GroupCreate);
+export default connect(null, { getFriends, createGroup })(GroupCreate);

@@ -47,7 +47,7 @@ const Middle = ({ logout, saveNoti }) => {
       socket.emit("disconnect");
       socket.off();
     };
-  }, [ENDPOINT, id]);
+  }, [ENDPOINT]);
 
   useEffect(() => {
     socket.on("receive-noti", (noti) => {

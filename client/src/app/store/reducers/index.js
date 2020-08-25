@@ -6,6 +6,7 @@ import search from "./search";
 import chat from "./chat";
 import status from "./status";
 import noti from "./noti";
+import friend from "./friend";
 
 const createReducer = (asyncReducers) =>
   combineReducers({
@@ -16,6 +17,7 @@ const createReducer = (asyncReducers) =>
     chat,
     status,
     noti,
+    friend,
     ...asyncReducers,
   });
 
