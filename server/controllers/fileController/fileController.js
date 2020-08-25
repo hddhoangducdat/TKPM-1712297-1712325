@@ -36,8 +36,10 @@ const multerStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const ext = file.mimetype.split("/")[1];
+    const newExt =
+      ext === "octet-stream" ? file.originalname.split(".")[1] : ext;
     const filename = file.originalname.split(".")[0];
-    cb(null, `user-${filename}-${Date.now()}.${ext}`);
+    cb(null, `user-${filename}-${Date.now()}.${newExt}`);
   },
 });
 
@@ -58,8 +60,15 @@ exports.uploadFile = async (req, res) => {
     parents: [targetFolderId],
   };
 
+  if (req.file.mimetype.split("/")[1] === "octet-stream") {
+    const ext = req.file.originalname.split(".")[1];
+    req.body.newMimeType = `application/${ext}`;
+  } else {
+    req.body.newMimeType = req.file.mimetype;
+  }
+
   const media = {
-    mimeType: req.file.mimetype,
+    mimeType: req.body.newMimeType,
     body: fs.createReadStream(req.file.path),
   };
 
@@ -123,8 +132,15 @@ exports.uploadFilestoDrive = async (req, res, next) => {
         parents: [targetFolderId],
       };
 
+      if (req.file.mimetype.split("/")[1] === "octet-stream") {
+        const ext = req.file.originalname.split(".")[1];
+        req.body.newMimeType = `application/${ext}`;
+      } else {
+        req.body.newMimeType = req.file.mimetype;
+      }
+
       const media = {
-        mimeType: e.mimetype,
+        mimeType: req.body.newMimeType,
         body: fs.createReadStream(e.path),
       };
 

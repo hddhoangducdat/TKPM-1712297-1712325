@@ -17,6 +17,50 @@ exports.getChatDialog = async (req, res) => {
   });
 };
 
+// chua xem
+exports.newNoti = async (req, res) => {
+  const user = await userModel.findById(req.body.userId);
+  //filter all chatBox but not include chatBoxChange
+  const chatBoxCur = user.chatBox.filter((e) => e.id !== req.params._id);
+  //console.log(chatBoxCur);
+  // find Object chatBox change
+  const chatBoxChange = user.chatBox.filter((e) => e.id === req.params._id)[0];
+  const newChatBox = {
+    id: chatBoxChange.id,
+    name: chatBoxChange.name,
+    avatar: chatBoxChange.avatar,
+    noti: req.body.noti, // gui noti moi nhat
+    seen: false,
+  };
+  user.chatBox = [...chatBoxCur, newChatBox];
+  await user.save();
+  res.json("");
+};
+
+//da xem => Click vao chatDialog
+exports.seenNoti = async (req, res) => {
+  const user = await userModel.findById(req.body.userId);
+  //console.log(user);
+  //filter all chatBox but not include chatBoxChange
+  const chatBoxCur = user.chatBox.filter((e) => e.id !== req.params._id);
+  //console.log(chatBoxCur);
+  // find Object chatBox change
+  const chatBoxChange = user.chatBox.filter((e) => e.id === req.params._id)[0];
+  const newChatBox = {
+    id: chatBoxChange.id,
+    name: chatBoxChange.name,
+    avatar: chatBoxChange.avatar,
+    noti: chatBoxChange.noti,
+    seen: true,
+  };
+
+  user.chatBox = [...chatBoxCur, newChatBox];
+  await user
+    .save()
+    .then((docs) => res.json(docs))
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 exports.createChatDialog = async (req, res) => {
   const user1 = await userModel.findById(req.body.id1);
   const user2 = await userModel.findById(req.body.id2);
@@ -33,6 +77,8 @@ exports.createChatDialog = async (req, res) => {
       id: chatDialog._id,
       name: user2.userName,
       avatar: user2.avatar,
+      seen: false,
+      noti: "",
     },
   ];
 
@@ -42,6 +88,8 @@ exports.createChatDialog = async (req, res) => {
       id: chatDialog._id,
       name: user1.userName,
       avatar: user1.avatar,
+      seen: false,
+      noti: "",
     },
   ];
 
