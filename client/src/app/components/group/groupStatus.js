@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { ReactComponent as PhotoIcon } from "../../asset/img/icon/photopost.svg";
 import { ReactComponent as EmojiIcon } from "../../asset/img/icon/emoji.svg";
@@ -9,36 +9,23 @@ import { ReactComponent as SaveIcon } from "../../asset/img/icon/save.svg";
 import { ReactComponent as ShareIcon } from "../../asset/img/icon/share.svg";
 import { ReactComponent as LikeIcon } from "../../asset/img/icon/heart.svg";
 import { ReactComponent as CommentIcon } from "../../asset/img/icon/comment.svg";
-import { useDispatch, useSelector, connect } from "react-redux";
-import { POST_ON } from "../../store/value";
-
+import { useSelector, useDispatch, connect } from "react-redux";
+import { POST_ON, EMPTY_STATUS } from "../../store/value";
 import { getStatus } from "../../store/actions";
 
-const Home = ({ getStatus }) => {
-  const dispatch = useDispatch();
+const GroupStatus = ({ getStatus }) => {
   const { avatar, status } = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
   const listStatus = useSelector((state) => state.status);
-
-  useEffect(() => {
-    if (
-      status instanceof Array &&
-      status.length > 0 &&
-      status.length !== listStatus.length
-    ) {
-      status.reverse().map((s) => {
-        const tmp = s.split("-");
-        getStatus(tmp.length > 1 ? tmp[2] : tmp[0]);
-      });
-    }
-  }, [status]);
+  const { id } = useSelector((state) => state.group);
 
   return (
-    <div className="home-page">
-      <div className="home-page-post">
+    <div>
+      <div className="home-page-post group-page-home-main__resize">
         <div className="home-page-post__top">
           <img src={avatar} alt="" />
           <button onClick={() => dispatch({ type: POST_ON })}>
-            Tell your friends what are you up to
+            Post something on group
           </button>
         </div>
 
@@ -63,17 +50,16 @@ const Home = ({ getStatus }) => {
           </div>
         </div>
       </div>
-      <ul className="home-page-list">
+      <ul className="home-page-list group-page-home-main__resize">
         {listStatus.map((s) => {
+          if (s.group.id !== id) return <div></div>;
           return (
             <li className="home-page-list-status">
               <div className="home-page-list-status__header">
                 <img src={s.avatar} alt="" />
                 <div className="home-page-list-status__header__info">
                   <div className="home-page-list-status__header__info__name">
-                    {s.group.id !== "none"
-                      ? s.userName + " >>> " + s.group.name
-                      : s.userName}
+                    {s.userName}
                   </div>
 
                   <p className="home-page-list-status__header__info__time">
@@ -88,6 +74,17 @@ const Home = ({ getStatus }) => {
                 </a>
               </div>
               <div className="home-page-list-status__contain">
+                {/* <div>
+                  Jimmy Butler (28 PTS) & Goran Dragic (24 PTS) come up clutch
+                  late to propel the Miami Heat to a 1-0 series lead!
+                </div>
+                <br />
+                <div> #NBAPlayoffs</div>
+                <br />
+                <div>Bam Adebayo: 17 PTS, 10 REB, 6 AST </div>
+                <div> Tyler Herro: 15 PTS, 4 AST</div>
+                <div> T.J. Warren: 22 PTS, 8 REB</div>
+                <div>Malcolm Brogdon: 22 PTS, 10 AST</div> */}
                 {s.text === "" ? (
                   <div></div>
                 ) : (
@@ -241,7 +238,7 @@ const Home = ({ getStatus }) => {
             />
             <div className="home-page-list-status__header__info">
               <div className="home-page-list-status__header__info__name">
-                {"Hoàng Đức Đạt >>> NBA"}
+                {"Hoàng Đức Đạt"}
               </div>
 
               <p className="home-page-list-status__header__info__time">
@@ -395,10 +392,11 @@ const Home = ({ getStatus }) => {
               </div>
             </div>
           </div>
-        </li> */}
+        </li>
+    */}
       </ul>
     </div>
   );
 };
 
-export default connect(null, { getStatus })(Home);
+export default connect(null, { getStatus })(GroupStatus);

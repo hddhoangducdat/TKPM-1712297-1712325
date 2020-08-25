@@ -13,14 +13,15 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { useSelector, useDispatch, connect } from "react-redux";
 import { POST_SAVE, POST_OFF, GROUP_OFF, GROUP_SAVE } from "../../store/value";
-import { postStatus } from "../../store/actions";
+import { postStatus, postStatusGroup } from "../../store/actions";
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
-const PostForm = ({ postStatus }) => {
+const PostForm = ({ postStatus, postStatusGroup }) => {
   const [file, setFile] = useState([]);
   const [text, setText] = useState("");
   const dispatch = useDispatch();
+  const { group } = useSelector((state) => state);
 
   return (
     <div className="middle-blur">
@@ -61,7 +62,9 @@ const PostForm = ({ postStatus }) => {
             href="#"
             className="button post-input-button"
             onClick={() => {
-              postStatus(text, file);
+              if (!group) {
+                postStatus(text, file);
+              } else postStatusGroup(group, text, file);
               dispatch({ type: POST_SAVE });
             }}
           >
@@ -73,4 +76,4 @@ const PostForm = ({ postStatus }) => {
   );
 };
 
-export default connect(null, { postStatus })(PostForm);
+export default connect(null, { postStatusGroup, postStatus })(PostForm);

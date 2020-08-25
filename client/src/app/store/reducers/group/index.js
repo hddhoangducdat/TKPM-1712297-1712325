@@ -1,12 +1,12 @@
-import { ADD_GROUP, GET_GROUP } from "../../value";
+import { GET_GROUP_DETAIL, REMOVE_GROUP_DETAIL } from "../../value";
 
-export default (state = [], action) => {
+export default (state = false, action) => {
   switch (action.type) {
-    case GET_GROUP:
+    case GET_GROUP_DETAIL:
       return action.payload;
 
-    case ADD_GROUP:
-      return [action.payload, ...state];
+    case REMOVE_GROUP_DETAIL:
+      return false;
 
     default:
       return state;

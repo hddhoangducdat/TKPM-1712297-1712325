@@ -8,6 +8,11 @@ const chatBoxModel = new mongoose.Schema({
   avatar: String,
   seen: Boolean,
   noti: String,
+  member: {
+    type: Number,
+    default: 1,
+  },
+  groupId: { type: String, default: "none" },
 });
 
 const userSchema = new mongoose.Schema({

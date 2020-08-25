@@ -18,6 +18,7 @@ const notiRoute = require("./server/routers/notiRoute/notiRoute");
 const fileRoute = require("./server/routers/fileRoute/fileRoute");
 const deadlineRoute = require("./server/routers/userRoute/deadlineRoute");
 const groupRoute = require("./server/routers/groupRoute/groupRoute");
+const messageRoute = require("./server/routers/chatRoute/messageRoute");
 
 const app = express();
 const server = http.createServer(app);
@@ -53,6 +54,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("send-noti", (noti) => {
+    console.log(noti);
     io.to(`noti-${noti.to}`).emit("receive-noti", noti);
   });
 
@@ -102,6 +104,7 @@ app.use("/chat", chatRoute);
 app.use("/file", fileRoute);
 app.use("/status", statusRoute);
 app.use("/noti", notiRoute);
+app.use("/message", messageRoute);
 // app.use("/file", fileRoute);w
 
 app.use("/deadline", deadlineRoute);

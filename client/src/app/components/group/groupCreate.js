@@ -159,7 +159,11 @@ const GroupCreate = ({ getFriends, createGroup }) => {
               const result = friend.filter((f, i) => {
                 return arr[i];
               });
-              createGroup(result, file[0].file, name);
+              createGroup(
+                result,
+                file.length === 0 ? false : file[0].file,
+                name
+              );
               dispatch({ type: GROUP_SAVE });
             }}
           >

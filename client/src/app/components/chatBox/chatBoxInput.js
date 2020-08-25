@@ -21,8 +21,8 @@ import { useSelector, useDispatch, connect } from "react-redux";
 let socket;
 
 const ChatBoxInput = ({ id, saveMessage }) => {
-  const [fileRender, setFileRender] = useState(<div></div>);
   const userId = useSelector((state) => state.auth.id);
+  const { avatar, userName } = useSelector((state) => state.auth.user);
   const [chat, setChat] = React.useState("");
   const ENDPOINT = "localhost:5000";
   const dispatch = useDispatch();
@@ -31,12 +31,16 @@ const ChatBoxInput = ({ id, saveMessage }) => {
     e.preventDefault();
     if (chat !== "") {
       const messageObj = {
+        avatar,
+        userName,
         text: chat,
         from: userId,
         type: "text",
       };
 
       socket.emit("send-message", { id, messageObj }, () => setChat(""));
+
+      saveMessage(id, messageObj);
     }
   };
 
@@ -56,7 +60,6 @@ const ChatBoxInput = ({ id, saveMessage }) => {
   useEffect(() => {
     socket.on("receive-message", (messageObj) => {
       dispatch({ type: RENDER_MESSAGE, payload: messageObj });
-      saveMessage(id, messageObj);
     });
   }, [id]);
 

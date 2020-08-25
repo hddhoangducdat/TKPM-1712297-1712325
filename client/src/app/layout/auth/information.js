@@ -75,17 +75,21 @@ const Information = ({ handleSubmit }) => {
     >
       <div className="content box style2">
         <header>
-          <h2>Please give us some of your Information</h2>
+          <h2 className="input-information">
+            Please give us some of your Information
+          </h2>
         </header>
 
         <form onSubmit={handleSubmit} className="form-action">
           <Field
+            className="input-information"
             name="fullName"
             component="input"
             placeholder="Full Name"
             type="text"
           ></Field>
           <Field
+            className="input-information"
             name="phoneNumber"
             component="input"
             placeholder="Phone Number"

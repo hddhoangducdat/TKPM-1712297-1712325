@@ -3,8 +3,10 @@ const userModel = require("../../models/userModel");
 const messageModel = require("../../models/messageModel");
 
 exports.saveMessge = async (req, res) => {
+  console.log(req.body);
   let chatBox = await chatBoxModel.findById(req.body.id);
   chatBox.message = [...chatBox.message, req.body.message];
+  console.log(chatBox);
   await chatBox.save();
 };
 

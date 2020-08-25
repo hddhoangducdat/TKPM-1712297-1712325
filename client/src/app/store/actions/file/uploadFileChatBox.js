@@ -2,25 +2,24 @@ import axios from "../../../api/server";
 import { saveFileChatBox } from "../../actions";
 
 export const uploadFileChatBox = (files) => async (dispatch, getState) => {
-  const formData = new FormData();
-  formData.append("userId", getState().auth.id);
+  files.forEach((f) => {
+    const formData = new FormData();
+    formData.append("userId", getState().auth.id);
+    formData.append("file", f);
 
-  files.forEach((f) => formData.append("files", f));
-
-  axios({
-    method: "post",
-    url: "/file/uploadFiles",
-    data: formData,
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  })
-    .then((response) => {
-      response.data.map((file) => {
-        dispatch(saveFileChatBox(file._id));
-      });
+    axios({
+      method: "post",
+      url: "/file",
+      data: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((response) => {
+        dispatch(saveFileChatBox(response.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 };

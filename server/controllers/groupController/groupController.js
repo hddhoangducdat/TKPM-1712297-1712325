@@ -108,7 +108,7 @@ exports.createGroupUser = async (req, res, next) => {
       };
 
       res.json({
-        id: chatDialog._id,
+        id: docs,
         name: req.body.groupName,
         avatar: avatarDefault,
         groupId: newModel._id,
@@ -142,24 +142,27 @@ exports.uploadImageCover = async (req, res) => {
       //delete the file image
       fs.unlinkSync(req.file.path);
       // update
-      const filteredBody = filterObj(req.body, "groupName", "admin");
+      const filteredBody = filterObj(req.body, "groupName", "admin", "member");
       filteredBody.avatar = `https://drive.google.com/uc?id=${file.data.id}&export=download`;
+      const newModel = new groupUserModel(filteredBody);
 
-      const chatId = createChatDialog(req, filteredBody.avatar);
+      const chatId = createChatDialog(req, filteredBody.avatar, newModel._id);
       await chatId.then((docs) => {
-        filteredBody.data = {
+        newModel.data = {
           member,
           chatGroup: docs,
         };
+
+        res.json({
+          id: docs,
+          name: req.body.groupName,
+          avatar: filteredBody.avatar,
+          groupId: newModel._id,
+          member: member.length,
+        });
       });
 
-      console.log(filteredBody);
-
-      const newModel = new groupUserModel(filteredBody);
-      await newModel
-        .save()
-        .then((docs) => res.json(docs))
-        .catch((err) => res.status(400).json("Error: " + err));
+      await newModel.save();
     }
   );
 };

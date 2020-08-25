@@ -10,3 +10,19 @@ export const createPost = (text, url) => async (dispatch, getState) => {
   console.log(response.data);
   dispatch({ type: SAVE_STATUS, payload: response.data });
 };
+
+export const createPostGroup = (group, text, url) => async (
+  dispatch,
+  getState
+) => {
+  console.log(group);
+  const response = await axios.post(
+    `/status/post/group/${getState().auth.id}`,
+    {
+      group,
+      text,
+      url,
+    }
+  );
+  dispatch({ type: SAVE_STATUS, payload: response.data });
+};

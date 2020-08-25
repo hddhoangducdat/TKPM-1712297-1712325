@@ -8,6 +8,13 @@ const statusSchema = new mongoose.Schema({
   userName: String,
   like: Array,
   comment: Array,
+  group: {
+    id: {
+      type: String,
+      default: "none",
+    },
+    name: String,
+  },
 });
 
 module.exports = mongoose.model("Status", statusSchema);

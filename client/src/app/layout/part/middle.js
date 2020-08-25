@@ -121,16 +121,7 @@ const Middle = ({ logout, saveNoti }) => {
         </div>
       </NavBar>
 
-      <div className="main-container">
-        {/* <Home /> */}
-        {/* <Notification /> */}
-        {/* <Group /> */}
-        {/* <Calendar /> */}
-
-        {render}
-      </div>
-
-      {/* <div className="main-footer"></div> */}
+      <div className="main-container">{render}</div>
     </div>
   );
 };

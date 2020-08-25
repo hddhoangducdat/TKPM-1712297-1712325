@@ -9,7 +9,7 @@ import ChatBoxInput from "../../components/chatBox/chatBoxInput";
 import { useSelector } from "react-redux";
 
 const MessengerChatBox = ({ setChatBox, chatBox }) => {
-  const { message } = useSelector((state) => state.chat);
+  const { message, isGroup } = useSelector((state) => state.chat);
   const { id } = useSelector((state) => state.auth);
 
   return (
@@ -17,6 +17,7 @@ const MessengerChatBox = ({ setChatBox, chatBox }) => {
       <div className="messenger-chatbox-nav">
         <div className="messenger-chatbox-nav-info">
           <img src={chatBox.avatar} alt="" />
+
           <div className="messenger-chatbox-nav-info__name">{chatBox.name}</div>
 
           <div className="messenger-chatbox-nav-info__icon">
@@ -69,9 +70,16 @@ const MessengerChatBox = ({ setChatBox, chatBox }) => {
                     className="messenger-chatbox-contain-list__left"
                   >
                     <div className="messenger-chatbox-contain-list__left__ava">
-                      <img src={chatBox.avatar} alt="" />
+                      <img src={m.avatar} alt="" />
                     </div>
                     <div className="messenger-chatbox-contain-list__left__detail">
+                      {isGroup ? (
+                        <div className="messenger-chatbox-contain-list__left__detail__name">
+                          {m.userName}
+                        </div>
+                      ) : (
+                        <div></div>
+                      )}
                       <div className="messenger-chatbox-contain-list__left__text">
                         {m.text}
                       </div>

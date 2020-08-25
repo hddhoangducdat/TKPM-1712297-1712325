@@ -801,6 +801,10 @@ input:focus {
           height: 21px;
           fill: #0084ff; }
 
+.messenger-chatbox-contain-list__left__detail__name {
+  color: #8a8d91;
+  font-size: 12px; }
+
 .nav {
   width: 100%;
   height: 100%;
@@ -1258,7 +1262,7 @@ input:focus {
     fill: #1877f2; }
   .group-page-home-header__img {
     position: relative;
-    height: 348px;
+    height: 280px;
     margin-bottom: 1.2rem; }
     .group-page-home-header__img img {
       position: absolute;
@@ -1763,6 +1767,9 @@ button.powerful:active,
   background-size: cover; }
   #banner button {
     width: 100%; }
+
+.input-information {
+  width: 480px; }
 
 #wrapper #dialog #form {
   max-width: 300px; }

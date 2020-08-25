@@ -6,7 +6,9 @@ export const createGroup = (friend, file, name) => async (
   getState
 ) => {
   const formData = new FormData();
-  formData.append("imageCover", file);
+  if (file) {
+    formData.append("imageCover", file);
+  }
   formData.append("groupName", name);
   formData.append("admin", getState().auth.id);
   friend.map((f) => {
