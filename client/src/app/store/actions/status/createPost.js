@@ -25,7 +25,7 @@ export const createPostGroup = (group, text, url) => async (
     }
   );
   dispatch({ type: SAVE_STATUS, payload: response.data });
-  getState().group.data.member((g) => {
+  getState().group.data.member.map((g) => {
     const noti = {
       from: getState().auth.id,
       to: g,
