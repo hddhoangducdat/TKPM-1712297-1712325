@@ -34,6 +34,6 @@ export const createPostGroup = (group, text, url) => async (
       type: "add-post-group",
     };
     dispatch(saveNoti(noti));
-    getState().socket.emit("send-noti", noti);
+    getState().auth.socket.emit("send-noti", noti);
   });
 };

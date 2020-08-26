@@ -1,5 +1,6 @@
 import axios from "../../../api/server";
 import { ADD_GROUP } from "../../value";
+import { saveNoti } from "../noti";
 
 export const createGroup = (friend, file, name) => async (
   dispatch,
@@ -34,6 +35,7 @@ export const createGroup = (friend, file, name) => async (
         avatar: getState().auth.user.avatar,
         type: "add-group",
       };
+      dispatch(saveNoti(noti));
       getState().auth.socket.emit("send-noti", noti);
     });
   });
