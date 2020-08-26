@@ -9,7 +9,7 @@ const AddFriend = ({ index, user, addFriend }) => {
     <a
       className="search-panel-dropdown-detail__icon__addfriend"
       href="#"
-      // onClick={() => addFriend(user, index)}
+      onClick={() => addFriend(user, index)}
     >
       <AddFriendIcon />
     </a>
