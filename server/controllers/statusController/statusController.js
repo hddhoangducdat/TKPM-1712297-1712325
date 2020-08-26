@@ -13,21 +13,19 @@ exports.createStatusGroup = async (req, res) => {
     from: user._id,
     image: req.body.url,
     group: {
-      id: req.body.group.id,
-      name: req.body.group.name,
+      id: req.body.group._id,
+      name: req.body.group.groupName,
     },
     like: [],
     comment: [],
   });
 
-  const group = await groupModel.findOne({
-    _id: req.body.group.groupId,
-  });
+  const group = await groupModel.findById(req.body.group._id);
 
   group.data.member.forEach(async (member) => {
     const userMember = await userModel.findById(member);
     userMember.status = [
-      "group-" + req.body.group.groupId + "-" + status._id,
+      "group-" + req.body.group._id + "-" + status._id,
       ...userMember.status,
     ];
     await userMember.save();

@@ -17,7 +17,7 @@ const GroupStatus = ({ getStatus }) => {
   const { avatar, status } = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const listStatus = useSelector((state) => state.status);
-  const { id } = useSelector((state) => state.group);
+  const { _id } = useSelector((state) => state.group);
 
   return (
     <div>
@@ -52,7 +52,7 @@ const GroupStatus = ({ getStatus }) => {
       </div>
       <ul className="home-page-list group-page-home-main__resize">
         {listStatus.map((s) => {
-          if (s.group.id !== id) return <div></div>;
+          if (s.group.id !== _id) return <div></div>;
           return (
             <li className="home-page-list-status">
               <div className="home-page-list-status__header">

@@ -35,7 +35,7 @@ const multerStorage = multer.diskStorage({
     cb(null, filePath);
   },
   filename: (req, file, cb) => {
-    const ext = file.mimetype.split("/")[1];
+    const ext = file.originalname.split(".")[1];
     const newExt =
       ext === "octet-stream" ? file.originalname.split(".")[1] : ext;
     const filename = file.originalname.split(".")[0];

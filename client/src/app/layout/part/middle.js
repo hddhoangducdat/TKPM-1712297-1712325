@@ -51,9 +51,7 @@ const Middle = ({ logout, saveNoti }) => {
 
   useEffect(() => {
     socket.on("receive-noti", (noti) => {
-      console.log(noti);
       dispatch({ type: RENDER_NOTI, payload: noti });
-      saveNoti(noti);
     });
   }, [id]);
 

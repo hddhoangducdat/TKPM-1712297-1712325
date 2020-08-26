@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useEffect } from "react";
 
 import { ReactComponent as CloseIcon } from "../../asset/img/icon/close.svg";
 import { ReactComponent as PhoneIcon } from "../../asset/img/icon/phone.svg";
@@ -7,10 +7,20 @@ import { ReactComponent as VideoCallIcon } from "../../asset/img/icon/video-call
 import { ReactComponent as DocumentIcon } from "../../asset/img/icon/document.svg";
 import ChatBoxInput from "../../components/chatBox/chatBoxInput";
 import { useSelector } from "react-redux";
+import { $CombinedState } from "redux";
 
 const MessengerChatBox = ({ setChatBox, chatBox }) => {
   const { message, isGroup } = useSelector((state) => state.chat);
   const { id } = useSelector((state) => state.auth);
+
+  // useEffect(() => {
+  //   // window.scrollTo(
+  //   //   0,
+  //   //   document.querySelector(".scrollingContainer").scrollHeight
+  //   // );
+  //   let scrollEle = document.querySelector(".scrollingContainer");
+  //   scrollEle.scrollTo(0, scrollEle.scrollHeight);
+  // }, []);
 
   return (
     <div className="messenger-chatbox">
@@ -49,7 +59,7 @@ const MessengerChatBox = ({ setChatBox, chatBox }) => {
         </div>
       </div>
       <div className="messenger-chatbox-contain">
-        <ul className="messenger-chatbox-contain-list">
+        <ul className="messenger-chatbox-contain-list scrollingContainer">
           {message.map((m, index) => {
             if (m.type === "text") {
               if (m.from === id) {

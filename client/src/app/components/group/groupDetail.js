@@ -5,10 +5,12 @@ import GroupStatus from "./groupStatus";
 
 import { ReactComponent as BackIcon } from "../../asset/img/icon/back.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { REMOVE_GROUP_DETAIL } from "../../store/value";
+import { REMOVE_GROUP_DETAIL, DEADLINE_ON } from "../../store/value";
+import nested from "../../utils/nested";
 
 const GroupDetail = ({ setDetail }) => {
   const { group } = useSelector((state) => state);
+  const { id } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   return (
@@ -31,16 +33,31 @@ const GroupDetail = ({ setDetail }) => {
         <div className="group-page-home-header__info">
           <div className="group-page-home-header-info__contain">
             <div className="group-page-home-header__info__text">
-              {group.name}
+              {group.groupName}
             </div>
             <div className="group-page-home-header__info__subtext">
-              {group.member}
-              134 members
+              {nested(group.data, "member") ? group.data.member.length : 0}{" "}
+              members
             </div>
           </div>
-          <button className="group-page-home-header__info__button">
-            + invite
-          </button>
+          <div className="group-page-home-header__info__right">
+            {id === group.admin ? (
+              <button
+                className="group-page-home-header__info__button group-page-home-header__info__button__red"
+                onClick={() => {
+                  dispatch({ type: DEADLINE_ON });
+                }}
+              >
+                + deadline
+              </button>
+            ) : (
+              <div />
+            )}
+
+            <button className="group-page-home-header__info__button">
+              + invite
+            </button>
+          </div>
         </div>
       </div>
       <div className="group-page-home-main">

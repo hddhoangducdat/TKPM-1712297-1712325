@@ -1,11 +1,8 @@
 import axios from "../../../api/server";
-import { ADD_GROUP } from "../../value";
+import { GET_GROUP_DETAIL } from "../../value";
 
-export const getGroup = () => async (dispatch, getState) => {
-  await Promise.all(
-    getState.auth.user.group(async (g) => {
-      const response = axios.get(`/group/get/${g.id}`);
-      dispatch({ type: ADD_GROUP, payload: response.data });
-    })
-  );
+export const getGroup = (g) => async (dispatch, getState) => {
+  console.log(g);
+  const response = await axios.get(`/group/get/${g.groupId}`);
+  dispatch({ type: GET_GROUP_DETAIL, payload: response.data });
 };

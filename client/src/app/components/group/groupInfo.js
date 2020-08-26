@@ -1,11 +1,86 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { getDeadline } from "../../store/actions";
 
 import { ReactComponent as TeamIcon } from "../../asset/img/icon/team.svg";
 import { ReactComponent as EyeIcon } from "../../asset/img/icon/eye.svg";
 import { ReactComponent as LockIcon } from "../../asset/img/icon/lock.svg";
 import { ReactComponent as FileIcon } from "../../asset/img/icon/file.svg";
+import { connect, useSelector, useDispatch } from "react-redux";
+import nested from "../../utils/nested";
+import { DEADLINE_SUBMIT_ON } from "../../store/value";
 
-const GroupInfo = () => {
+const GroupInfo = ({ getDeadline }) => {
+  const { deadline, group, auth } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (group !== false) {
+      getDeadline();
+    }
+  }, [group]);
+
+  // const countDown = (countDownDate) => {
+  //   // Get today's date and time
+  //   var now = new Date().getTime();
+
+  //   // Find the distance between now and the count down date
+  //   var distance = countDownDate - now;
+
+  //   // Time calculations for days, hours, minutes and seconds
+  //   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  //   var hours = Math.floor(
+  //     (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  //   );
+  //   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  //   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  //   // Display the result in the element with id="demo"
+  //   document.getElementById("demo").innerHTML =
+  //     days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+  //   // If the count down is finished, write some text
+  //   if (distance < 0) {
+  //     clearInterval(x);
+  //     document.getElementById("demo").innerHTML = "EXPIRED";
+  //   }
+  // };
+
+  const ktra = (files) => {
+    if (!files) return false;
+    const file = files.filter((f) => {
+      return f.from === auth.id;
+    });
+    if (file.length > 0) {
+      return file[0];
+    } else return false;
+  };
+
+  const RenderTH = ({ d }) => {
+    const ok = ktra(d.files);
+
+    return ok ? (
+      <button className="group-page-home-main-right__deadline__info__done">
+        <a href={ok.fileUrl}>
+          <FileIcon />
+        </a>
+        <div>{ok.fileName}</div>
+      </button>
+    ) : new Date(d.timeEnd).getTime() < Date.now() ? (
+      <button className="group-page-home-main-right__deadline__info__cant">
+        you failed
+      </button>
+    ) : (
+      <button
+        className="group-page-home-main-right__deadline__info__can"
+        onClick={() => {
+          dispatch({ type: DEADLINE_SUBMIT_ON, payload: d._id });
+        }}
+      >
+        submit
+      </button>
+    );
+  };
+
   return (
     <div className="group-page-home-main-right">
       <div className="group-page-home-main-right__introduce group-page-home-decorate">
@@ -96,7 +171,49 @@ const GroupInfo = () => {
       </div>
 
       <ul className="group-page-home-main-right__deadline">
-        <li className="group-page-home-decorate">
+        {deadline instanceof Array ? (
+          deadline.map((d) => {
+            return (
+              <li className="group-page-home-decorate">
+                <div className="group-page-home-main-right__introduce__title">
+                  {d.title}
+                </div>
+                <div className="group-page-home-main-right__deadline__info">
+                  <div>
+                    Deadline:{" "}
+                    {new Date(d.timeEnd).getDate() +
+                      "/" +
+                      (new Date(d.timeEnd).getMonth() + 1) +
+                      "/" +
+                      new Date(d.timeEnd).getFullYear()}
+                  </div>
+                  <div>Description: {d.description}</div>
+                  {d.fileUrl !== "none" ? (
+                    <div className="group-page-home-main-right__deadline__info__image">
+                      <a href={d.fileUrl}>
+                        <FileIcon />
+                      </a>
+                      <span>{d.fileName}</span>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
+                  {group.admin === auth.id ? (
+                    <button className="group-page-home-main-right__deadline__info__can">
+                      {d.files.length} submit
+                    </button>
+                  ) : (
+                    <RenderTH d={d} />
+                  )}
+                </div>
+              </li>
+            );
+          })
+        ) : (
+          <div />
+        )}
+        {/* <li className="group-page-home-decorate">
           <div className="group-page-home-main-right__introduce__title">
             #5 Deadline: Java App
           </div>
@@ -160,10 +277,10 @@ const GroupInfo = () => {
               <div>1712325.zip</div>
             </button>
           </div>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
 };
 
-export default GroupInfo;
+export default connect(null, { getDeadline })(GroupInfo);

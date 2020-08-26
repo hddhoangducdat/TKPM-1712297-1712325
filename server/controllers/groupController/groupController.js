@@ -32,7 +32,7 @@ const multerStorage = multer.diskStorage({
     cb(null, filePath);
   },
   filename: (req, file, cb) => {
-    const ext = file.mimetype.split("/")[1];
+    const ext = file.originalname.split(".")[1];
     const filename = file.originalname.split(".")[0];
     cb(null, `group-${filename}-${Date.now()}.${ext}`);
   },
@@ -207,4 +207,9 @@ exports.addMember = async (req, res) => {
     // khong phai admin
     res.status(400).json("");
   }
+};
+
+exports.getGroup = async (req, res) => {
+  const result = await groupUserModel.findById(req.params._id);
+  res.send(result);
 };

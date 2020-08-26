@@ -8,10 +8,12 @@ import status from "./status";
 import noti from "./noti";
 import friend from "./friend";
 import group from "./group";
+import deadline from "./deadline";
 
 const createReducer = (asyncReducers) =>
   combineReducers({
     form: formReducer,
+    deadline,
     group,
     utils,
     auth,

@@ -912,6 +912,9 @@ input:focus {
           height: 20px;
           fill: #ddb917; }
 
+.deadline-label {
+  padding: 0px 8px; }
+
 .home-page-list li {
   width: 100%;
   background-color: #ffffff;
@@ -974,7 +977,7 @@ input:focus {
     display: block;
     max-width: 100%;
     line-height: 1.5;
-    padding: 15px 15px 30px;
+    padding: 15px 15px 0px;
     border: none;
     font-size: 15px;
     color: #050505;
@@ -1286,14 +1289,20 @@ input:focus {
     .group-page-home-header__info__subtext {
       font-size: 17px;
       color: #65676b; }
-    .group-page-home-header__info__button {
+    .group-page-home-header__info__right {
       right: 16px;
       position: absolute;
+      display: inline-flex; }
+    .group-page-home-header__info__button {
       background-color: #1877f2;
       text-transform: none;
       border-radius: 13px; }
       .group-page-home-header__info__button:hover {
-        background-color: #1877f2; }
+        background-color: #1876f294; }
+      .group-page-home-header__info__button__red {
+        background-color: #ff0000; }
+        .group-page-home-header__info__button__red:hover {
+          background-color: #ff0000a6; }
   .group-page-home-decorate {
     padding: 8px 20px;
     color: #050505;
@@ -1363,6 +1372,7 @@ input:focus {
               width: 100%;
               padding: 0.2rem 0.8rem;
               word-break: break-all;
+              text-overflow: ellipsis;
               font-size: 15px; }
             .group-page-home-main-right__share__list__file img {
               border-radius: 10px;

@@ -132,15 +132,26 @@
         color: #65676b;
       }
 
-      &__button {
+      &__right {
         right: 16px;
         position: absolute;
+        display: inline-flex;
+      }
+
+      &__button {
         background-color: #1877f2;
         text-transform: none;
         border-radius: 13px;
-
         &:hover {
-          background-color: #1877f2;
+          background-color: #1876f294;
+        }
+
+        &__red {
+          background-color: #ff0000;
+
+          &:hover {
+            background-color: #ff0000a6;
+          }
         }
       }
     }
@@ -246,7 +257,7 @@
               width: 100%;
               padding: 0.2rem 0.8rem;
               word-break: break-all;
-              // text-overflow: ellipsis;
+              text-overflow: ellipsis;
               font-size: 15px;
             }
 

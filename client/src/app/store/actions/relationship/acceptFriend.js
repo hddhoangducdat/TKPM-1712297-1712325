@@ -1,5 +1,6 @@
 import axios from "../../../api/server";
 import { SEARCH_RELATIONSHIP } from "../../value";
+import { saveNoti } from "../../actions";
 
 export const acceptFriend = (user, index) => async (dispatch, getState) => {
   await axios.patch(`/relationship/acceptRequest`, {
@@ -22,6 +23,7 @@ export const acceptFriend = (user, index) => async (dispatch, getState) => {
     avatar: getState().auth.user.avatar,
     type: "accept",
   };
+  dispatch(saveNoti(noti));
   getState().auth.socket.emit("send-noti", noti);
   // dispatch({type: UPDATE_NOTI_ACCEPT, payload: })
 };

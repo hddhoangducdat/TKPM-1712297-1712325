@@ -93,7 +93,7 @@ const Home = ({ getStatus }) => {
                 ) : (
                   <textarea
                     disabled={true}
-                    rows={s.text.split("\n").length - 1}
+                    rows={s.text.split("\n").length}
                     className="home-page-list-status__contain_textarea"
                     value={s.text}
                   />

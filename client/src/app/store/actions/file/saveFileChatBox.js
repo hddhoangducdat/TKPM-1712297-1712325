@@ -5,23 +5,32 @@ import { saveMessage } from "../../actions";
 // import socket from "../../reducers/chat/socket";
 
 export const saveFileChatBox = (file) => async (dispatch, getState) => {
+  console.log(file);
   // const ENDPOINT = "localhost:5000";
   // let socket;
+  const arr = file.fileName.split(".");
 
-  const response = await axios.get(`file/${file._id}`);
-  console.log(response.data);
   const messageObj = {
-    type: response.data.type,
-    text: response.data.fileName,
-    from: response.data.userId,
-    url: response.data.fileUrl,
+    type:
+      arr[arr.length - 1] === "jpeg"
+        ? "picture"
+        : arr[arr.length - 1] === "jpg"
+        ? "picture"
+        : arr[arr.length - 1] === "png"
+        ? "picture"
+        : arr[arr.length - 1] === "svg"
+        ? "picture"
+        : "file",
+    text: file.fileName,
+    from: file.userId,
+    url: file.fileUrl,
+    avatar: getState().auth.user.avatar,
+    userName: getState().auth.user.userName,
   };
-  // dispatch(
-  //   saveMessage(getState().chat.id, {
-  //     type: RENDER_MESSAGE,
-  //     payload: messageObj,
-  //   })
-  // );
+
+  console.log(messageObj);
+
+  dispatch(saveMessage(getState().chat.id, messageObj));
 
   getState().chat.socket.emit(
     "send-message",

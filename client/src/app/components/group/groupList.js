@@ -3,7 +3,7 @@ import { getGroup } from "../../store/actions";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { GET_GROUP_DETAIL } from "../../store/value";
 
-const GroupList = ({ setDetail }) => {
+const GroupList = ({ setDetail, getGroup }) => {
   const groupList = useSelector((state) => {
     return state.auth.user.chatBox.filter((c) => {
       return c.groupId !== "none";
@@ -23,7 +23,8 @@ const GroupList = ({ setDetail }) => {
             <li
               className="group-page-card-detail"
               onClick={() => {
-                dispatch({ type: GET_GROUP_DETAIL, payload: g });
+                getGroup(g);
+                // dispatch({ type: GET_GROUP_DETAIL, payload: g });
                 setDetail(true);
               }}
             >

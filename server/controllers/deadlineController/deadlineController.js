@@ -36,7 +36,7 @@ const multerStorage = multer.diskStorage({
     cb(null, filePath);
   },
   filename: (req, file, cb) => {
-    const ext = file.mimetype.split("/")[1];
+    const ext = file.originalname.split(".")[1];
     const newExt =
       ext === "octet-stream" ? file.originalname.split(".")[1] : ext;
     const filename = file.originalname.split(".")[0];
@@ -80,7 +80,8 @@ exports.uploadFiletoDrive = async (req, res) => {
         newModel.title = req.body.title;
         newModel.description = req.body.description;
         newModel.groupId = req.body.groupId;
-        newModel.fileDescription = `https://drive.google.com/uc?id=${file.data.id}&export=download`;
+        newModel.fileUrl = `https://drive.google.com/uc?id=${file.data.id}&export=download`;
+        newModel.fileName = req.file.filename;
         if (req.body.timeEnd !== undefined) {
           req.body.timeEnd = new Date(req.body.timeEnd);
         }
@@ -112,11 +113,9 @@ exports.uploadFiletoDrive = async (req, res) => {
 
 exports.createDeadline = async (req, res, next) => {
   if (req.file !== undefined) {
-    console.log(req.file.filename);
     //TH co gui fileDescription
     next();
   } else {
-    console.log(req.body);
     //TH khong gui fileDescription
     try {
       const newModel = new deadlineModel();
@@ -152,7 +151,6 @@ exports.createDeadline = async (req, res, next) => {
 };
 
 exports.userSubmittion = async (req, res) => {
-  console.log(req.file);
   const drive = google.drive({
     version: "v3",
     auth: oAuth2Client,
@@ -169,8 +167,6 @@ exports.userSubmittion = async (req, res) => {
   } else {
     req.body.newMimeType = req.file.mimetype;
   }
-
-  console.log(req.body.newMimeType);
 
   const media = {
     mimeType: req.body.newMimeType,
@@ -192,12 +188,27 @@ exports.userSubmittion = async (req, res) => {
       modelFile.userId = req.body.userId;
 
       await modelFile.save();
-      //push fileId to deadlineModel
+      // push fileId to deadlineModel
       const deadline = await deadlineModel.findById(req.params._id);
-      //console.log(deadline);
-      deadline.files = [...deadline.files, modelFile._id];
+
+      deadline.files = [
+        ...deadline.files,
+        {
+          from: req.body.userId,
+          fileName: req.file.filename,
+          url: `https://drive.google.com/uc?id=${file.data.id}&export=download`,
+        },
+      ];
+      console.log(deadline);
       await deadline.save();
       res.json(deadline);
     }
   );
+};
+
+exports.getDeadline = async (req, res) => {
+  const response = await deadlineModel.find({
+    groupId: req.params._id,
+  });
+  res.send(response);
 };

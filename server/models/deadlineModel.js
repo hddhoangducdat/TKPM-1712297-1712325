@@ -5,8 +5,10 @@ const deadlineModel = new mongoose.Schema({
   description: { type: String, required: true },
   timeStart: { type: Date, default: Date.now() },
   timeEnd: { type: Date, default: Date.now() + 7 * 86400000 },
-  fileDescription: { type: String },
+  description: { type: String },
   files: { type: Array },
+  fileUrl: { type: String, default: "none" },
+  fileName: { type: String },
   groupId: { type: String, required: true },
 });
 

@@ -79,6 +79,42 @@ const Notification = ({ getNoti }) => {
                     3 friends
                   </div>
                 </div>
+              ) : value.type === "add-post-group" ? (
+                <div className="notification-page-list-card-contain">
+                  <div className="notification-page-list-card-contain__text">
+                    <span className="notification-page-list-card-contain__seen">
+                      {value.userName}
+                    </span>
+                    <p>post a status on your group</p>
+                  </div>
+                  <div className="notification-page-list-card-contain__subtext notification-page-list-card-contain__seen">
+                    3 friends
+                  </div>
+                </div>
+              ) : value.type === "submit-form" ? (
+                <div className="notification-page-list-card-contain">
+                  <div className="notification-page-list-card-contain__text">
+                    <span className="notification-page-list-card-contain__seen">
+                      {value.userName}
+                    </span>
+                    <p>submit a deadline on group that you are admin</p>
+                  </div>
+                  <div className="notification-page-list-card-contain__subtext notification-page-list-card-contain__seen">
+                    3 friends
+                  </div>
+                </div>
+              ) : value.type === "submit-form" ? (
+                <div className="notification-page-list-card-contain">
+                  <div className="notification-page-list-card-contain__text">
+                    <span className="notification-page-list-card-contain__seen">
+                      {value.userName}
+                    </span>
+                    <p>create a new deadline for you</p>
+                  </div>
+                  <div className="notification-page-list-card-contain__subtext notification-page-list-card-contain__seen">
+                    3 friends
+                  </div>
+                </div>
               ) : (
                 <div></div>
               )}

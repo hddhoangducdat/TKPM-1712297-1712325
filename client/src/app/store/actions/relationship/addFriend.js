@@ -1,5 +1,6 @@
 import axios from "../../../api/server";
 import { SEARCH_RELATIONSHIP } from "../../value";
+import { saveNoti } from "../../actions";
 
 export const addFriend = (user, index) => async (dispatch, getState) => {
   await axios.post("/relationship/add", {
@@ -22,5 +23,6 @@ export const addFriend = (user, index) => async (dispatch, getState) => {
     avatar: getState().auth.user.avatar,
     type: "add",
   };
+  dispatch(saveNoti(noti));
   getState().auth.socket.emit(`send-noti`, noti);
 };
