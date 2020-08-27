@@ -5,13 +5,12 @@ import { ReactComponent as TeamIcon } from "../../asset/img/icon/team.svg";
 import { ReactComponent as EyeIcon } from "../../asset/img/icon/eye.svg";
 import { ReactComponent as LockIcon } from "../../asset/img/icon/lock.svg";
 import { ReactComponent as FileIcon } from "../../asset/img/icon/file.svg";
-import { connect, useSelector, useDispatch } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import nested from "../../utils/nested";
-import { DEADLINE_SUBMIT_ON } from "../../store/value";
+import DeadLineButton from "./deadlineButton";
 
 const GroupInfo = ({ getDeadline }) => {
   const { deadline, group, auth } = useSelector((state) => state);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (group !== false) {
@@ -44,42 +43,6 @@ const GroupInfo = ({ getDeadline }) => {
   //     document.getElementById("demo").innerHTML = "EXPIRED";
   //   }
   // };
-
-  const ktra = (files) => {
-    if (!files) return false;
-    const file = files.filter((f) => {
-      return f.from === auth.id;
-    });
-    if (file.length > 0) {
-      return file[0];
-    } else return false;
-  };
-
-  const RenderTH = ({ d }) => {
-    const ok = ktra(d.files);
-
-    return ok ? (
-      <button className="group-page-home-main-right__deadline__info__done">
-        <a href={ok.fileUrl}>
-          <FileIcon />
-        </a>
-        <div>{ok.fileName}</div>
-      </button>
-    ) : new Date(d.timeEnd).getTime() < Date.now() ? (
-      <button className="group-page-home-main-right__deadline__info__cant">
-        you failed
-      </button>
-    ) : (
-      <button
-        className="group-page-home-main-right__deadline__info__can"
-        onClick={() => {
-          dispatch({ type: DEADLINE_SUBMIT_ON, payload: d._id });
-        }}
-      >
-        submit
-      </button>
-    );
-  };
 
   return (
     <div className="group-page-home-main-right">
@@ -119,41 +82,41 @@ const GroupInfo = ({ getDeadline }) => {
           Share File
         </div>
         <ul className="group-page-home-main-right__share__list">
-          <li className="group-page-home-main-right__share__list__file">
+          <li key={1} className="group-page-home-main-right__share__list__file">
             <img
               src="https://scontent-xsp1-2.xx.fbcdn.net/v/t1.0-0/p320x320/118011160_2839021256423292_2922419493353089090_n.jpg?_nc_cat=106&_nc_sid=b9115d&_nc_ohc=A44hDx2T_TEAX-AoeMg&_nc_ht=scontent-xsp1-2.xx&_nc_tp=6&oh=4c3a16d4bb7615dab3c59874cf247ead&oe=5F660B9A"
               alt=""
             />
           </li>
 
-          <li className="group-page-home-main-right__share__list__file">
+          <li key={2} className="group-page-home-main-right__share__list__file">
             <img
               src="https://scontent-xsp1-2.xx.fbcdn.net/v/t1.0-0/p320x320/118011160_2839021256423292_2922419493353089090_n.jpg?_nc_cat=106&_nc_sid=b9115d&_nc_ohc=A44hDx2T_TEAX-AoeMg&_nc_ht=scontent-xsp1-2.xx&_nc_tp=6&oh=4c3a16d4bb7615dab3c59874cf247ead&oe=5F660B9A"
               alt=""
             />
           </li>
 
-          <li className="group-page-home-main-right__share__list__file">
+          <li key={3} className="group-page-home-main-right__share__list__file">
             <img
               src="https://scontent-xsp1-2.xx.fbcdn.net/v/t1.0-0/p320x320/118011160_2839021256423292_2922419493353089090_n.jpg?_nc_cat=106&_nc_sid=b9115d&_nc_ohc=A44hDx2T_TEAX-AoeMg&_nc_ht=scontent-xsp1-2.xx&_nc_tp=6&oh=4c3a16d4bb7615dab3c59874cf247ead&oe=5F660B9A"
               alt=""
             />
           </li>
 
-          <li className="group-page-home-main-right__share__list__file">
+          <li key={4} className="group-page-home-main-right__share__list__file">
             <img
               src="https://scontent-xsp1-2.xx.fbcdn.net/v/t1.0-0/p320x320/118011160_2839021256423292_2922419493353089090_n.jpg?_nc_cat=106&_nc_sid=b9115d&_nc_ohc=A44hDx2T_TEAX-AoeMg&_nc_ht=scontent-xsp1-2.xx&_nc_tp=6&oh=4c3a16d4bb7615dab3c59874cf247ead&oe=5F660B9A"
               alt=""
             />
           </li>
 
-          <li className="group-page-home-main-right__share__list__file">
+          <li key={5} className="group-page-home-main-right__share__list__file">
             <img
               src="https://scontent-xsp1-2.xx.fbcdn.net/v/t1.0-0/p320x320/118011160_2839021256423292_2922419493353089090_n.jpg?_nc_cat=106&_nc_sid=b9115d&_nc_ohc=A44hDx2T_TEAX-AoeMg&_nc_ht=scontent-xsp1-2.xx&_nc_tp=6&oh=4c3a16d4bb7615dab3c59874cf247ead&oe=5F660B9A"
               alt=""
             />
           </li>
-          <li className="group-page-home-main-right__share__list__file">
+          <li key={6} className="group-page-home-main-right__share__list__file">
             <a href="#">
               <FileIcon />
             </a>
@@ -174,7 +137,7 @@ const GroupInfo = ({ getDeadline }) => {
         {deadline instanceof Array ? (
           deadline.map((d) => {
             return (
-              <li className="group-page-home-decorate">
+              <li key={d._id} className="group-page-home-decorate">
                 <div className="group-page-home-main-right__introduce__title">
                   {d.title}
                 </div>
@@ -203,8 +166,10 @@ const GroupInfo = ({ getDeadline }) => {
                     <button className="group-page-home-main-right__deadline__info__can">
                       {d.files.length} submit
                     </button>
+                  ) : nested(d, "files") ? (
+                    <DeadLineButton deadline={d} />
                   ) : (
-                    <RenderTH d={d} />
+                    <div />
                   )}
                 </div>
               </li>
@@ -213,71 +178,6 @@ const GroupInfo = ({ getDeadline }) => {
         ) : (
           <div />
         )}
-        {/* <li className="group-page-home-decorate">
-          <div className="group-page-home-main-right__introduce__title">
-            #5 Deadline: Java App
-          </div>
-          <div className="group-page-home-main-right__deadline__info">
-            <div>Start Date: 20/07/2020</div>
-            <div>End Date: 25/07/2020</div>
-            <div>Time Left: 1h30m</div>
-            <div className="group-page-home-main-right__deadline__info__image">
-              <a href="#">
-                <FileIcon />
-              </a>
-              <span>#DEADLINE5.docx</span>
-            </div>
-            <button className="group-page-home-main-right__deadline__info__can">
-              submit
-            </button>
-          </div>
-        </li>
-        <li className="group-page-home-decorate">
-          <div className="group-page-home-main-right__introduce__title">
-            #5 Deadline: Java App
-          </div>
-          <div className="group-page-home-main-right__deadline__info">
-            <div>Start Date: 20/07/2020</div>
-            <div>End Date: 25/07/2020</div>
-            <div className="group-page-home-main-right__deadline__failed">
-              Time Left: 25m
-            </div>
-            <div className="group-page-home-main-right__deadline__info__image">
-              <a href="#">
-                <FileIcon />
-              </a>
-              <span>#DEADLINE5.docx</span>
-            </div>
-            <button className="group-page-home-main-right__deadline__info__cant">
-              you failed
-            </button>
-          </div>
-        </li>
-
-        <li className="group-page-home-decorate">
-          <div className="group-page-home-main-right__introduce__title">
-            #5 Deadline: Java App
-          </div>
-          <div className="group-page-home-main-right__deadline__info">
-            <div>Start Date: 20/07/2020</div>
-            <div>End Date: 25/07/2020</div>
-            <div className="group-page-home-main-right__deadline__done">
-              Time Left: 0m
-            </div>
-            <div className="group-page-home-main-right__deadline__info__image">
-              <a href="#">
-                <FileIcon />
-              </a>
-              <span>#DEADLINE5.docx</span>
-            </div>
-            <button className="group-page-home-main-right__deadline__info__done">
-              <a href="#">
-                <FileIcon />
-              </a>
-              <div>1712325.zip</div>
-            </button>
-          </div>
-        </li> */}
       </ul>
     </div>
   );

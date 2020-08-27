@@ -51,10 +51,10 @@ const GroupStatus = ({ getStatus }) => {
         </div>
       </div>
       <ul className="home-page-list group-page-home-main__resize">
-        {listStatus.map((s) => {
+        {listStatus.map((s, i) => {
           if (s.group.id !== _id) return <div></div>;
           return (
-            <li className="home-page-list-status">
+            <li key={i} className="home-page-list-status">
               <div className="home-page-list-status__header">
                 <img src={s.avatar} alt="" />
                 <div className="home-page-list-status__header__info">

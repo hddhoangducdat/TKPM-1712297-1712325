@@ -80,6 +80,7 @@ const createChatDialog = async (req, filePath, id) => {
           name: req.body.groupName,
           avatar: filePath,
           groupId: id,
+          seen: true,
         },
         ...user.chatBox,
       ];
@@ -113,6 +114,7 @@ exports.createGroupUser = async (req, res, next) => {
         avatar: avatarDefault,
         groupId: newModel._id,
         member: member.length,
+        seen: true,
       });
     });
 

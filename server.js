@@ -54,31 +54,8 @@ io.on("connection", (socket) => {
   });
 
   socket.on("send-noti", (noti) => {
-    console.log(noti);
     io.to(`noti-${noti.to}`).emit("receive-noti", noti);
   });
-
-  // socket.on("join", (chatBoxId) => {
-  //   socket.join(chatBoxId);
-  // });
-
-  // socket.on("request", (id) => {
-  //   socket.join(id);
-  // });
-
-  // socket.on("sendRequest", ({ id, type, data }) => {
-  //   if (type === "acceptFriend") {
-  //     io.to(id).emit(type, data);
-  //   } else io.to(id).emit(type);
-  // });
-
-  // socket.on("sendFile", ({ fileName, chatBoxId }) => {
-  //   io.to(chatBoxId).emit("file", fileName);
-  // });
-
-  // socket.on("sendMessage", ({ userId, message, chatBoxId }) => {
-  //   io.to(chatBoxId).emit("message", { id: userId, text: message });
-  // });
 });
 
 app.use(cors());

@@ -6,11 +6,12 @@ import { ReactComponent as PhoneIcon } from "../../asset/img/icon/phone.svg";
 import { ReactComponent as VideoCallIcon } from "../../asset/img/icon/video-call.svg";
 import { ReactComponent as DocumentIcon } from "../../asset/img/icon/document.svg";
 import ChatBoxInput from "../../components/chatBox/chatBoxInput";
-import { useSelector } from "react-redux";
-import { $CombinedState } from "redux";
+import { useSelector, connect } from "react-redux";
+import { seenMessage } from "../../store/actions";
 
-const MessengerChatBox = ({ setChatBox, chatBox }) => {
+const MessengerChatBox = ({ setChatBox, chatBox, seenMessage }) => {
   const { message, isGroup } = useSelector((state) => state.chat);
+  const _id = useSelector((state) => state.chat.id);
   const { id } = useSelector((state) => state.auth);
 
   // useEffect(() => {
@@ -58,7 +59,14 @@ const MessengerChatBox = ({ setChatBox, chatBox }) => {
           </div>
         </div>
       </div>
-      <div className="messenger-chatbox-contain">
+      <div
+        className="messenger-chatbox-contain"
+        onClick={() => {
+          if (!chatBox.seen) {
+            seenMessage(_id);
+          }
+        }}
+      >
         <ul className="messenger-chatbox-contain-list scrollingContainer">
           {message.map((m, index) => {
             if (m.type === "text") {
@@ -100,7 +108,10 @@ const MessengerChatBox = ({ setChatBox, chatBox }) => {
             } else if (m.type === "file") {
               if (m.from === id) {
                 return (
-                  <li className="messenger-chatbox-contain-list__right">
+                  <li
+                    key={index}
+                    className="messenger-chatbox-contain-list__right"
+                  >
                     <div className="messenger-chatbox-contain-list__right__file">
                       <a
                         href={m.url}
@@ -116,7 +127,10 @@ const MessengerChatBox = ({ setChatBox, chatBox }) => {
                 );
               } else
                 return (
-                  <li className="messenger-chatbox-contain-list__left">
+                  <li
+                    key={index}
+                    className="messenger-chatbox-contain-list__left"
+                  >
                     <div className="messenger-chatbox-contain-list__left__ava">
                       <img src={chatBox.avatar} alt="" />
                     </div>
@@ -138,13 +152,19 @@ const MessengerChatBox = ({ setChatBox, chatBox }) => {
             } else if (m.type === "picture") {
               if (m.from === id) {
                 return (
-                  <li className="messenger-chatbox-contain-list__right">
+                  <li
+                    key={index}
+                    className="messenger-chatbox-contain-list__right"
+                  >
                     <img src={m.url} alt="" />
                   </li>
                 );
               } else
                 return (
-                  <li className="messenger-chatbox-contain-list__left">
+                  <li
+                    key={index}
+                    className="messenger-chatbox-contain-list__left"
+                  >
                     <div className="messenger-chatbox-contain-list__left__ava">
                       <img src={chatBox.avatar} alt="" />
                     </div>
@@ -254,4 +274,4 @@ const MessengerChatBox = ({ setChatBox, chatBox }) => {
   );
 };
 
-export default MessengerChatBox;
+export default connect(null, { seenMessage })(MessengerChatBox);

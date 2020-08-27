@@ -17,6 +17,8 @@ export const userSubmitDeadline = (file) => async (dispatch, getState) => {
   }).then((response) => {
     getState().deadline.map((d, i) => {
       if (d._id === response.data._id) {
+        console.log(response.data);
+        console.log("haga");
         dispatch({
           type: SUBMIT_FILE,
           payload: {
@@ -32,9 +34,9 @@ export const userSubmitDeadline = (file) => async (dispatch, getState) => {
       to: getState().group.admin,
       userName: getState().auth.user.userName,
       avatar: getState().auth.user.avatar,
+      name: response.data.title,
       type: "submit-form",
     };
     dispatch(saveNoti(noti));
-    getState().auth.socket.emit("send-noti", noti);
   });
 };

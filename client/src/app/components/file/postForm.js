@@ -43,7 +43,6 @@ const PostForm = ({ postStatus, postStatusGroup }) => {
             value={text}
             placeholder="Tell your friends what are you up to"
             onChange={(e) => {
-              console.log(e.target.value);
               setText(e.target.value);
             }}
           />

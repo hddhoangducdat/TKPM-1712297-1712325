@@ -9,7 +9,6 @@ const GroupList = ({ setDetail, getGroup }) => {
       return c.groupId !== "none";
     });
   });
-  const dispatch = useDispatch();
 
   return (
     <ul className="group-page-card">
@@ -21,6 +20,7 @@ const GroupList = ({ setDetail, getGroup }) => {
         groupList.map((g) => {
           return (
             <li
+              key={g.groupId}
               className="group-page-card-detail"
               onClick={() => {
                 getGroup(g);

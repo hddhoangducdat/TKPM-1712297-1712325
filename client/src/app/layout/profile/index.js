@@ -34,7 +34,7 @@ const Profile = ({ uploadAvatar }) => {
                 uploadAvatar(e.target.files[0]);
               }}
             />
-            <label for="imageUpload"></label>
+            <label htmlFor="imageUpload"></label>
           </div>
           <div className="avatar-preview">
             <div

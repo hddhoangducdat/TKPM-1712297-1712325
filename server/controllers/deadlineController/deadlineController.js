@@ -139,6 +139,7 @@ exports.createDeadline = async (req, res, next) => {
         // Not a date
         // do nothing cause timeEnd is default
       }
+      console.log(newModel);
 
       await newModel
         .save()

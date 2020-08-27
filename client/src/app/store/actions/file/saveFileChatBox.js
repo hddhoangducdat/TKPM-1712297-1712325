@@ -28,8 +28,6 @@ export const saveFileChatBox = (file) => async (dispatch, getState) => {
     userName: getState().auth.user.userName,
   };
 
-  console.log(messageObj);
-
   dispatch(saveMessage(getState().chat.id, messageObj));
 
   getState().chat.socket.emit(

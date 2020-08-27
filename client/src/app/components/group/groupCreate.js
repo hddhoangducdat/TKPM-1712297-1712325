@@ -46,8 +46,6 @@ const GroupCreate = ({ getFriends, createGroup }) => {
     );
   }, [friend.length]);
 
-  console.log(arr);
-
   return (
     <div className="middle-blur">
       <div className="middle-blur-sub">

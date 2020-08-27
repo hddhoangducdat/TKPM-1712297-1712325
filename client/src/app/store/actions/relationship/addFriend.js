@@ -24,5 +24,4 @@ export const addFriend = (user, index) => async (dispatch, getState) => {
     type: "add",
   };
   dispatch(saveNoti(noti));
-  getState().auth.socket.emit(`send-noti`, noti);
 };

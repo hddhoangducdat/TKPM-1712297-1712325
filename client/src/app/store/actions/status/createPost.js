@@ -26,14 +26,22 @@ export const createPostGroup = (group, text, url) => async (
   );
   dispatch({ type: SAVE_STATUS, payload: response.data });
   getState().group.data.member.map((g) => {
-    const noti = {
-      from: getState().auth.id,
-      to: g,
-      userName: getState().auth.user.userName,
-      avatar: getState().auth.user.avatar,
-      type: "add-post-group",
-    };
-    dispatch(saveNoti(noti));
-    getState().auth.socket.emit("send-noti", noti);
+    if (g !== getState().auth.id) {
+      const noti = {
+        from: getState().auth.id,
+        to: g,
+        userName: getState().auth.user.userName,
+        avatar: getState().auth.user.avatar,
+        groupName: response.data.name,
+        type: "add-post-group",
+      };
+
+      getState().auth.socket.emit("send-noti", noti);
+      getState().auth.socket.emit("send-noti", {
+        status: response.data,
+        to: g,
+      });
+      dispatch(saveNoti(noti));
+    }
   });
 };

@@ -567,6 +567,8 @@ input:focus {
           -webkit-font-smoothing: antialiased;
           white-space: nowrap;
           max-width: 100%; }
+          .messenger-list-ul-detail__text__noti__seen {
+            color: #1876f2; }
 
 .messenger-chatbox {
   bottom: 75px;
@@ -788,9 +790,13 @@ input:focus {
       .messenger-chatbox-input-detail button {
         margin: none; }
       .messenger-chatbox-input-detail__icon {
+        margin-top: 0.5rem;
         width: 32px;
         height: 32px;
-        padding: 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0px 8px;
         border-radius: 100%;
         margin: none;
         margin-left: 5px; }

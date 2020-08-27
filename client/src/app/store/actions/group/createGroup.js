@@ -28,15 +28,19 @@ export const createGroup = (friend, file, name) => async (
   }).then((response) => {
     dispatch({ type: ADD_GROUP, payload: response.data });
     friend.map((f) => {
+      getState().auth.socket.emit("send-noti", {
+        contain: response.data,
+        to: f._id,
+      });
       const noti = {
         from: getState().auth.id,
         to: f._id,
         userName: getState().auth.user.userName,
         avatar: getState().auth.user.avatar,
+        name: response.data.name,
         type: "add-group",
       };
       dispatch(saveNoti(noti));
-      getState().auth.socket.emit("send-noti", noti);
     });
   });
 };

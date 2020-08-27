@@ -55,57 +55,59 @@ exports.acceptFriend = async (req, res) => {
       userId2,
     },
     { type: "friend" },
-    { new: true },
-    function (err, data) {
-      if (err) return res.status(400).send("Error while updating");
-      if (data) return res.send(data);
-      return res.status(404).send("");
-    }
+    { new: true }
   );
 
   const user1 = await userModel.findById(userId1);
   const user2 = await userModel.findById(userId2);
 
   const chatDialog = new chatBoxModel({
-    message: [
-      {
-        text: `Hello`,
-        type: "text",
-        from: userId1,
-      },
-      {
-        text: `Hi`,
-        type: "text",
-        from: userId2,
-      },
-    ],
+    message: [],
     member: [userId1, userId2],
     isGroup: false,
   });
 
   user1.chatBox = [
-    ...user1.chatBox,
     {
       id: chatDialog._id,
       name: user2.userName,
       avatar: user2.avatar,
       noti: `${user1.userName} is your friend, message him now`,
+      seen: false,
     },
+    ...user1.chatBox,
   ];
 
   user2.chatBox = [
-    ...user2.chatBox,
     {
       id: chatDialog._id,
       name: user1.userName,
       avatar: user1.avatar,
       noti: `${user2.userName} is your friend, message him now`,
+      seen: false,
     },
+    ...user2.chatBox,
   ];
 
   await chatDialog.save();
   await user1.save();
   await user2.save();
+  res.send({
+    user1: {
+      id: chatDialog._id,
+      name: user2.userName,
+      avatar: user2.avatar,
+      noti: `${user1.userName} is your friend, message him now`,
+      seen: false,
+    },
+    user2: {
+      id: chatDialog._id,
+      name: user1.userName,
+      avatar: user1.avatar,
+      noti: `${user2.userName} is your friend, message him now`,
+      seen: false,
+    },
+  });
 };
 
 exports.cancleRequest = async (req, res) => {
@@ -162,8 +164,6 @@ exports.getFriend = async (req, res) => {
     type: "friend",
   });
 
-  console.log(friend1);
-  console.log(friend2);
   let friend = [];
 
   await Promise.all(
@@ -182,7 +182,7 @@ exports.getFriend = async (req, res) => {
   await Promise.all(
     friend2.map(async (f) => {
       await userModel
-        .findById(f.userId2, "userName avatar")
+        .findById(f.userId1, "userName avatar")
         .then((result) => {
           console.log(result);
           friend = [...friend, result];

@@ -9,6 +9,8 @@ import { ReactComponent as LogOutIcon } from "../../asset/img/icon/logout.svg";
 import { ReactComponent as CalendarIcon } from "../../asset/img/icon/calendar.svg";
 import { ReactComponent as BellIcon } from "../../asset/img/icon/bell.svg";
 import { ReactComponent as HomeIcon } from "../../asset/img/icon/construction.svg";
+import sound from "../../asset/sound/swiftly.mp3";
+import notiSound from "../../asset/sound/ios_notification.mp3";
 
 import { logout, saveNoti } from "../../store/actions";
 
@@ -17,13 +19,23 @@ import Notification from "../main/notification";
 import Group from "../main/group";
 import Calendar from "../main/calendar";
 import io from "socket.io-client";
+import nested from "../../utils/nested";
 
-import { SET_NOTI_SOCKET, RENDER_NOTI } from "../../store/value";
+import {
+  SET_NOTI_SOCKET,
+  RENDER_NOTI,
+  ADD_GROUP,
+  UPDATE_MESSAGE_NOTI,
+  SAVE_STATUS,
+  ADD_DEADLINE,
+} from "../../store/value";
+import history from "../../../history";
 
 let socket;
 
 const Middle = ({ logout, saveNoti }) => {
   const { id } = useSelector((state) => state.auth);
+  const { noti } = useSelector((state) => state.auth.user);
   const [render, setRender] = useState(<Home />);
   const ENDPOINT = "localhost:5000";
   const [tab, setTab] = useState([
@@ -47,12 +59,26 @@ const Middle = ({ logout, saveNoti }) => {
       socket.emit("disconnect");
       socket.off();
     };
-  }, [ENDPOINT]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ENDPOINT, id]);
 
   useEffect(() => {
     socket.on("receive-noti", (noti) => {
-      dispatch({ type: RENDER_NOTI, payload: noti });
+      if (nested(noti, "type")) {
+        new Audio(sound).play();
+        dispatch({ type: RENDER_NOTI, payload: noti });
+      } else if (nested(noti, "contain")) {
+        dispatch({ type: ADD_GROUP, payload: noti.contain });
+      } else if (nested(noti, "status")) {
+        dispatch({ type: SAVE_STATUS, payload: noti.status });
+      } else if (nested(noti, "deadline")) {
+        dispatch({ type: ADD_DEADLINE, payload: noti.deadline });
+      } else {
+        new Audio(notiSound).play();
+        dispatch({ type: UPDATE_MESSAGE_NOTI, payload: noti });
+      }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const colorTab = (x) => {
@@ -74,6 +100,7 @@ const Middle = ({ logout, saveNoti }) => {
               onClick={(e) => {
                 colorTab(0);
                 setRender(<Home />);
+                history.push("/home");
               }}
             >
               <HomeIcon />
@@ -104,7 +131,9 @@ const Middle = ({ logout, saveNoti }) => {
               }}
             >
               <BellIcon />
-              <div className="nav-tab-detail-noti">3</div>
+              <div className="nav-tab-detail-noti">
+                <p>{noti}</p>
+              </div>
             </li>
             <li
               className={tab[4]}

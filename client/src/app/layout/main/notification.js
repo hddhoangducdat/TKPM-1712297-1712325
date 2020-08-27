@@ -1,12 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, connect } from "react-redux";
-import { getNoti } from "../../store/actions";
+import {
+  getNoti,
+  acceptFriendNoti,
+  seenNoti,
+  increaseNoti,
+} from "../../store/actions";
 
 import Comment from "../../asset/img/png/speech-bubble.png";
 import Heart from "../../asset/img/png/heart.png";
 import Friend from "../../asset/img/png/friend.png";
+import AddGroup from "../../asset/img/png/add-group.png";
+import AddFriend from "../../asset/img/png/add-friend.png";
+import Post from "../../asset/img/png/blog.png";
+import DeadLine from "../../asset/img/png/deadline.png";
+import Submit from "../../asset/img/png/submit.png";
 
-const Notification = ({ getNoti }) => {
+const Notification = ({ seenNoti, acceptFriendNoti, getNoti }) => {
   const { noti } = useSelector((state) => state);
 
   useEffect(() => {
@@ -16,9 +26,17 @@ const Notification = ({ getNoti }) => {
   return (
     <div className="notification-page">
       <ul className="notification-page-list">
-        {noti.map((value) => {
+        {noti.map((value, index) => {
           return (
-            <li className="notification-page-list-card">
+            <li
+              key={index}
+              className="notification-page-list-card"
+              onClick={() => {
+                if (!value.seen) {
+                  seenNoti(value._id);
+                }
+              }}
+            >
               <div className="notification-page-list-card__image">
                 <img
                   src={value.avatar}
@@ -26,7 +44,19 @@ const Notification = ({ getNoti }) => {
                   alt=""
                 />
                 <img
-                  src={Friend}
+                  src={
+                    value.type === "add"
+                      ? AddFriend
+                      : value.type === "add-group"
+                      ? AddGroup
+                      : value.type === "add-post-group"
+                      ? Post
+                      : value.type === "create-deadline"
+                      ? DeadLine
+                      : value.type === "submit-form"
+                      ? Submit
+                      : Friend
+                  }
                   alt=""
                   className="notification-page-list-card__image__icon"
                 />
@@ -34,10 +64,31 @@ const Notification = ({ getNoti }) => {
               {value.type === "add" ? (
                 <div className="notification-page-list-card-contain">
                   <div className="notification-page-list-card-contain__text">
-                    <span className="notification-page-list-card-contain__seen">
-                      {value.userName}
-                    </span>
+                    {!value.seen ? (
+                      <span className="notification-page-list-card-contain__seen">
+                        {value.userName}
+                      </span>
+                    ) : (
+                      <div> {value.userName}</div>
+                    )}
+
                     <p>send you a friend's request</p>
+                  </div>
+                  <div className="notification-page-list-card-contain__subtext notification-page-list-card-contain__seen">
+                    3 friends
+                  </div>
+                </div>
+              ) : value.type === "you-accept" ? (
+                <div className="notification-page-list-card-contain">
+                  <div className="notification-page-list-card-contain__text">
+                    {!value.seen ? (
+                      <span className="notification-page-list-card-contain__seen">
+                        {value.userName}
+                      </span>
+                    ) : (
+                      <div> {value.userName}</div>
+                    )}
+                    <p>are friend now</p>
                   </div>
                   <div className="notification-page-list-card-contain__subtext notification-page-list-card-contain__seen">
                     3 friends
@@ -46,9 +97,14 @@ const Notification = ({ getNoti }) => {
               ) : value.type === "accept" ? (
                 <div className="notification-page-list-card-contain">
                   <div className="notification-page-list-card-contain__text">
-                    <span className="notification-page-list-card-contain__seen">
-                      {value.userName}
-                    </span>
+                    {!value.seen ? (
+                      <span className="notification-page-list-card-contain__seen">
+                        {value.userName}
+                      </span>
+                    ) : (
+                      <div> {value.userName}</div>
+                    )}
+
                     <p>accept your friend request</p>
                   </div>
                   <div className="notification-page-list-card-contain__subtext notification-page-list-card-contain__seen">
@@ -58,9 +114,13 @@ const Notification = ({ getNoti }) => {
               ) : value.type === "agree" ? (
                 <div className="notification-page-list-card-contain">
                   <div className="notification-page-list-card-contain__text">
-                    <span className="notification-page-list-card-contain__seen">
-                      {value.userName}
-                    </span>
+                    {!value.seen ? (
+                      <span className="notification-page-list-card-contain__seen">
+                        {value.userName}
+                      </span>
+                    ) : (
+                      <div> {value.userName}</div>
+                    )}
                     <p>is your friend now</p>
                   </div>
                   <div className="notification-page-list-card-contain__subtext notification-page-list-card-contain__seen">
@@ -70,10 +130,14 @@ const Notification = ({ getNoti }) => {
               ) : value.type === "add-group" ? (
                 <div className="notification-page-list-card-contain">
                   <div className="notification-page-list-card-contain__text">
-                    <span className="notification-page-list-card-contain__seen">
-                      {value.userName}
-                    </span>
-                    <p>add you to his/her new group</p>
+                    {!value.seen ? (
+                      <span className="notification-page-list-card-contain__seen">
+                        {value.userName}
+                      </span>
+                    ) : (
+                      <div> {value.userName}</div>
+                    )}
+                    <p>add you to his/her new group {value.name}</p>
                   </div>
                   <div className="notification-page-list-card-contain__subtext notification-page-list-card-contain__seen">
                     3 friends
@@ -82,10 +146,14 @@ const Notification = ({ getNoti }) => {
               ) : value.type === "add-post-group" ? (
                 <div className="notification-page-list-card-contain">
                   <div className="notification-page-list-card-contain__text">
-                    <span className="notification-page-list-card-contain__seen">
-                      {value.userName}
-                    </span>
-                    <p>post a status on your group</p>
+                    {!value.seen ? (
+                      <span className="notification-page-list-card-contain__seen">
+                        {value.userName}
+                      </span>
+                    ) : (
+                      <div> {value.userName}</div>
+                    )}
+                    <p>post a status on your group {value.name}</p>
                   </div>
                   <div className="notification-page-list-card-contain__subtext notification-page-list-card-contain__seen">
                     3 friends
@@ -94,22 +162,32 @@ const Notification = ({ getNoti }) => {
               ) : value.type === "submit-form" ? (
                 <div className="notification-page-list-card-contain">
                   <div className="notification-page-list-card-contain__text">
-                    <span className="notification-page-list-card-contain__seen">
-                      {value.userName}
-                    </span>
-                    <p>submit a deadline on group that you are admin</p>
+                    {!value.seen ? (
+                      <span className="notification-page-list-card-contain__seen">
+                        {value.userName}
+                      </span>
+                    ) : (
+                      <div> {value.userName}</div>
+                    )}
+                    <p>submit a deadline name ${value.name}</p>
                   </div>
                   <div className="notification-page-list-card-contain__subtext notification-page-list-card-contain__seen">
                     3 friends
                   </div>
                 </div>
-              ) : value.type === "submit-form" ? (
+              ) : value.type === "create-deadline" ? (
                 <div className="notification-page-list-card-contain">
                   <div className="notification-page-list-card-contain__text">
-                    <span className="notification-page-list-card-contain__seen">
-                      {value.userName}
-                    </span>
-                    <p>create a new deadline for you</p>
+                    {!value.seen ? (
+                      <span className="notification-page-list-card-contain__seen">
+                        {value.userName}
+                      </span>
+                    ) : (
+                      <div> {value.userName}</div>
+                    )}
+                    <p>
+                      create a new deadline for you in {value.name} deadline
+                    </p>
                   </div>
                   <div className="notification-page-list-card-contain__subtext notification-page-list-card-contain__seen">
                     3 friends
@@ -121,7 +199,13 @@ const Notification = ({ getNoti }) => {
 
               {value.type === "add" ? (
                 <div className="notification-page-list-card__button">
-                  <button className="notification-page-list-card__button__accept">
+                  <button
+                    className="notification-page-list-card__button__accept"
+                    onClick={() => {
+                      acceptFriendNoti(value);
+                      increaseNoti();
+                    }}
+                  >
                     Accept
                   </button>
                   <button className="notification-page-list-card__button__refuse">
@@ -242,4 +326,9 @@ const Notification = ({ getNoti }) => {
   );
 };
 
-export default connect(null, { getNoti })(Notification);
+export default connect(null, {
+  increaseNoti,
+  acceptFriendNoti,
+  seenNoti,
+  getNoti,
+})(Notification);

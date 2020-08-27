@@ -1,10 +1,46 @@
 const chatBoxModel = require("../../models/chatModel");
 const userModel = require("../../models/userModel");
 
+exports.messageNoti = async (req, res) => {
+  let user = await userModel.findById(req.params._id);
+  user.chatBox = user.chatBox.map((c) => {
+    if (c.id === req.body.id) {
+      c.noti = req.body.noti;
+      c.seen = false;
+      return c;
+    } else return c;
+  });
+  await user.save();
+};
+
+exports.messageSelfNoti = async (req, res) => {
+  let user = await userModel.findById(req.params._id);
+  user.chatBox = user.chatBox.map((c) => {
+    if (c.id === req.body.id) {
+      c.noti = req.body.noti;
+      c.seen = true;
+      return c;
+    } else return c;
+  });
+  await user.save();
+};
+
 exports.saveMessge = async (req, res) => {
   let chatBox = await chatBoxModel.findById(req.body.id);
   chatBox.message = [...chatBox.message, req.body.message];
   await chatBox.save();
+};
+
+exports.seenMessage = async (req, res) => {
+  let user = await userModel.findById(req.params._id);
+  user.chatBox = user.chatBox.map((c) => {
+    if (c.id === req.body.id) {
+      c.seen = true;
+      return c;
+    } else return c;
+  });
+
+  await user.save();
 };
 
 exports.getChatDialog = async (req, res) => {
