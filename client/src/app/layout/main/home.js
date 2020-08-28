@@ -20,11 +20,6 @@ const Home = () => {
   const { avatar, status } = useSelector((state) => state.auth.user);
   const [listStatus, setListStatus] = useState([]);
 
-  useEffect(() => {
-    setListStatus(status);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status instanceof Array ? status.length : Status instanceof Array]);
-
   return (
     <div className="home-page">
       <div className="home-page-post">
@@ -57,8 +52,8 @@ const Home = () => {
         </div>
       </div>
       <ul className="home-page-list">
-        {listStatus instanceof Array ? (
-          listStatus.map((s, i) => {
+        {status instanceof Array ? (
+          status.map((s, i) => {
             return <Status isLike={s.like} index={i} id={s.id} />;
           })
         ) : (
