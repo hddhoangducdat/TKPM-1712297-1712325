@@ -1095,7 +1095,8 @@ input:focus {
         width: 16px;
         height: 16px; }
   .home-page-list-status__comment__list {
-    position: relative; }
+    position: relative;
+    display: grid; }
     .home-page-list-status__comment__list__container {
       display: inline-flex; }
       .home-page-list-status__comment__list__container img {
@@ -1104,6 +1105,7 @@ input:focus {
         height: 32px;
         border-radius: 100%; }
       .home-page-list-status__comment__list__container__box {
+        max-width: 300px;
         white-space: normal;
         word-break: break-word;
         background-color: #f0f2f5;
@@ -1111,10 +1113,11 @@ input:focus {
         border-radius: 18px;
         color: #050505; }
         .home-page-list-status__comment__list__container__box__name {
-          font-size: 13px;
+          font-size: 15px;
           font-weight: 600; }
         .home-page-list-status__comment__list__container__box__text {
-          font-size: 15px; }
+          font-size: 15px;
+          color: #65676b; }
       .home-page-list-status__comment__list__container__choice div {
         display: inline-flex;
         align-items: center;
@@ -1899,6 +1902,10 @@ a {
       .middle-blur .post-input-header__text {
         padding-bottom: 16px;
         text-align: center; }
+
+.home-page-form {
+  z-index: 0;
+  width: 100%; }
 
 .main-container {
   display: flex;

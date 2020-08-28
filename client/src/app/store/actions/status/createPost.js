@@ -1,15 +1,13 @@
 import axios from "../../../api/server";
-import { SAVE_STATUS } from "../../value";
+import { SAVE_STATUS, ADD_STATUS } from "../../value";
 import { saveNoti } from "../../actions";
 
 export const createPost = (text, url) => async (dispatch, getState) => {
-  console.log(text);
   const response = await axios.post(`/status/post/${getState().auth.id}`, {
     text,
     url,
   });
-  console.log(response.data);
-  dispatch({ type: SAVE_STATUS, payload: response.data });
+  dispatch({ type: ADD_STATUS, payload: response.data._id });
 };
 
 export const createPostGroup = (group, text, url) => async (
@@ -24,7 +22,7 @@ export const createPostGroup = (group, text, url) => async (
       url,
     }
   );
-  dispatch({ type: SAVE_STATUS, payload: response.data });
+  dispatch({ type: ADD_STATUS, payload: response.data._id });
   getState().group.data.member.map((g) => {
     if (g !== getState().auth.id) {
       const noti = {

@@ -4,7 +4,6 @@ import auth from "./auth";
 import utils from "./utils";
 import search from "./search";
 import chat from "./chat";
-import status from "./status";
 import noti from "./noti";
 import friend from "./friend";
 import group from "./group";
@@ -19,7 +18,6 @@ const createReducer = (asyncReducers) =>
     auth,
     search,
     chat,
-    status,
     noti,
     friend,
     ...asyncReducers,

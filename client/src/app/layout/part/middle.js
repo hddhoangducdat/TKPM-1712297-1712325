@@ -36,6 +36,7 @@ let socket;
 const Middle = ({ logout, saveNoti }) => {
   const { id } = useSelector((state) => state.auth);
   const { noti } = useSelector((state) => state.auth.user);
+
   const [render, setRender] = useState(<Home />);
   const ENDPOINT = "localhost:5000";
   const [tab, setTab] = useState([
@@ -100,7 +101,6 @@ const Middle = ({ logout, saveNoti }) => {
               onClick={(e) => {
                 colorTab(0);
                 setRender(<Home />);
-                history.push("/home");
               }}
             >
               <HomeIcon />

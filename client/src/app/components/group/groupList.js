@@ -1,12 +1,12 @@
 import React from "react";
 import { getGroup } from "../../store/actions";
 import { connect, useSelector, useDispatch } from "react-redux";
-import { GET_GROUP_DETAIL } from "../../store/value";
+import nested from "../../utils/nested";
 
 const GroupList = ({ setDetail, getGroup }) => {
   const groupList = useSelector((state) => {
     return state.auth.user.chatBox.filter((c) => {
-      return c.groupId !== "none";
+      return c.groupId !== "none" || !nested(c, "groupId");
     });
   });
 

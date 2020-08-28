@@ -7,6 +7,7 @@ const notiSchema = new mongoose.Schema({
   avatar: String,
   userName: String,
   type: String,
+  statusId: { type: String, default: "none" },
   seen: { type: Boolean, default: false },
   name: { type: String, default: "none" },
 });

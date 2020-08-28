@@ -6,6 +6,9 @@ import {
   UPDATE_MESSAGE_NOTI_SELF,
   RENDER_NOTI,
   SEEN_NOTI,
+  ADD_STATUS,
+  LIKE_STATUS,
+  UNLIKE_STATUS,
 } from "../../value";
 
 export default (state = {}, action) => {
@@ -14,6 +17,10 @@ export default (state = {}, action) => {
       return action.payload;
     case "USER_DATA_UPDATE":
       return { ...state, data: action.payload.data };
+
+    case ADD_STATUS:
+      state.status = [{ id: action.payload, like: false }, ...state.status];
+      return state;
 
     case SEEN_NOTI:
       return { ...state, noti: state.noti - 1 };
