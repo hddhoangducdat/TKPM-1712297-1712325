@@ -8,6 +8,7 @@ const {
   updateAvatar,
   searchUser,
   getAllFriend,
+  getAllFile,
 } = require("../../controllers/userController/userController");
 
 const userRoute = express();
@@ -19,4 +20,5 @@ userRoute.get("/", getAll);
 userRoute.patch("/update/starting/:_id", updateNewUser);
 userRoute.patch("/update/avatar/:_id", updateAvatar);
 userRoute.get("/getAllFriend/:_id", getAllFriend);
+userRoute.get("/getAllFile/:_id", getAllFile);
 module.exports = userRoute;

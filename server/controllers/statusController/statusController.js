@@ -2,7 +2,7 @@ const userModel = require("../../models/userModel");
 const relationModel = require("../../models/userRelationshipModel");
 const statusModel = require("../../models/statusModel");
 const groupModel = require("../../models/groupUserModel");
-
+const fileModel = require("../../models/fileModel");
 exports.likeStatus = async (req, res) => {
   const status = await statusModel.findById(req.body.id);
   status.like = [req.params._id, ...status.like];
@@ -49,6 +49,8 @@ exports.createStatusGroup = async (req, res) => {
     like: [],
     comment: [],
   });
+  //lay fileId luu vao data Group
+  const file = await fileModel.findOne({ fileUrl: req.body.url });
 
   const group = await groupModel.findById(req.body.group._id);
 
@@ -61,7 +63,11 @@ exports.createStatusGroup = async (req, res) => {
     await userMember.save();
   });
 
+  group.data.files = [...group.data.files, file._id];
+  group.markModified("data.files");
+
   await status.save();
+  await group.save();
   res.send(status);
 };
 

@@ -1,5 +1,6 @@
 const userModel = require("../../models/userModel");
 const relationshipModel = require("../../models/userRelationshipModel");
+const fileModel = require("../../models/fileModel");
 const path = require("path");
 
 const {
@@ -67,6 +68,17 @@ exports.getAllFriend = async (req, res) => {
   });
 };
 
+exports.getAllFile = async (req, res) => {
+  await fileModel.find({ userId: req.params._id }, function (err, docs) {
+    if (err) return res.status(400).json("Error: " + err);
+    if (docs) {
+      //console.log(docs);
+      //return All file of User's status
+      res.json(docs);
+    }
+  });
+};
+
 exports.updateAvatar = async (req, res) => {
   await userModel.findByIdAndUpdate(req.params._id, {
     avatar: req.body.url,
@@ -116,55 +128,6 @@ exports.updateAvatar = async (req, res) => {
   //   );
   // });
 };
-
-// exports.getAvatar = (req, res) => {
-//   // lay file ve
-//   const fileId = "1_nwvf02WBw3S_h3-NhBRjpwhrOFthgsF";
-//   const filePath = path.join(
-//     __dirname,
-//     "..",
-//     "..",
-//     "..",
-//     "/public/img/users/test.jpg"
-//   );
-//   console.log(`Writing to ${filePath}`);
-//   const dest = fs.createWriteStream(filePath);
-
-//   const drive = google.drive({
-//     version: "v3",
-//     auth: oAuth2Client,
-//   });
-
-//   drive.files
-//     .get(
-//       {
-//         fileId: fileId,
-//         alt: "media",
-//         parents: [targetFolderId],
-//       },
-//       { responseType: "stream" }
-//     )
-//     .then((rs) => {
-//       let progress = 0;
-//       rs.data
-//         .on("end", () => {
-//           console.log("Done downloading file.");
-//           res.json("OK!");
-//         })
-//         .on("error", (err) => {
-//           console.error("Error downloading file.");
-//         })
-//         .on("data", (d) => {
-//           progress += d.length;
-//           if (process.stdout.isTTY) {
-//             process.stdout.clearLine();
-//             process.stdout.cursorTo(0);
-//             process.stdout.write(`Downloaded ${progress} bytes`);
-//           }
-//         })
-//         .pipe(dest);
-//     });
-// };
 
 exports.updateNewUser = async (req, res) => {
   let user = await userModel.findById(req.params._id);
