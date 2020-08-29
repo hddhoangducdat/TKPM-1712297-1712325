@@ -1,65 +1,10 @@
 const userModel = require("../../models/userModel");
-const multer = require("multer");
-const fs = require("fs");
-const { google } = require("googleapis");
-const OAuth2Data = require("../../../credentials.json");
+const relationshipModel = require("../../models/userRelationshipModel");
 const path = require("path");
-const { client_secret, client_id, redirect_uris } = OAuth2Data.installed;
+
 const {
   getRelationShip,
 } = require("../relationshipController/relationshipController");
-
-const oAuth2Client = new google.auth.OAuth2(
-  client_id,
-  client_secret,
-  redirect_uris[0]
-);
-
-const targetFolderId = "12OVzJ1Jxr0p5SUNuYgCxNu4sC6hqelsK";
-const SCOPES = ["https://www.googleapis.com/auth/drive"];
-const TOKEN_PATH = "token.json";
-
-fs.readFile(TOKEN_PATH, (err, token) => {
-  if (err) return getAccessToken(oAuth2Client);
-  oAuth2Client.setCredentials(JSON.parse(token));
-});
-
-function getAccessToken(oAuth2Client) {
-  const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: "offline",
-    scope: SCOPES,
-  });
-  console.log("Authorize this app by visiting this url:", authUrl);
-}
-
-const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const filePath = path.join(
-      __dirname,
-      "..",
-      "..",
-      "..",
-      "/client/public/img/users"
-    );
-    cb(null, filePath);
-  },
-  filename: (req, file, cb) => {
-    const ext = file.originalname.split(".")[1];
-    cb(null, `user-${req.params._id}-${Date.now()}.${ext}`);
-  },
-});
-
-const multerFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith("image")) {
-    cb(null, true);
-  } else {
-    cb(new Error("Not an image. Please upload only image"), false);
-  }
-};
-
-const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
-
-const userUploadAvatar = upload.single("photo");
 
 const filterObj = (obj, ...allowedFileds) => {
   const newObj = {};
@@ -92,6 +37,33 @@ exports.getAll = async (req, res) => {
     if (err) return res.status(400).json("Error: " + err);
     if (docs) return res.json(docs);
     return res.status(404).json("Error: Not found");
+  });
+};
+
+exports.getAllFriend = async (req, res) => {
+  await relationshipModel.find(async function (err, docs) {
+    if (err) return res.status(400).json("Error: " + err);
+    if (docs) {
+      const _listId = docs.map((e) => {
+        if (
+          (e.userId1 === req.params._id || e.userId2 === req.params._id) &&
+          e.type === "friend"
+        ) {
+          return e.userId1 === req.params._id ? e.userId2 : e.userId1;
+        }
+      });
+      await Promise.all(
+        _listId.map(async (e) => {
+          const model = await userModel.findById(e);
+          return { userName: model.userName, avatar: model.avatar };
+        })
+      )
+        .then((friends) => {
+          console.log(friends);
+          return res.json(friends);
+        })
+        .catch((err) => res.status(400).json("Error: " + err));
+    }
   });
 };
 
@@ -145,54 +117,54 @@ exports.updateAvatar = async (req, res) => {
   // });
 };
 
-exports.getAvatar = (req, res) => {
-  // lay file ve
-  const fileId = "1_nwvf02WBw3S_h3-NhBRjpwhrOFthgsF";
-  const filePath = path.join(
-    __dirname,
-    "..",
-    "..",
-    "..",
-    "/public/img/users/test.jpg"
-  );
-  console.log(`Writing to ${filePath}`);
-  const dest = fs.createWriteStream(filePath);
+// exports.getAvatar = (req, res) => {
+//   // lay file ve
+//   const fileId = "1_nwvf02WBw3S_h3-NhBRjpwhrOFthgsF";
+//   const filePath = path.join(
+//     __dirname,
+//     "..",
+//     "..",
+//     "..",
+//     "/public/img/users/test.jpg"
+//   );
+//   console.log(`Writing to ${filePath}`);
+//   const dest = fs.createWriteStream(filePath);
 
-  const drive = google.drive({
-    version: "v3",
-    auth: oAuth2Client,
-  });
+//   const drive = google.drive({
+//     version: "v3",
+//     auth: oAuth2Client,
+//   });
 
-  drive.files
-    .get(
-      {
-        fileId: fileId,
-        alt: "media",
-        parents: [targetFolderId],
-      },
-      { responseType: "stream" }
-    )
-    .then((rs) => {
-      let progress = 0;
-      rs.data
-        .on("end", () => {
-          console.log("Done downloading file.");
-          res.json("OK!");
-        })
-        .on("error", (err) => {
-          console.error("Error downloading file.");
-        })
-        .on("data", (d) => {
-          progress += d.length;
-          if (process.stdout.isTTY) {
-            process.stdout.clearLine();
-            process.stdout.cursorTo(0);
-            process.stdout.write(`Downloaded ${progress} bytes`);
-          }
-        })
-        .pipe(dest);
-    });
-};
+//   drive.files
+//     .get(
+//       {
+//         fileId: fileId,
+//         alt: "media",
+//         parents: [targetFolderId],
+//       },
+//       { responseType: "stream" }
+//     )
+//     .then((rs) => {
+//       let progress = 0;
+//       rs.data
+//         .on("end", () => {
+//           console.log("Done downloading file.");
+//           res.json("OK!");
+//         })
+//         .on("error", (err) => {
+//           console.error("Error downloading file.");
+//         })
+//         .on("data", (d) => {
+//           progress += d.length;
+//           if (process.stdout.isTTY) {
+//             process.stdout.clearLine();
+//             process.stdout.cursorTo(0);
+//             process.stdout.write(`Downloaded ${progress} bytes`);
+//           }
+//         })
+//         .pipe(dest);
+//     });
+// };
 
 exports.updateNewUser = async (req, res) => {
   let user = await userModel.findById(req.params._id);
