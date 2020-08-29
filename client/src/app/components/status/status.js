@@ -2,18 +2,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
 
-import nested from "../../utils/nested";
-import { ReactComponent as PhotoIcon } from "../../asset/img/icon/photopost.svg";
 import { ReactComponent as EmojiIcon } from "../../asset/img/icon/emoji.svg";
-import { ReactComponent as VideoIcon } from "../../asset/img/icon/videopost.svg";
 import { ReactComponent as DownArrowIcon } from "../../asset/img/icon/down-arrow.svg";
 import { ReactComponent as SaveIcon } from "../../asset/img/icon/save.svg";
 import { ReactComponent as ShareIcon } from "../../asset/img/icon/share.svg";
 import { ReactComponent as LikeIcon } from "../../asset/img/icon/heart.svg";
 import { ReactComponent as CommentIcon } from "../../asset/img/icon/comment.svg";
 import { ReactComponent as HeartActive } from "../../asset/img/icon/heart-active.svg";
-import { useDispatch, useSelector, connect } from "react-redux";
-import { POST_ON } from "../../store/value";
+import { useSelector, connect } from "react-redux";
 import {
   getStatus,
   likeStatus,
@@ -46,10 +42,10 @@ const Status = ({
   }, [status._id]);
 
   if (!status) return <div></div>;
-  else if (group && status.group.id === "none") return <div></div>;
+  else if (group && status.group.id !== group) return <div></div>;
   else
     return (
-      <li key={index} className="home-page-list-status">
+      <li className="home-page-list-status">
         <div className="home-page-list-status__header">
           <img src={avatar} alt="" />
           <div className="home-page-list-status__header__info">

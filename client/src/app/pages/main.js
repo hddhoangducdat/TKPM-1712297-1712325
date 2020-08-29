@@ -13,9 +13,7 @@ import SubmitDeadLine from "../components/deadline/submitDeadLine";
 const Home = () => {
   const { chatBox } = useSelector((state) => state.utils.file);
   const { postForm } = useSelector((state) => state.utils.file);
-  const { group, deadline, submit, status } = useSelector(
-    (state) => state.utils.post
-  );
+  const { group, deadline, submit } = useSelector((state) => state.utils.post);
 
   return (
     <div className="home-container">
@@ -30,7 +28,7 @@ const Home = () => {
       </div>
       {chatBox.show ? <ChatBoxFile /> : <div />}
       {group === 1 ? <GroupCreate /> : <div />}
-      {postForm === 1 ? <PostForm /> : <div />}
+      {postForm !== 0 ? <PostForm /> : <div />}
       {deadline === 1 ? <DeadLinePost /> : <div />}
       {submit !== 0 ? <SubmitDeadLine /> : <div />}
     </div>

@@ -9,7 +9,7 @@ export default (state = 0, action) => {
       return 0;
 
     case POST_SAVE:
-      return -1;
+      return 0;
 
     default:
       return state;

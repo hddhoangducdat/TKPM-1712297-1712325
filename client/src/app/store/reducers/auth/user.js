@@ -19,8 +19,7 @@ export default (state = {}, action) => {
       return { ...state, data: action.payload.data };
 
     case ADD_STATUS:
-      state.status = [{ id: action.payload, like: false }, ...state.status];
-      return state;
+      return { ...state, status: [action.payload, ...state.status] };
 
     case SEEN_NOTI:
       return { ...state, noti: state.noti - 1 };

@@ -5,20 +5,18 @@ import nested from "../../utils/nested";
 import { ReactComponent as PhotoIcon } from "../../asset/img/icon/photopost.svg";
 import { ReactComponent as EmojiIcon } from "../../asset/img/icon/emoji.svg";
 import { ReactComponent as VideoIcon } from "../../asset/img/icon/videopost.svg";
-import { ReactComponent as DownArrowIcon } from "../../asset/img/icon/down-arrow.svg";
-import { ReactComponent as SaveIcon } from "../../asset/img/icon/save.svg";
-import { ReactComponent as ShareIcon } from "../../asset/img/icon/share.svg";
-import { ReactComponent as LikeIcon } from "../../asset/img/icon/heart.svg";
-import { ReactComponent as CommentIcon } from "../../asset/img/icon/comment.svg";
-import { ReactComponent as HeartActive } from "../../asset/img/icon/heart-active.svg";
-import { useDispatch, useSelector, connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { POST_ON } from "../../store/value";
 import Status from "../../components/status/status";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { avatar, status } = useSelector((state) => state.auth.user);
-  const [listStatus, setListStatus] = useState([]);
+
+  const { avatar } = useSelector((state) => state.auth.user);
+
+  const status = useSelector((state) =>
+    state.auth.user.status instanceof Array ? state.auth.user.status : []
+  );
 
   return (
     <div className="home-page">
@@ -52,13 +50,9 @@ const Home = () => {
         </div>
       </div>
       <ul className="home-page-list">
-        {status instanceof Array ? (
-          status.map((s, i) => {
-            return <Status isLike={s.like} index={i} id={s.id} />;
-          })
-        ) : (
-          <div></div>
-        )}
+        {status.map((s, i) => {
+          return <Status key={i} index={i} id={s} />;
+        })}
       </ul>
     </div>
   );

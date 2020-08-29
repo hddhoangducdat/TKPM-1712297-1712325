@@ -4,13 +4,9 @@ const statusModel = require("../../models/statusModel");
 const groupModel = require("../../models/groupUserModel");
 
 exports.likeStatus = async (req, res) => {
-  const user = await userModel.findById(req.params._id);
   const status = await statusModel.findById(req.body.id);
-  user.status[req.body.index].like = true;
   status.like = [req.params._id, ...status.like];
-  user.markModified("status");
   await status.save();
-  await user.save();
 };
 
 exports.commentStatus = async (req, res) => {
@@ -29,16 +25,12 @@ exports.commentStatus = async (req, res) => {
 };
 
 exports.unlikeStatus = async (req, res) => {
-  const user = await userModel.findById(req.params._id);
   const status = await statusModel.findById(req.body.id);
-  user.status[req.body.index].like = false;
   status.like = status.like.filter((l) => {
     if (l === req.params._id) return false;
     return true;
   });
-  user.markModified("status");
   await status.save();
-  await user.save();
 };
 
 exports.createStatusGroup = async (req, res) => {
@@ -63,7 +55,7 @@ exports.createStatusGroup = async (req, res) => {
   group.data.member.forEach(async (member) => {
     const userMember = await userModel.findById(member);
     userMember.status = [
-      { id: "group-" + req.body.group._id + "-" + status._id, like: false },
+      "group-" + req.body.group._id + "-" + status._id,
       ...userMember.status,
     ];
     await userMember.save();
@@ -95,34 +87,16 @@ exports.createStatus = async (req, res) => {
   });
   friend1.forEach(async (f) => {
     const friend = await userModel.findById(f.userId2);
-    friend.status = [
-      {
-        id: status._id,
-        like: false,
-      },
-      ...friend.status,
-    ];
+    friend.status = [status._id, ...friend.status];
     await friend.save();
   });
   friend2.forEach(async (f) => {
     const friend = await userModel.findById(f.userId1);
-    friend.status = [
-      {
-        id: status._id,
-        like: false,
-      },
-      ...friend.status,
-    ];
+    friend.status = [status._id, ...friend.status];
     await friend.save();
   });
 
-  user.status = [
-    {
-      id: status._id,
-      like: false,
-    },
-    ...user.status,
-  ];
+  user.status = [status._id, ...user.status];
   await user.save();
   await status.save();
 
