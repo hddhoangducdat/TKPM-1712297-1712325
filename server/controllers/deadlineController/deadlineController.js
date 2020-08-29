@@ -5,6 +5,7 @@ const fs = require("fs");
 const path = require("path");
 const { google } = require("googleapis");
 const OAuth2Data = require("../../../credentials.json");
+const groupUserModel = require("../../models/groupUserModel");
 const { client_secret, client_id, redirect_uris } = OAuth2Data.installed;
 const oAuth2Client = new google.auth.OAuth2(
   client_id,
@@ -100,6 +101,14 @@ exports.uploadFiletoDrive = async (req, res) => {
           // do nothing cause timeEnd is default
         }
 
+        const groupModel = await groupUserModel.findById(req.body.groupId);
+        groupModel.data.deadlines = [
+          newModel._id,
+          ...groupModel.data.deadlines,
+        ];
+        groupModel.markModified("data.deadlines");
+        await groupModel.save();
+
         await newModel.save(null, function (err, docs) {
           if (err) return res.status(400).json("Error: " + err);
           if (docs) return res.json(docs);
@@ -140,6 +149,11 @@ exports.createDeadline = async (req, res, next) => {
         // do nothing cause timeEnd is default
       }
       console.log(newModel);
+
+      const groupModel = await groupUserModel.findById(req.body.groupId);
+      groupModel.data.deadlines = [newModel._id, ...groupModel.data.deadlines];
+      groupModel.markModified("data.deadlines");
+      await groupModel.save();
 
       await newModel
         .save()
@@ -197,7 +211,7 @@ exports.userSubmittion = async (req, res) => {
         {
           from: req.body.userId,
           fileName: req.file.filename,
-          url: `https://drive.google.com/uc?id=${file.data.id}&export=download`,
+          fileUrl: `https://drive.google.com/uc?id=${file.data.id}&export=download`,
         },
       ];
       console.log(deadline);
@@ -212,4 +226,85 @@ exports.getDeadline = async (req, res) => {
     groupId: req.params._id,
   });
   res.send(response);
+};
+
+exports.getFilesDeadline = async (req, res) => {
+  console.log(req.params._id);
+
+  //return all file submit of deadline
+  await deadlineModel
+    .findById(req.params._id)
+    .then((docs) => {
+      // if docs.files.length === 0 . return empty array
+      // else
+      res.json(docs.files);
+    })
+    .catch((err) => res.json("Error: " + err));
+};
+
+//
+
+exports.downloadFile = async (req, res) => {
+  //req.body: {fileName, fileUrl, from}
+  const obj = {
+    fileName: req.body.fileName,
+    fileUrl: req.body.fileUrl,
+    userId: req.body.from,
+  };
+  await fileModel
+    .find(obj)
+    .then(async (docs) => {
+      //Split file id
+
+      const startStr = docs[0].fileUrl.indexOf("=") + 1;
+      const endStr = docs[0].fileUrl.indexOf("&");
+      const fileId = docs[0].fileUrl.substring(startStr, endStr);
+
+      let dir =
+        req.body.dir === undefined
+          ? path.join(process.env.HOME || process.env.USERPROFILE, "downloads/")
+          : req.body.dir;
+
+      const filePath = path.join(dir, docs[0].fileName);
+      console.log(`Writing to ${filePath}`);
+      const dest = fs.createWriteStream(filePath, { flags: "a" });
+      const drive = google.drive({
+        version: "v3",
+        auth: oAuth2Client,
+      });
+
+      await drive.files
+        .get(
+          {
+            fileId: fileId,
+            alt: "media",
+            parents: [targetFolderId],
+          },
+          { responseType: "stream" }
+        )
+        .then((rs) => {
+          let progress = 0;
+          rs.data
+            .on("end", () => {
+              console.log("Done downloading file.");
+              // Download successfully ->Send code
+              res.json("OK");
+            })
+            .on("error", (err) => {
+              console.error("Error downloading file");
+            })
+            .on("data", (d) => {
+              progress += d.length;
+              if (process.stdout.isTTY) {
+                process.stdout.clearLine();
+                process.stdout.cursorTo(0);
+                process.stdout.write(`Downloaded ${progress} bytes`);
+              }
+            })
+            .pipe(dest);
+        });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+
+  // start download with gg api
 };

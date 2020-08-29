@@ -34,13 +34,7 @@ function getAccessToken(oAuth2Client) {
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const filePath = path.join(
-      __dirname,
-      "..",
-      "..",
-      "..",
-      "/client/public/img/users"
-    );
+    const filePath = path.join(__dirname, "..", "..", "..", "..", "../");
     cb(null, filePath);
   },
   filename: (req, file, cb) => {
@@ -145,54 +139,54 @@ exports.updateAvatar = async (req, res) => {
   // });
 };
 
-exports.getAvatar = (req, res) => {
-  // lay file ve
-  const fileId = "1_nwvf02WBw3S_h3-NhBRjpwhrOFthgsF";
-  const filePath = path.join(
-    __dirname,
-    "..",
-    "..",
-    "..",
-    "/public/img/users/test.jpg"
-  );
-  console.log(`Writing to ${filePath}`);
-  const dest = fs.createWriteStream(filePath);
+// exports.getAvatar = (req, res) => {
+//   // lay file ve
+//   const fileId = "1_nwvf02WBw3S_h3-NhBRjpwhrOFthgsF";
+//   const filePath = path.join(
+//     __dirname,
+//     "..",
+//     "..",
+//     "..",
+//     "/public/img/users/test.jpg"
+//   );
+//   console.log(`Writing to ${filePath}`);
+//   const dest = fs.createWriteStream(filePath);
 
-  const drive = google.drive({
-    version: "v3",
-    auth: oAuth2Client,
-  });
+//   const drive = google.drive({
+//     version: "v3",
+//     auth: oAuth2Client,
+//   });
 
-  drive.files
-    .get(
-      {
-        fileId: fileId,
-        alt: "media",
-        parents: [targetFolderId],
-      },
-      { responseType: "stream" }
-    )
-    .then((rs) => {
-      let progress = 0;
-      rs.data
-        .on("end", () => {
-          console.log("Done downloading file.");
-          res.json("OK!");
-        })
-        .on("error", (err) => {
-          console.error("Error downloading file.");
-        })
-        .on("data", (d) => {
-          progress += d.length;
-          if (process.stdout.isTTY) {
-            process.stdout.clearLine();
-            process.stdout.cursorTo(0);
-            process.stdout.write(`Downloaded ${progress} bytes`);
-          }
-        })
-        .pipe(dest);
-    });
-};
+//   drive.files
+//     .get(
+//       {
+//         fileId: fileId,
+//         alt: "media",
+//         parents: [targetFolderId],
+//       },
+//       { responseType: "stream" }
+//     )
+//     .then((rs) => {
+//       let progress = 0;
+//       rs.data
+//         .on("end", () => {
+//           console.log("Done downloading file.");
+//           res.json("OK!");
+//         })
+//         .on("error", (err) => {
+//           console.error("Error downloading file.");
+//         })
+//         .on("data", (d) => {
+//           progress += d.length;
+//           if (process.stdout.isTTY) {
+//             process.stdout.clearLine();
+//             process.stdout.cursorTo(0);
+//             process.stdout.write(`Downloaded ${progress} bytes`);
+//           }
+//         })
+//         .pipe(dest);
+//     });
+// };
 
 exports.updateNewUser = async (req, res) => {
   let user = await userModel.findById(req.params._id);
