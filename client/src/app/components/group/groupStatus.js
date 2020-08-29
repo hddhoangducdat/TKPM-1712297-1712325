@@ -50,7 +50,7 @@ const GroupStatus = () => {
       </div>
       <ul className="home-page-list group-page-home-main__resize">
         {status.map((s, i) => {
-          return <Status key={i} group={_id} index={i} id={s} />;
+          return <Status key={s} group={_id} index={i} id={s} />;
         })}
       </ul>
     </div>

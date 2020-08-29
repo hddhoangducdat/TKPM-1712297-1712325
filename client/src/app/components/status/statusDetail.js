@@ -1,7 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
-
 import { ReactComponent as EmojiIcon } from "../../asset/img/icon/emoji.svg";
 import { ReactComponent as DownArrowIcon } from "../../asset/img/icon/down-arrow.svg";
 import { ReactComponent as SaveIcon } from "../../asset/img/icon/save.svg";
@@ -9,72 +7,70 @@ import { ReactComponent as ShareIcon } from "../../asset/img/icon/share.svg";
 import { ReactComponent as LikeIcon } from "../../asset/img/icon/heart.svg";
 import { ReactComponent as CommentIcon } from "../../asset/img/icon/comment.svg";
 import { ReactComponent as HeartActive } from "../../asset/img/icon/heart-active.svg";
-import { useSelector, connect } from "react-redux";
+import { ReactComponent as CloseIcon } from "../../asset/img/icon/close.svg";
+import { useSelector, useDispatch } from "react-redux";
 import {
   getStatus,
   likeStatus,
   unlikeStatus,
   commentStatus,
 } from "../../store/actions";
+import { STATUS_OFF } from "../../store/value";
 
-const Status = ({
-  index,
-  id,
-  getStatus,
-  likeStatus,
-  unlikeStatus,
-  commentStatus,
-  group,
-}) => {
+const StatusDetail = () => {
   const [status, setStatus] = useState(false);
   const [like, setLike] = useState([]);
   const [comments, setComments] = useState([]);
   const { avatar, userName } = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  const id = useSelector((state) => state.utils.status);
   const userId = useSelector((state) => state.auth.id);
 
   useEffect(() => {
     const tmp = id.split("-");
     if (tmp.length > 1) {
-      getStatus(tmp[2], setStatus, setComments, setLike);
+      dispatch(getStatus(tmp[2], setStatus, setComments, setLike));
     } else {
-      getStatus(tmp[0], setStatus, setComments, setLike);
+      dispatch(getStatus(tmp[0], setStatus, setComments, setLike));
     }
-  }, [status._id, index]);
+  }, [id]);
 
-  if (!status) return <div></div>;
-  else if (group && status.group.id !== group) return <div></div>;
-  else
-    return (
-      <li className="home-page-list-status">
-        <div className="home-page-list-status__header">
-          <img src={avatar} alt="" />
-          <div className="home-page-list-status__header__info">
-            <div className="home-page-list-status__header__info__name">
-              {status.group.id !== "none"
-                ? status.userName + " >>> " + status.group.name
-                : status.userName}
-            </div>
-
-            <p className="home-page-list-status__header__info__time">4 mins</p>
+  return (
+    <div className="middle-blur middle-blur-split">
+      <div className="grid-item-image">
+        <a
+          href="#"
+          className="grid-item-image-icon"
+          onClick={() => {
+            dispatch({ type: STATUS_OFF });
+          }}
+        >
+          <CloseIcon />
+        </a>
+        {status.image === "" ? (
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png"
+            alt=""
+          />
+        ) : (
+          <img src={status.image} alt="" />
+        )}
+      </div>
+      <div className="grid-item-info">
+        <div className="status-header">
+          <img src={status.avatar} alt="" />
+          <div className="status-header-name">
+            <span>{status.userName}</span>
+            <p>2 hours</p>
           </div>
-          <a href="#" className="home-page-list-status__header__info__icon">
-            <DownArrowIcon />
-          </a>
         </div>
-        <div className="home-page-list-status__contain">
-          {status.text === "" ? (
-            <div></div>
-          ) : (
-            <textarea
-              disabled={true}
-              rows={status.text.split("\n").length}
-              className="home-page-list-status__contain_textarea"
-              value={status.text}
-            />
-          )}
-        </div>
-        <div className="home-page-list-status__pic">
-          {status.image === "" ? <div /> : <img src={status.image} alt="" />}
+        <div className="status-header-text">
+          <textarea
+            disabled={true}
+            rows={3}
+            className="home-page-list-status__contain_textarea"
+            value={status.text}
+          />
         </div>
         <div className="home-page-list-status__number">
           <div className="home-page-list-status__number__contain">
@@ -107,13 +103,14 @@ const Status = ({
             <a href="#" className="home-page-list-status__icon__contain__save">
               <SaveIcon />
             </a>
+
             {!like.filter((l) => l === userId).length > 0 ? (
               <a
                 href="#"
                 className="home-page-list-status__icon__contain__like"
                 onClick={() => {
                   setLike([userId, ...like]);
-                  likeStatus(status);
+                  dispatch(likeStatus(status));
                 }}
               >
                 <LikeIcon />
@@ -129,7 +126,7 @@ const Status = ({
                       else return true;
                     })
                   );
-                  unlikeStatus(status);
+                  dispatch(unlikeStatus(status));
                 }}
               >
                 <HeartActive />
@@ -141,34 +138,10 @@ const Status = ({
             </a>
           </div>
         </div>
-        <div className="home-page-list-status__comment">
-          <div className="home-page-list-status__comment__input">
-            <img src={avatar} alt="" />
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                commentStatus(e.target.comment.value, status);
-                setComments([
-                  {
-                    userName,
-                    avatar,
-                    text: e.target.comment.value,
-                  },
-                  ...comments,
-                ]);
-                e.target.comment.value = "";
-              }}
-              className="home-page-form"
-            >
-              <input placeholder="write comment here..." name="comment" />
-            </form>
-            <a href="#">
-              <EmojiIcon />
-            </a>
-          </div>
-          <div className="home-page-list-status__comment__list">
-            {comments.map((c, i) => {
-              return (
+        <div className="home-page-list-status__comment status-detail-comment">
+          {comments.map((c, i) => {
+            return (
+              <div className="home-page-list-status__comment__list">
                 <div
                   key={i}
                   className="home-page-list-status__comment__list__container"
@@ -200,17 +173,37 @@ const Status = ({
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
-      </li>
-    );
+        <div className="home-page-list-status__comment__input status-detail-input">
+          <img src={avatar} alt="" />
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              dispatch(commentStatus(e.target.comment.value, status));
+              setComments([
+                {
+                  userName,
+                  avatar,
+                  text: e.target.comment.value,
+                },
+                ...comments,
+              ]);
+              e.target.comment.value = "";
+            }}
+            className="home-page-form"
+          >
+            <input placeholder="write comment here..." name="comment" />
+          </form>
+          <a href="#">
+            <EmojiIcon />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default connect(null, {
-  commentStatus,
-  likeStatus,
-  getStatus,
-  unlikeStatus,
-})(Status);
+export default StatusDetail;

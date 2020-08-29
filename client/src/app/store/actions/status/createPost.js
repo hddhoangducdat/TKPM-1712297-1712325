@@ -32,6 +32,7 @@ export const createPostGroup = (group, text, url) => async (
         avatar: getState().auth.user.avatar,
         groupName: response.data.name,
         type: "add-post-group",
+        statusId: response.data._id,
       };
 
       getState().auth.socket.emit("send-noti", noti);

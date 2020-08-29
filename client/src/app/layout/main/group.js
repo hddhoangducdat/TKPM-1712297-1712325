@@ -3,14 +3,15 @@ import React, { useState } from "react";
 
 import { ReactComponent as AddGroupIcon } from "../../asset/icons/add-group.svg";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GROUP_ON } from "../../store/value";
 import GroupList from "../../components/group/groupList";
 import GroupDetail from "../../components/group/groupDetail";
 
-const Group = () => {
-  const [detail, setDetail] = useState(false);
+const Group = ({ detail, setDetail }) => {
   const dispatch = useDispatch();
+
+  const group = useSelector((state) => state.utils.group);
 
   return (
     <div className="group-page">
@@ -25,11 +26,7 @@ const Group = () => {
         </a>
       </div>
 
-      {!detail ? (
-        <GroupList setDetail={setDetail} />
-      ) : (
-        <GroupDetail setDetail={setDetail} />
-      )}
+      {group === 0 ? <GroupList /> : <GroupDetail />}
     </div>
   );
 };

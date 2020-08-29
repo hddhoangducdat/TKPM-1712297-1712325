@@ -29,7 +29,6 @@ import {
   SAVE_STATUS,
   ADD_DEADLINE,
 } from "../../store/value";
-import history from "../../../history";
 
 let socket;
 
@@ -127,7 +126,9 @@ const Middle = ({ logout, saveNoti }) => {
               className={tab[3]}
               onClick={() => {
                 colorTab(3);
-                setRender(<Notification />);
+                setRender(
+                  <Notification colorTab={colorTab} setRender={setRender} />
+                );
               }}
             >
               <BellIcon />

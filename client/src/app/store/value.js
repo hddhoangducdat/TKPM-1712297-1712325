@@ -17,6 +17,8 @@ export const UPDATE_SUCCESS = "UPDATE_SUCCESS";
 export const DISABLE_ALL = "DISABLE_ALL";
 export const STATUS_OFF = "STATUS_OFF";
 export const STATUS_ON = "STATUS_ON";
+export const GROUP_DETAIL_ON = "GROUP_DETAIL_ON";
+export const GROUP_DETAIL_OFF = "GROUP_DETAIL_OFF";
 
 export const SEARCH = "SEARCH";
 export const SEARCH_RELATIONSHIP = "SEARCH_RELATIONSHIP";

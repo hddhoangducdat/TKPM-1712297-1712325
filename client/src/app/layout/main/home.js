@@ -51,7 +51,7 @@ const Home = () => {
       </div>
       <ul className="home-page-list">
         {status.map((s, i) => {
-          return <Status key={i} index={i} id={s} />;
+          return <Status key={s} index={i} id={s} />;
         })}
       </ul>
     </div>

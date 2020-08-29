@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, connect } from "react-redux";
+import { useSelector, connect, useDispatch } from "react-redux";
 import {
   getNoti,
   acceptFriendNoti,
   seenNoti,
   increaseNoti,
+  getGroup,
 } from "../../store/actions";
 
 import Comment from "../../asset/img/png/speech-bubble.png";
@@ -15,9 +16,18 @@ import AddFriend from "../../asset/img/png/add-friend.png";
 import Post from "../../asset/img/png/blog.png";
 import DeadLine from "../../asset/img/png/deadline.png";
 import Submit from "../../asset/img/png/submit.png";
+import { STATUS_ON, GROUP_DETAIL_ON } from "../../store/value";
+import Group from "./group";
 
-const Notification = ({ seenNoti, acceptFriendNoti, getNoti }) => {
+const Notification = ({
+  seenNoti,
+  acceptFriendNoti,
+  getNoti,
+  setRender,
+  colorTab,
+}) => {
   const { noti } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getNoti();
@@ -132,7 +142,15 @@ const Notification = ({ seenNoti, acceptFriendNoti, getNoti }) => {
                   </div>
                 </div>
               ) : value.type === "add-group" ? (
-                <div className="notification-page-list-card-contain">
+                <div
+                  className="notification-page-list-card-contain"
+                  onClick={() => {
+                    colorTab(2);
+                    dispatch(getGroup({ groupId: value.groupId }));
+                    dispatch({ type: GROUP_DETAIL_ON });
+                    setRender(<Group />);
+                  }}
+                >
                   <div className="notification-page-list-card-contain__text">
                     {!value.seen ? (
                       <span className="notification-page-list-card-contain__seen">
@@ -148,7 +166,12 @@ const Notification = ({ seenNoti, acceptFriendNoti, getNoti }) => {
                   </div>
                 </div>
               ) : value.type === "add-post-group" ? (
-                <div className="notification-page-list-card-contain">
+                <div
+                  className="notification-page-list-card-contain"
+                  onClick={() => {
+                    dispatch({ type: STATUS_ON, payload: value.statusId });
+                  }}
+                >
                   <div className="notification-page-list-card-contain__text">
                     {!value.seen ? (
                       <span className="notification-page-list-card-contain__seen">
@@ -198,7 +221,12 @@ const Notification = ({ seenNoti, acceptFriendNoti, getNoti }) => {
                   </div>
                 </div>
               ) : value.type === "like" ? (
-                <div className="notification-page-list-card-contain">
+                <div
+                  className="notification-page-list-card-contain"
+                  onClick={() => {
+                    dispatch({ type: STATUS_ON, payload: value.statusId });
+                  }}
+                >
                   <div className="notification-page-list-card-contain__text">
                     {!value.seen ? (
                       <span className="notification-page-list-card-contain__seen">
@@ -214,7 +242,12 @@ const Notification = ({ seenNoti, acceptFriendNoti, getNoti }) => {
                   </div>
                 </div>
               ) : value.type === "comment" ? (
-                <div className="notification-page-list-card-contain">
+                <div
+                  className="notification-page-list-card-contain"
+                  onClick={() => {
+                    dispatch({ type: STATUS_ON, payload: value.statusId });
+                  }}
+                >
                   <div className="notification-page-list-card-contain__text">
                     {!value.seen ? (
                       <span className="notification-page-list-card-contain__seen">

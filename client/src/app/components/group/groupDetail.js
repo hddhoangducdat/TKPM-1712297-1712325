@@ -5,10 +5,14 @@ import GroupStatus from "./groupStatus";
 
 import { ReactComponent as BackIcon } from "../../asset/img/icon/back.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { REMOVE_GROUP_DETAIL, DEADLINE_ON } from "../../store/value";
+import {
+  REMOVE_GROUP_DETAIL,
+  DEADLINE_ON,
+  GROUP_DETAIL_OFF,
+} from "../../store/value";
 import nested from "../../utils/nested";
 
-const GroupDetail = ({ setDetail }) => {
+const GroupDetail = () => {
   const { group } = useSelector((state) => state);
   const { id } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -20,7 +24,7 @@ const GroupDetail = ({ setDetail }) => {
           href="#"
           onClick={() => {
             dispatch({ type: REMOVE_GROUP_DETAIL });
-            setDetail(false);
+            dispatch({ type: GROUP_DETAIL_OFF });
           }}
         >
           <BackIcon />

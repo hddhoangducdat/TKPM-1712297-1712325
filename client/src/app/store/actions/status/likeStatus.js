@@ -1,9 +1,7 @@
 import axios from "../../../api/server";
-import { LIKE_STATUS } from "../../value";
 import { saveNoti } from "../noti";
 
-export const likeStatus = (status, index) => async (dispatch, getState) => {
-  dispatch({ type: LIKE_STATUS, payload: { id: getState().auth.id, index } });
+export const likeStatus = (status) => async (dispatch, getState) => {
   if (status.from !== getState().auth.id) {
     const noti = {
       from: getState().auth.id,
@@ -17,7 +15,6 @@ export const likeStatus = (status, index) => async (dispatch, getState) => {
     dispatch(saveNoti(noti));
   }
   await axios.post(`/status/like/${getState().auth.id}`, {
-    index,
     id: status._id,
   });
 };

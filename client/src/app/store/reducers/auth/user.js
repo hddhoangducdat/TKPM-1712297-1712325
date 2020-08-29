@@ -7,8 +7,6 @@ import {
   RENDER_NOTI,
   SEEN_NOTI,
   ADD_STATUS,
-  LIKE_STATUS,
-  UNLIKE_STATUS,
 } from "../../value";
 
 export default (state = {}, action) => {

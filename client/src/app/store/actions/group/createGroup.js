@@ -35,6 +35,7 @@ export const createGroup = (friend, file, name) => async (
       const noti = {
         from: getState().auth.id,
         to: f._id,
+        groupId: response.data.groupId,
         userName: getState().auth.user.userName,
         avatar: getState().auth.user.avatar,
         name: response.data.name,
