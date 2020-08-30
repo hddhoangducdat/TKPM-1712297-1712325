@@ -1,11 +1,13 @@
 const groupUserModel = require("../../models/groupUserModel");
 const chatBoxModel = require("../../models/chatModel");
 const userModel = require("../../models/userModel");
+const fileModel = require("../../models/fileModel");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 const { google } = require("googleapis");
 const OAuth2Data = require("../../../credentials.json");
+const groupRoute = require("../../routers/groupRoute/groupRoute");
 
 const { client_secret, client_id, redirect_uris } = OAuth2Data.installed;
 const oAuth2Client = new google.auth.OAuth2(
@@ -214,4 +216,26 @@ exports.addMember = async (req, res) => {
 exports.getGroup = async (req, res) => {
   const result = await groupUserModel.findById(req.params._id);
   res.send(result);
+};
+
+exports.getAllFile = async (req, res) => {
+  await groupUserModel.findById(req.params._id, async function (err, doc) {
+    if (err) return res.status(400).json("Error: " + err);
+    if (doc) {
+      await Promise.all(
+        doc.data.files.map(async (e) => {
+          const file = await fileModel.findById(e);
+          return file;
+        })
+      )
+        .then((files) => {
+          // console.log(files);
+          //return All file of status in Group
+          res.json(files);
+        })
+        .catch((err) => {
+          res.status(400).json("Error: " + err);
+        });
+    }
+  });
 };
