@@ -4,3 +4,5 @@ export * from "./postStatusGroup";
 export * from "./saveDeadline";
 export * from "./getDeadline";
 export * from "./userSubmitDeadline";
+export * from "./getAllFileGroup";
+export * from "./inviteUser";

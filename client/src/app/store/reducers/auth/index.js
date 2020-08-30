@@ -5,8 +5,10 @@ import id from "./id";
 import submit from "./submit";
 import otp from "./otp";
 import socket from "./socket";
+import file from "./file";
 
 const authReducers = combineReducers({
+  file,
   id,
   user,
   isAuthenticated,

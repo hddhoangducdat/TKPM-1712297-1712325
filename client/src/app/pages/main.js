@@ -11,13 +11,18 @@ import GroupCreate from "../components/group/groupCreate";
 import SubmitDeadLine from "../components/deadline/submitDeadLine";
 import StatusDetail from "../components/status/statusDetail";
 import FileManager from "../components/file/fileManager";
+import FriendManager from "../components/relationship/friendManager";
+import InviteFriend from "../components/relationship/inviteFriend";
 
 const Home = () => {
   const { chatBox, postForm, fileManager } = useSelector(
     (state) => state.utils.file
   );
-  const { group, deadline, submit } = useSelector((state) => state.utils.post);
+  const { group, deadline, submit, invite } = useSelector(
+    (state) => state.utils.post
+  );
   const { status } = useSelector((state) => state.utils);
+  const { friend } = useSelector((state) => state.utils.auth);
 
   return (
     <div className="home-container">
@@ -37,6 +42,8 @@ const Home = () => {
       {submit !== 0 ? <SubmitDeadLine /> : <div />}
       {status !== 0 ? <StatusDetail /> : <div />}
       {fileManager !== 0 ? <FileManager /> : <div />}
+      {friend !== 0 ? <FriendManager /> : <div />}
+      {invite !== 0 ? <InviteFriend /> : <div />}
     </div>
   );
 };

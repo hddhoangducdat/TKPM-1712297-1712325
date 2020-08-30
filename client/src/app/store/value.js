@@ -1,5 +1,7 @@
 export const LOGIN_CLICK_1 = "LOGIN_CLICK_1";
+export const GET_USER_FILE = "GET_USER_FILE";
 export const LOGIN_CLICK_2 = "LOGIN_CLICK_2";
+export const GET_GROUP_FILE = "GET_GROUP_FILE";
 export const REGISTER_CLICK_1 = "REGISTER_CLICK_1";
 export const REGISTER_CLICK_2 = "REGISTER_CLICK_2";
 export const PANEL_SHOW_BUTTON = "PANEL_SHOW_BUTTON";
@@ -21,6 +23,10 @@ export const GROUP_DETAIL_ON = "GROUP_DETAIL_ON";
 export const GROUP_DETAIL_OFF = "GROUP_DETAIL_OFF";
 export const FILE_MANAGER_ON = "FILE_MANAGER_ON";
 export const FILE_MANAGER_OFF = "FILE_MANAGER_OFF";
+export const FRIEND_MANAGER_ON = "FRIEND_MANAGER_ON";
+export const FRIEND_MANAGER_OFF = "FRIEND_MANAGER_OFF";
+export const INVITE_ON = "INVITE_ON";
+export const INVITE_OFF = "INVITE_OFF";
 
 export const SEARCH = "SEARCH";
 export const SEARCH_RELATIONSHIP = "SEARCH_RELATIONSHIP";

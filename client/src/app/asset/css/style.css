@@ -337,6 +337,7 @@ input:focus {
     display: flex;
     justify-content: center; }
   .profile-info-picture {
+    position: relative;
     margin-bottom: 1rem;
     display: inline-flex; }
     .profile-info-picture img:not(:last-child) {
@@ -346,13 +347,14 @@ input:focus {
       margin-right: 1rem;
       cursor: pointer; }
     .profile-info-picture-more {
+      right: 16px;
+      position: absolute;
       cursor: pointer;
       margin-left: 1rem;
-      position: relative;
       width: 75px;
       height: 75px;
       margin-left: 0;
-      background-color: #90f12e;
+      background-color: rgba(0, 0, 0, 0.473);
       border-radius: 0.8rem; }
       .profile-info-picture-more-content {
         color: white;
@@ -363,7 +365,7 @@ input:focus {
         left: 50%;
         transform: translate(-50%, -50%); }
     .profile-info-picture-friend {
-      background-color: #f126ae; }
+      background-color: rgba(0, 0, 0, 0.473); }
   .profile-info-friend {
     display: flex;
     justify-content: center; }
@@ -1144,6 +1146,9 @@ input:focus {
     display: flex;
     justify-content: center;
     align-items: center; }
+    .middle-blur-split .grid-item-image img {
+      max-width: 100%;
+      max-height: 100%; }
     .middle-blur-split .grid-item-image-icon {
       top: 10px;
       left: 10px;
@@ -1844,6 +1849,15 @@ button.powerful:active,
 .button.powerful:active {
   background-color: #0981e2 !important; }
 
+.friend-list-button {
+  position: absolute;
+  right: 0;
+  background-color: #1294fd;
+  border-radius: 35px;
+  font-size: 11px;
+  padding: 0px 20px;
+  text-transform: none; }
+
 .picture-manager {
   overflow: auto; }
   .picture-manager-header {
@@ -1864,6 +1878,16 @@ button.powerful:active,
     grid-column-gap: 1rem; }
     .picture-manager-list img {
       width: 100%; }
+    .picture-manager-list-file {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #036af1;
+      background-color: #ddd0d0be; }
+
+.selected-image {
+  border: solid 1px #036af1; }
 
 #banner {
   background-image: url("../img/background1.jpeg");

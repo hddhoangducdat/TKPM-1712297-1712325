@@ -27,5 +27,18 @@
     img {
       width: 100%;
     }
+
+    &-file {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #036af1;
+      background-color: #ddd0d0be;
+    }
   }
+}
+
+.selected-image {
+  border: solid 1px #036af1;
 }

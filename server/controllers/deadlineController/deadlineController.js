@@ -152,7 +152,9 @@ exports.createDeadline = async (req, res, next) => {
 
       const groupModel = await groupUserModel.findById(req.body.groupId);
       groupModel.data.deadlines = [newModel._id, ...groupModel.data.deadlines];
+      groupModel.data.files = [newModel._id, ...groupModel.data.files];
       groupModel.markModified("data.deadlines");
+      groupModel.markModified("data.files");
       await groupModel.save();
 
       await newModel

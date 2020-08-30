@@ -2,7 +2,7 @@ const express = require("express");
 
 const {
   createUser,
-  getUser,
+  // getUser,
   getAll,
   updateNewUser,
   updateAvatar,
@@ -15,7 +15,7 @@ const userRoute = express();
 
 userRoute.post("/", createUser);
 userRoute.post("/search/:key", searchUser);
-userRoute.get("/:_id", getUser);
+// userRoute.get("/:_id", getUser);
 userRoute.get("/", getAll);
 userRoute.patch("/update/starting/:_id", updateNewUser);
 userRoute.patch("/update/avatar/:_id", updateAvatar);

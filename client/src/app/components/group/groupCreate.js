@@ -35,10 +35,6 @@ const GroupCreate = ({ getFriends, createGroup }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getFriends();
-  }, [1]);
-
-  useEffect(() => {
     setArr(
       friend.map((f) => {
         return false;

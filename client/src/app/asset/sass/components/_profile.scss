@@ -46,6 +46,7 @@
     }
 
     &-picture {
+      position: relative;
       margin-bottom: 1rem;
       display: inline-flex;
       // width: 100%;
@@ -59,13 +60,14 @@
       }
 
       &-more {
+        right: 16px;
+        position: absolute;
         cursor: pointer;
         margin-left: 1rem;
-        position: relative;
         width: 75px;
         height: 75px;
         margin-left: 0;
-        background-color: rgb(144, 241, 46);
+        background-color: rgba(0, 0, 0, 0.473);
         border-radius: 0.8rem;
         // text-align: center;
 
@@ -81,7 +83,7 @@
       }
 
       &-friend {
-        background-color: #f126ae;
+        background-color: rgba(0, 0, 0, 0.473);
       }
     }
 

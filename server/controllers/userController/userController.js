@@ -1,7 +1,6 @@
 const userModel = require("../../models/userModel");
 const relationshipModel = require("../../models/userRelationshipModel");
-<<<<<<< HEAD
-=======
+
 const fileModel = require("../../models/fileModel");
 const path = require("path");
 
@@ -17,7 +16,6 @@ const filterObj = (obj, ...allowedFileds) => {
 
   return newObj;
 };
->>>>>>> 8da10ccf7becf444a591e832a34565ea6d584e4b
 
 exports.createUser = async (req, res) => {
   const modelUser = new userModel();
@@ -31,10 +29,10 @@ exports.createUser = async (req, res) => {
     .catch((err) => res.status(400).send(err));
 };
 
-exports.getUser = async (req, res) => {
-  await userModel.findBy;
-  userRoute.get("/:_id", getUser);
-};
+// exports.getUser = async (req, res) => {
+//   await userModel.findBy;
+//   userRoute.get("/:_id", getUser);
+// };
 
 exports.getAll = async (req, res) => {
   await userModel.find(function (err, docs) {

@@ -63,8 +63,12 @@ exports.createStatusGroup = async (req, res) => {
     await userMember.save();
   });
 
-  group.data.files = [...group.data.files, file._id];
+  group.data.status = [status._id, ...group.data.status];
+  if (file) {
+    group.data.files = [...group.data.files, file._id];
+  }
   group.markModified("data.files");
+  group.markModified("data.status");
 
   await status.save();
   await group.save();

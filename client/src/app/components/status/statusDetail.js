@@ -140,11 +140,8 @@ const StatusDetail = () => {
         <div className="home-page-list-status__comment status-detail-comment">
           {comments.map((c, i) => {
             return (
-              <div className="home-page-list-status__comment__list">
-                <div
-                  key={i}
-                  className="home-page-list-status__comment__list__container"
-                >
+              <div key={i} className="home-page-list-status__comment__list">
+                <div className="home-page-list-status__comment__list__container">
                   <img src={c.avatar} alt="" />
 
                   <div className="home-page-list-status__comment__list__container__other">

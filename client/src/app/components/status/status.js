@@ -33,6 +33,7 @@ const Status = ({
   const userId = useSelector((state) => state.auth.id);
 
   useEffect(() => {
+    console.log(id);
     const tmp = id.split("-");
     if (tmp.length > 1) {
       getStatus(tmp[2], setStatus, setComments, setLike);

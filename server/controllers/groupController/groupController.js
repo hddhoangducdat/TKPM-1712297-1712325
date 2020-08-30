@@ -171,54 +171,13 @@ exports.uploadImageCover = async (req, res) => {
   );
 };
 
-exports.addMember = async (req, res) => {
-  const host = req.body.host;
-  const newMember = req.body.member;
-
-  const groupUser = await groupUserModel.findById(req.params._id);
-
-  if (groupUser.admin === host) {
-    // Add member to group
-    groupUser.data.member = [...groupUser.data.member, newMember];
-    groupUser.markModified("data.member");
-
-    await groupUser.save();
-
-    //Create chatBox in member
-
-    const newGroupMember = await userModel.findById(req.body.member);
-
-    newGroupMember.chatBox = [
-      ...newGroupMember.chatBox,
-      {
-        id: groupUser.data.chatGroup,
-        name: groupUser.groupName,
-        avatar: groupUser.avatar,
-      },
-    ];
-
-    await newGroupMember.save();
-    //add member to chatGroup
-    const chatGroupDialog = await chatBoxModel.findById(
-      groupUser.data.chatGroup
-    );
-
-    chatGroupDialog.member = [...chatGroupDialog.member, newGroupMember._id];
-    chatGroupDialog.markModified("member");
-    await chatGroupDialog.save();
-    res.json(groupUser);
-  } else {
-    // khong phai admin
-    res.status(400).json("");
-  }
-};
-
 exports.getGroup = async (req, res) => {
   const result = await groupUserModel.findById(req.params._id);
   res.send(result);
 };
 
 exports.getAllFile = async (req, res) => {
+  console.log(req.params._id);
   await groupUserModel.findById(req.params._id, async function (err, doc) {
     if (err) return res.status(400).json("Error: " + err);
     if (doc) {
@@ -237,5 +196,57 @@ exports.getAllFile = async (req, res) => {
           res.status(400).json("Error: " + err);
         });
     }
+  });
+};
+
+exports.addMember = async (req, res) => {
+  const groupUser = await groupUserModel.findById(req.body.groupId);
+
+  // Add member to group
+  groupUser.data.member = [...groupUser.data.member, req.params._id];
+  groupUser.markModified("data.member");
+
+  await groupUser.save();
+
+  //Create chatBox in member
+
+  const newGroupMember = await userModel.findById(req.params._id);
+
+  newGroupMember.chatBox = [
+    {
+      id: groupUser.data.chatGroup,
+      name: groupUser.groupName,
+      avatar: groupUser.avatar,
+      seen: false,
+      groupId: req.body.groupId,
+    },
+    ...newGroupMember.chatBox,
+  ];
+
+  newGroupMember.markModified("chatBox");
+  //Add status group to member
+
+  groupUser.data.status.map((e) => {
+    newGroupMember.status = [
+      "group-" + req.body.groupId + "-" + e,
+      ...newGroupMember.status,
+    ];
+    newGroupMember.markModified("status");
+  });
+
+  await newGroupMember.save();
+  //add member to chatGroup
+  const chatGroupDialog = await chatBoxModel.findById(groupUser.data.chatGroup);
+
+  chatGroupDialog.member = [...chatGroupDialog.member, newGroupMember._id];
+  chatGroupDialog.markModified("member");
+  await chatGroupDialog.save();
+  res.json({
+    id: chatGroupDialog._id,
+    name: groupUser.groupName,
+    avatar: groupUser.avatar,
+    groupId: groupUser._id,
+    member: 2,
+    seen: false,
   });
 };
