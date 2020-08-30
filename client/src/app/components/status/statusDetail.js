@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
 import { ReactComponent as EmojiIcon } from "../../asset/img/icon/emoji.svg";
-import { ReactComponent as DownArrowIcon } from "../../asset/img/icon/down-arrow.svg";
 import { ReactComponent as SaveIcon } from "../../asset/img/icon/save.svg";
 import { ReactComponent as ShareIcon } from "../../asset/img/icon/share.svg";
 import { ReactComponent as LikeIcon } from "../../asset/img/icon/heart.svg";

@@ -1,19 +1,5 @@
 const userModel = require("../../models/userModel");
 const relationshipModel = require("../../models/userRelationshipModel");
-const path = require("path");
-
-const {
-  getRelationShip,
-} = require("../relationshipController/relationshipController");
-
-const filterObj = (obj, ...allowedFileds) => {
-  const newObj = {};
-  Object.keys(obj).forEach((el) => {
-    if (allowedFileds.includes(el)) newObj[el] = obj[el];
-  });
-
-  return newObj;
-};
 
 exports.createUser = async (req, res) => {
   const modelUser = new userModel();

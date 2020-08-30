@@ -10,10 +10,12 @@ import DeadLinePost from "../components/deadline/deadlinePost";
 import GroupCreate from "../components/group/groupCreate";
 import SubmitDeadLine from "../components/deadline/submitDeadLine";
 import StatusDetail from "../components/status/statusDetail";
+import FileManager from "../components/file/fileManager";
 
 const Home = () => {
-  const { chatBox } = useSelector((state) => state.utils.file);
-  const { postForm } = useSelector((state) => state.utils.file);
+  const { chatBox, postForm, fileManager } = useSelector(
+    (state) => state.utils.file
+  );
   const { group, deadline, submit } = useSelector((state) => state.utils.post);
   const { status } = useSelector((state) => state.utils);
 
@@ -34,6 +36,7 @@ const Home = () => {
       {deadline === 1 ? <DeadLinePost /> : <div />}
       {submit !== 0 ? <SubmitDeadLine /> : <div />}
       {status !== 0 ? <StatusDetail /> : <div />}
+      {fileManager !== 0 ? <FileManager /> : <div />}
     </div>
   );
 };

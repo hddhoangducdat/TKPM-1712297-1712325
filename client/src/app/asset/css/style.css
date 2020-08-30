@@ -1844,6 +1844,27 @@ button.powerful:active,
 .button.powerful:active {
   background-color: #0981e2 !important; }
 
+.picture-manager {
+  overflow: auto; }
+  .picture-manager-header {
+    text-align: end;
+    line-height: 14px;
+    margin-bottom: 4rem; }
+    .picture-manager-header h1 {
+      color: #555555;
+      font-size: 30px;
+      font-weight: 700; }
+    .picture-manager-header p {
+      color: #aaaaaa;
+      font-size: 25px;
+      font-weight: 600; }
+  .picture-manager-list {
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr;
+    grid-column-gap: 1rem; }
+    .picture-manager-list img {
+      width: 100%; }
+
 #banner {
   background-image: url("../img/background1.jpeg");
   background-size: cover; }
