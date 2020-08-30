@@ -7,6 +7,7 @@ import ChatBoxFile from "../components/file/chatBoxFile";
 import { useSelector } from "react-redux";
 import PostForm from "../components/file/postForm";
 import DeadLinePost from "../components/deadline/deadlinePost";
+import GroupAddMember from "../components/group/groupAddMember";
 import GroupCreate from "../components/group/groupCreate";
 import SubmitDeadLine from "../components/deadline/submitDeadLine";
 import StatusDetail from "../components/status/statusDetail";
@@ -16,7 +17,9 @@ const Home = () => {
   const { chatBox, postForm, fileManager } = useSelector(
     (state) => state.utils.file
   );
-  const { group, deadline, submit } = useSelector((state) => state.utils.post);
+  const { group, deadline, submit, invite } = useSelector(
+    (state) => state.utils.post
+  );
   const { status } = useSelector((state) => state.utils);
 
   return (
@@ -34,6 +37,7 @@ const Home = () => {
       {group === 1 ? <GroupCreate /> : <div />}
       {postForm !== 0 ? <PostForm /> : <div />}
       {deadline === 1 ? <DeadLinePost /> : <div />}
+      {invite === 1 ? <GroupAddMember /> : <div />}
       {submit !== 0 ? <SubmitDeadLine /> : <div />}
       {status !== 0 ? <StatusDetail /> : <div />}
       {fileManager !== 0 ? <FileManager /> : <div />}

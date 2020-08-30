@@ -1,5 +1,6 @@
 const groupUserModel = require("../../models/groupUserModel");
 const chatBoxModel = require("../../models/chatModel");
+const statusModel = require("../../models/statusModel");
 const userModel = require("../../models/userModel");
 const fileModel = require("../../models/fileModel");
 const multer = require("multer");
@@ -196,6 +197,20 @@ exports.addMember = async (req, res) => {
         avatar: groupUser.avatar,
       },
     ];
+
+    newGroupMember.markModified("chatBox");
+    //Add status group to member
+    await Promise.all(
+      groupUser.data.status.map((e) => {
+        return "group-" + groupUser._id + "-" + e;
+      })
+    )
+      .then((status) => {
+        // tra ve tat ca stt của group
+        newGroupMember.status = [status, ...newGroupMember.status];
+        newGroupMember.markModified(status);
+      })
+      .catch((err) => res.status(400).json(err));
 
     await newGroupMember.save();
     //add member to chatGroup

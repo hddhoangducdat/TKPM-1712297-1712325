@@ -9,6 +9,7 @@ import {
   REMOVE_GROUP_DETAIL,
   DEADLINE_ON,
   GROUP_DETAIL_OFF,
+  GROUP_INVITE_ON,
 } from "../../store/value";
 import nested from "../../utils/nested";
 
@@ -58,7 +59,12 @@ const GroupDetail = () => {
               <div />
             )}
 
-            <button className="group-page-home-header__info__button">
+            <button
+              className="group-page-home-header__info__button"
+              onClick={() => {
+                dispatch({ type: GROUP_INVITE_ON });
+              }}
+            >
               + invite
             </button>
           </div>
