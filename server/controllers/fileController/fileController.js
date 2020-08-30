@@ -163,7 +163,7 @@ exports.uploadFilestoDrive = async (req, res, next) => {
           //delete the file in localhost
           fs.unlinkSync(e.path);
 
-          // upload model.fileUrl
+          // upload model.222222222222222222222222222222222222222222211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111q
           const fileUrl = `https://drive.google.com/uc?id=${file.data.id}&export=download`;
 
           await fileModel.findByIdAndUpdate(id, {

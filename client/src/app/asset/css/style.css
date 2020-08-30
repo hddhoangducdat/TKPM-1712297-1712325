@@ -1879,6 +1879,7 @@ button.powerful:active,
     .picture-manager-list img {
       width: 100%; }
     .picture-manager-list-file {
+      max-width: 256px;
       display: flex;
       justify-content: center;
       align-items: center;

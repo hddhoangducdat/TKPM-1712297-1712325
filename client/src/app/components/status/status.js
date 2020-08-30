@@ -33,7 +33,6 @@ const Status = ({
   const userId = useSelector((state) => state.auth.id);
 
   useEffect(() => {
-    console.log(id);
     const tmp = id.split("-");
     if (tmp.length > 1) {
       getStatus(tmp[2], setStatus, setComments, setLike);
@@ -48,7 +47,7 @@ const Status = ({
     return (
       <li className="home-page-list-status">
         <div className="home-page-list-status__header">
-          <img src={avatar} alt="" />
+          <img src={status.avatar} alt="" />
           <div className="home-page-list-status__header__info">
             <div className="home-page-list-status__header__info__name">
               {status.group.id !== "none"

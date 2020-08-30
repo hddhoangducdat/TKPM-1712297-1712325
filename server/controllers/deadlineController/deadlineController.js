@@ -239,7 +239,10 @@ exports.getFilesDeadline = async (req, res) => {
     .then((docs) => {
       // if docs.files.length === 0 . return empty array
       // else
-      res.json(docs.files);
+
+      res.send(docs.files);
+
+      // )
     })
     .catch((err) => res.json("Error: " + err));
 };
@@ -253,6 +256,7 @@ exports.downloadFile = async (req, res) => {
     fileUrl: req.body.fileUrl,
     userId: req.body.from,
   };
+  console.log(obj);
   await fileModel
     .find(obj)
     .then(async (docs) => {
@@ -267,9 +271,9 @@ exports.downloadFile = async (req, res) => {
           ? path.join(process.env.HOME || process.env.USERPROFILE, "downloads/")
           : req.body.dir;
 
-      const filePath = path.join(dir, docs[0].fileName);
+      const filePath = path.join(dir, docs[0].fileName.replace(/\s+/g, ""));
       console.log(`Writing to ${filePath}`);
-      const dest = fs.createWriteStream(filePath, { flags: "a" });
+      const dest = fs.createWriteStream(filePath, { flags: "w" });
       const drive = google.drive({
         version: "v3",
         auth: oAuth2Client,

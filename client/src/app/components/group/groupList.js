@@ -7,7 +7,7 @@ import { GROUP_DETAIL_ON } from "../../store/value";
 const GroupList = ({ getGroup }) => {
   const groupList = useSelector((state) => {
     return state.auth.user.chatBox.filter((c) => {
-      return c.groupId !== "none";
+      return nested(c, "groupId") && c.groupId !== "none" && c.groupId !== "";
     });
   });
   const dispatch = useDispatch();

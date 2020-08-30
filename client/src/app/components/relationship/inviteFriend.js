@@ -47,7 +47,7 @@ const InviteFriend = () => {
           <ul className="friend-list">
             {friend instanceof Array ? (
               friend.map((m, index) => {
-                if (member.includes(m)) return <div key={index}></div>;
+                if (member.includes(m._id)) return <div key={index}></div>;
                 return (
                   <li key={index} className="friend-list-detail">
                     <img src={m.avatar} alt="" />
