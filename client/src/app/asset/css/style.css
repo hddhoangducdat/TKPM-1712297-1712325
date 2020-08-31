@@ -145,7 +145,7 @@ input:focus {
       right: -63px; }
 
 .navbar {
-  height: 75px;
+  height: 7.5vh;
   background-color: #5364ba;
   border-bottom: 1px solid #e4e6eb; }
   .navbar-nav {
@@ -312,7 +312,7 @@ input:focus {
 .profile-container {
   color: black;
   background-color: #ffffff;
-  height: 100%;
+  height: 92.5vh;
   width: 100%;
   display: block;
   text-align: center; }
@@ -480,7 +480,7 @@ input:focus {
   fill: #f74545; }
 
 .messenger-container {
-  height: 100vh;
+  height: 92.5vh;
   width: 100%;
   background-color: #ffffff;
   position: relative; }
@@ -581,7 +581,8 @@ input:focus {
   border-top-right-radius: 3%;
   border: solid #65676b21 1px;
   width: 328px;
-  height: 455px; }
+  height: 455px;
+  bottom: 0; }
   .messenger-chatbox-nav {
     width: 100%;
     height: 48px;
@@ -1940,6 +1941,8 @@ body {
   margin: 0 auto;
   display: grid;
   grid-template-columns: 0.7fr 1.7fr 0.6fr; }
+  .home-container .grid {
+    height: 100vh; }
 
 ul {
   list-style: none;
