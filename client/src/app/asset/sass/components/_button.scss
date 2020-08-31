@@ -71,3 +71,13 @@ button.powerful:active,
 .button.powerful:active {
   background-color: #0981e2 !important;
 }
+
+.friend-list-button {
+  position: absolute;
+  right: 0;
+  background-color: #1294fd;
+  border-radius: 35px;
+  font-size: 11px;
+  padding: 0px 20px;
+  text-transform: none;
+}

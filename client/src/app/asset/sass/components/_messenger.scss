@@ -19,7 +19,7 @@
 }
 
 .messenger-container {
-  height: 100vh;
+  height: 92.5vh;
   width: 100%;
   background-color: #ffffff;
   position: relative;
@@ -157,6 +157,7 @@
   border: solid #65676b21 1px;
   width: 328px;
   height: 455px;
+  bottom: 0;
 
   &-nav {
     width: 100%;

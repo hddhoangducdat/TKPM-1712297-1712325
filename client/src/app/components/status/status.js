@@ -47,7 +47,7 @@ const Status = ({
     return (
       <li className="home-page-list-status">
         <div className="home-page-list-status__header">
-          <img src={avatar} alt="" />
+          <img src={status.avatar} alt="" />
           <div className="home-page-list-status__header__info">
             <div className="home-page-list-status__header__info__name">
               {status.group.id !== "none"

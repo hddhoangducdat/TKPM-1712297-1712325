@@ -180,7 +180,7 @@ const Notification = ({
                     ) : (
                       <div> {value.userName}</div>
                     )}
-                    <p>post a status on your group {value.name}</p>
+                    <p>post a status on your group {value.groupName}</p>
                   </div>
                   <div className="notification-page-list-card-contain__subtext notification-page-list-card-contain__seen">
                     3 friends

@@ -1,6 +1,22 @@
 const userModel = require("../../models/userModel");
 const relationshipModel = require("../../models/userRelationshipModel");
 
+const fileModel = require("../../models/fileModel");
+const path = require("path");
+
+const {
+  getRelationShip,
+} = require("../relationshipController/relationshipController");
+
+const filterObj = (obj, ...allowedFileds) => {
+  const newObj = {};
+  Object.keys(obj).forEach((el) => {
+    if (allowedFileds.includes(el)) newObj[el] = obj[el];
+  });
+
+  return newObj;
+};
+
 exports.createUser = async (req, res) => {
   const modelUser = new userModel();
   modelUser.userName = req.body.userName;
@@ -13,10 +29,10 @@ exports.createUser = async (req, res) => {
     .catch((err) => res.status(400).send(err));
 };
 
-exports.getUser = async (req, res) => {
-  await userModel.findBy;
-  userRoute.get("/:_id", getUser);
-};
+// exports.getUser = async (req, res) => {
+//   await userModel.findBy;
+//   userRoute.get("/:_id", getUser);
+// };
 
 exports.getAll = async (req, res) => {
   await userModel.find(function (err, docs) {

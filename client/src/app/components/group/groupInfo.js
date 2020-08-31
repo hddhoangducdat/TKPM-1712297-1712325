@@ -1,23 +1,35 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from "react";
-import { getDeadline } from "../../store/actions";
+import {
+  getDeadline,
+  getAllFileGroup,
+  userSubmitDeadline,
+} from "../../store/actions";
 
 import { ReactComponent as TeamIcon } from "../../asset/img/icon/team.svg";
 import { ReactComponent as EyeIcon } from "../../asset/img/icon/eye.svg";
 import { ReactComponent as LockIcon } from "../../asset/img/icon/lock.svg";
 import { ReactComponent as FileIcon } from "../../asset/img/icon/file.svg";
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
+import { downloadDeadline } from "../../store/actions";
 import nested from "../../utils/nested";
 import DeadLineButton from "./deadlineButton";
 
 const GroupInfo = ({ getDeadline }) => {
+  const dispatch = useDispatch();
   const { deadline, group, auth } = useSelector((state) => state);
+  const groupFile = useSelector((state) =>
+    state.utils.file.groupFile instanceof Array
+      ? state.utils.file.groupFile
+      : []
+  );
 
   useEffect(() => {
     if (group !== false) {
+      dispatch(getAllFileGroup(group._id));
       getDeadline();
     }
-  }, [group]);
+  }, [group._id]);
 
   return (
     <div className="group-page-home-main-right">
@@ -57,46 +69,36 @@ const GroupInfo = ({ getDeadline }) => {
           Share File
         </div>
         <ul className="group-page-home-main-right__share__list">
-          <li key={1} className="group-page-home-main-right__share__list__file">
-            <img
-              src="https://scontent-xsp1-2.xx.fbcdn.net/v/t1.0-0/p320x320/118011160_2839021256423292_2922419493353089090_n.jpg?_nc_cat=106&_nc_sid=b9115d&_nc_ohc=A44hDx2T_TEAX-AoeMg&_nc_ht=scontent-xsp1-2.xx&_nc_tp=6&oh=4c3a16d4bb7615dab3c59874cf247ead&oe=5F660B9A"
-              alt=""
-            />
-          </li>
-
-          <li key={2} className="group-page-home-main-right__share__list__file">
-            <img
-              src="https://scontent-xsp1-2.xx.fbcdn.net/v/t1.0-0/p320x320/118011160_2839021256423292_2922419493353089090_n.jpg?_nc_cat=106&_nc_sid=b9115d&_nc_ohc=A44hDx2T_TEAX-AoeMg&_nc_ht=scontent-xsp1-2.xx&_nc_tp=6&oh=4c3a16d4bb7615dab3c59874cf247ead&oe=5F660B9A"
-              alt=""
-            />
-          </li>
-
-          <li key={3} className="group-page-home-main-right__share__list__file">
-            <img
-              src="https://scontent-xsp1-2.xx.fbcdn.net/v/t1.0-0/p320x320/118011160_2839021256423292_2922419493353089090_n.jpg?_nc_cat=106&_nc_sid=b9115d&_nc_ohc=A44hDx2T_TEAX-AoeMg&_nc_ht=scontent-xsp1-2.xx&_nc_tp=6&oh=4c3a16d4bb7615dab3c59874cf247ead&oe=5F660B9A"
-              alt=""
-            />
-          </li>
-
-          <li key={4} className="group-page-home-main-right__share__list__file">
-            <img
-              src="https://scontent-xsp1-2.xx.fbcdn.net/v/t1.0-0/p320x320/118011160_2839021256423292_2922419493353089090_n.jpg?_nc_cat=106&_nc_sid=b9115d&_nc_ohc=A44hDx2T_TEAX-AoeMg&_nc_ht=scontent-xsp1-2.xx&_nc_tp=6&oh=4c3a16d4bb7615dab3c59874cf247ead&oe=5F660B9A"
-              alt=""
-            />
-          </li>
-
-          <li key={5} className="group-page-home-main-right__share__list__file">
-            <img
-              src="https://scontent-xsp1-2.xx.fbcdn.net/v/t1.0-0/p320x320/118011160_2839021256423292_2922419493353089090_n.jpg?_nc_cat=106&_nc_sid=b9115d&_nc_ohc=A44hDx2T_TEAX-AoeMg&_nc_ht=scontent-xsp1-2.xx&_nc_tp=6&oh=4c3a16d4bb7615dab3c59874cf247ead&oe=5F660B9A"
-              alt=""
-            />
-          </li>
-          <li key={6} className="group-page-home-main-right__share__list__file">
-            <a href="#">
-              <FileIcon />
-            </a>
-            <span>CSDL.txt</span>
-          </li>
+          {groupFile.map((f, i) => {
+            let arr = f.fileName.split(".");
+            if (i > 6) return <li key={f._id}></li>;
+            if (
+              arr[arr.length - 1] === "jpg" ||
+              arr[arr.length - 1] === "jpeg" ||
+              arr[arr.length - 1] === "png"
+            ) {
+              return (
+                <li
+                  key={f._id}
+                  className="group-page-home-main-right__share__list__file"
+                >
+                  <img src={f.fileUrl} alt="" />
+                </li>
+              );
+            } else {
+              return (
+                <li
+                  key={f._id}
+                  className="group-page-home-main-right__share__list__file"
+                >
+                  <a href={f.fileUrl}>
+                    <FileIcon />
+                  </a>
+                  <span>{f.fileName}</span>
+                </li>
+              );
+            }
+          })}
         </ul>
         <button className="group-page-home-main-right__share__button">
           see more
@@ -110,7 +112,7 @@ const GroupInfo = ({ getDeadline }) => {
 
       <ul className="group-page-home-main-right__deadline">
         {deadline instanceof Array ? (
-          deadline.map((d) => {
+          deadline.map((d, index) => {
             return (
               <li key={d._id} className="group-page-home-decorate">
                 <div className="group-page-home-main-right__introduce__title">
@@ -138,7 +140,12 @@ const GroupInfo = ({ getDeadline }) => {
                   )}
 
                   {group.admin === auth.id ? (
-                    <button className="group-page-home-main-right__deadline__info__can">
+                    <button
+                      className="group-page-home-main-right__deadline__info__can"
+                      onClick={() => {
+                        dispatch(downloadDeadline(index));
+                      }}
+                    >
                       {d.files.length} submit
                     </button>
                   ) : nested(d, "files") ? (

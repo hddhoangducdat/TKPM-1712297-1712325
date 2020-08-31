@@ -1,5 +1,5 @@
-import React from "react";
-import { useSelector, connect } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, connect, useDispatch } from "react-redux";
 
 import Pic1 from "../../asset/img/tmp/pic1.jpeg";
 import Pic2 from "../../asset/img/tmp/pic2.jpg";
@@ -9,10 +9,18 @@ import Ava1 from "../../asset/img/tmp/ava1.jpg";
 import Ava2 from "../../asset/img/tmp/ava2.jpg";
 import Ava3 from "../../asset/img/tmp/ava3.jpg";
 
-import { uploadAvatar } from "../../store/actions";
+import { uploadAvatar, getAllFile, getFriends } from "../../store/actions";
+import { FILE_MANAGER_ON, FRIEND_MANAGER_ON } from "../../store/value";
 
 const Profile = ({ uploadAvatar }) => {
-  const { user } = useSelector((state) => state.auth);
+  const { user, id, file } = useSelector((state) => state.auth);
+  const { friend } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllFile(id));
+    dispatch(getFriends());
+  }, [id]);
 
   return (
     <div className="profile-container">
@@ -53,26 +61,95 @@ const Profile = ({ uploadAvatar }) => {
         <div className="profile-info-photo">
           <h3 className="profile-info-title">Photos</h3>
         </div>
-        <div className="profile-info-picture">
-          <img src={Pic1} alt="" />
-          <img src={Pic2} alt="" />
-          <img src={Pic3} alt="" />
-          <div className="profile-info-picture-more">
-            <div className="profile-info-picture-more-content">+123</div>
+        {file.length === 0 ? (
+          <div> NO FILE UPLOAD YET !!! </div>
+        ) : file.length === 1 ? (
+          <div className="profile-info-picture">
+            <img src={file[0].fileUrl} alt="" />
+            <div className="profile-info-picture-more">
+              <div
+                className="profile-info-picture-more-content"
+                onClick={() => dispatch({ type: FILE_MANAGER_ON })}
+              >
+                +{file.length}
+              </div>
+            </div>
           </div>
-        </div>
+        ) : file.length === 2 ? (
+          <div className="profile-info-picture">
+            <img src={file[0].fileUrl} alt="" />
+            <img src={file[1].fileUrl} alt="" />
+            <div className="profile-info-picture-more">
+              <div
+                className="profile-info-picture-more-content"
+                onClick={() => dispatch({ type: FILE_MANAGER_ON })}
+              >
+                +{file.length}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="profile-info-picture">
+            <img src={file[0].fileUrl} alt="" />
+            <img src={file[1].fileUrl} alt="" />
+            <img src={file[2].fileUrl} alt="" />
+            <div className="profile-info-picture-more">
+              <div
+                className="profile-info-picture-more-content"
+                onClick={() => dispatch({ type: FILE_MANAGER_ON })}
+              >
+                +{file.length}
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="profile-info-friend">
           <h3 className="profile-info-title">Friends</h3>
         </div>
-        <div className="profile-info-picture">
-          <img src={Ava1} alt="" />
-          <img src={Ava2} alt="" />
-          <img src={Ava3} alt="" />
-          <div className="profile-info-picture-more profile-info-picture-friend">
-            <div className="profile-info-picture-more-content">+8600</div>
+
+        {friend.length === 0 ? (
+          <div> NO FRIEND YET !!! </div>
+        ) : friend.length === 1 ? (
+          <div className="profile-info-picture">
+            <img src={friend[0].avatar} alt="" />
+            <div className="profile-info-picture-more profile-info-picture-friend">
+              <div
+                className="profile-info-picture-more-content"
+                onClick={() => dispatch({ type: FRIEND_MANAGER_ON })}
+              >
+                +{friend.length}
+              </div>
+            </div>
           </div>
-        </div>
+        ) : friend.length === 2 ? (
+          <div className="profile-info-picture">
+            <img src={friend[0].avatar} alt="" />
+            <img src={friend[1].avatar} alt="" />
+            <div className="profile-info-picture-more profile-info-picture-friend">
+              <div
+                className="profile-info-picture-more-content"
+                onClick={() => dispatch({ type: FRIEND_MANAGER_ON })}
+              >
+                +{friend.length}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="profile-info-picture">
+            <img src={friend[0].avatar} alt="" />
+            <img src={friend[1].avatar} alt="" />
+            <img src={friend[2].avatar} alt="" />
+            <div className="profile-info-picture-more profile-info-picture-friend">
+              <div
+                className="profile-info-picture-more-content"
+                onClick={() => dispatch({ type: FRIEND_MANAGER_ON })}
+              >
+                +{friend.length}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
