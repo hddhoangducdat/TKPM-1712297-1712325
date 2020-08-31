@@ -112,7 +112,7 @@ const GroupInfo = ({ getDeadline }) => {
 
       <ul className="group-page-home-main-right__deadline">
         {deadline instanceof Array ? (
-          deadline.map((d) => {
+          deadline.map((d, index) => {
             return (
               <li key={d._id} className="group-page-home-decorate">
                 <div className="group-page-home-main-right__introduce__title">
@@ -143,7 +143,7 @@ const GroupInfo = ({ getDeadline }) => {
                     <button
                       className="group-page-home-main-right__deadline__info__can"
                       onClick={() => {
-                        dispatch(downloadDeadline(d._id));
+                        dispatch(downloadDeadline(index));
                       }}
                     >
                       {d.files.length} submit
