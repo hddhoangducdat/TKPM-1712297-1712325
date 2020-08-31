@@ -268,9 +268,9 @@ exports.downloadFile = async (req, res) => {
 
       let dir =
         req.body.dir === undefined
-          ? path.join(process.env.HOME || process.env.USERPROFILE, "downloads/")
+          ? path.join(__dirname, "..", "..", "..", "/client/public/")
           : req.body.dir;
-
+      console.log(dir);
       const filePath = path.join(dir, docs[0].fileName.replace(/\s+/g, ""));
       console.log(`Writing to ${filePath}`);
       const dest = fs.createWriteStream(filePath, { flags: "w" });
