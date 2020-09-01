@@ -10,52 +10,54 @@ export const downloadDeadline = (idx) => async (dispatch, getState) => {
   // let link = document.createElement("a");
   // document.body.appendChild(link);
 
-  // JSZipUtils.getBinaryContent("default.jpg", function (err, data) {
-  //   if (err) {
-  //     throw err;
-  //   }
-
-  //   console.log(data);
-
-  //   zip.file("default.jpg", data, { binary: true });
-  //   window.setTimeout(function () {
-  //     zip
-  //       .generateAsync({
-  //         type: "blob",
-  //       })
-  //       .then(function (content) {
-  //         console.log(content);
-  //         // link.setAttribute(
-  //         //   "download",
-  //         //   "filesDeadline" + new Date().getTime()
-  //         // );
-  //         // link.href = URL.createObjectURL(content);
-  //         // link.click();
-
-  //         saveAs(content, "fileDeadline-" + new Date().getTime());
-  //       });
-  //   }, 5000);
-  //   count++;
-
-  //   // if (count === _files.length) {
-
-  //   // }
-  // });
-
   _files.map(async (file) => {
     await axios.patch("/deadline/downloadFile", file).then((result) => {
       console.log(result.data);
+      // JSZipUtils.getBinaryContent(result.data.webViewLink, function (
+      //   err,
+      //   data
+      // ) {
+      //   if (err) {
+      //     throw err;
+      //   }
+
+      //   console.log(data);
+      //   axios
+      //     .get(result.data.webViewLink, {
+      //       responseType: "blob",
+      //     })
+      //     .then((response) => {
+      //       zip.file(result.data.webViewLink, response.data, {
+      //         binary: true,
+      //       });
+      //       console.log(response.data);
+      //     });
+
+      //   // zip.file(result.data.webViewLink, data, { binary: true });
+
+      //   count++;
+
+      //   if (count === _files.length) {
+      //     window.setTimeout(function () {
+      //       zip
+      //         .generateAsync({
+      //           type: "blob",
+      //         })
+      //         .then(function (content) {
+      //           console.log(content);
+      //           // link.setAttribute(
+      //           //   "download",
+      //           //   "filesDeadline" + new Date().getTime()
+      //           // );
+      //           // link.href = URL.createObjectURL(content);
+      //           // link.click();
+
+      //           saveAs(content, "fileDeadline-" + new Date().getTime());
+      //         });
+      //     }, 5000);
+      //   }
+      // });
     });
-    // axios
-    //   .get(file.fileUrl, {
-    //     responseType: "blob",
-    //   })
-    //   .then((response) => {
-    //     zip.file(file.fileName, response.data, {
-    //       binary: true,
-    //     });
-    //     console.log(response.data);
-    //   });
   });
   // link.remove();
 };
