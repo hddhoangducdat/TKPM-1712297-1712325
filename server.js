@@ -6,6 +6,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const socketio = require("socket.io");
 const cors = require("cors");
+const path = require("path");
 // const socketWeb = require("./server/socket/socket");
 
 const authRoute = require("./server/routers/userRoute/authRoute");
@@ -88,6 +89,29 @@ app.use("/deadline", deadlineRoute);
 app.use("/group", groupRoute);
 
 const port = process.env.PORT || 5000;
+
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, "client/build")));
+// Anything that doesn't match the above, send back index.html
+app.get("*", (req, res) => {
+  const code = req.query.code;
+  if (code) {
+    oAuth2Client.getToken(code, function (err, tokens) {
+      if (err) return console.error("Error retrieving access token", err);
+      console.log("Successfully authenticated!");
+      console.log(tokens);
+      oAuth2Client.setCredentials(tokens);
+      // Store the token to disk for later program executions
+      fs.writeFile(TOKEN_PATH, JSON.stringify(tokens), (err) => {
+        if (err) return console.error(err);
+        console.log("Token stored to", TOKEN_PATH);
+      });
+
+      res.status(200).json("OK!");
+    });
+  }
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+});
 
 server.listen(port, () => console.log(`Server started on port ${port}`));
 
