@@ -413,7 +413,22 @@
     &__text {
       font-size: 15px;
       font-weight: 600;
-      flex-basis: 80%;
+
+      &-wrap {
+        width: 340px !important;
+      }
+      
+      &.wrap {
+        margin: 10px 0;
+        overflow: hidden;
+        line-height: 15px;
+        height: 15px;
+        display: block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      
+
     }
 
     &__svg {

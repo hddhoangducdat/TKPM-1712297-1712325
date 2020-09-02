@@ -1551,8 +1551,17 @@ input:focus {
       border-radius: 100%; }
     .friend-list-detail__text {
       font-size: 15px;
-      font-weight: 600;
-      flex-basis: 80%; }
+      font-weight: 600; }
+      .friend-list-detail__text-wrap {
+        width: 340px !important; }
+      .friend-list-detail__text.wrap {
+        margin: 10px 0;
+        overflow: hidden;
+        line-height: 15px;
+        height: 15px;
+        display: block;
+        text-overflow: ellipsis;
+        white-space: nowrap; }
     .friend-list-detail__svg {
       position: absolute;
       display: inline-flex;
