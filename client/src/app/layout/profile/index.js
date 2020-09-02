@@ -1,16 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, connect, useDispatch } from "react-redux";
 
-import Pic1 from "../../asset/img/tmp/pic1.jpeg";
-import Pic2 from "../../asset/img/tmp/pic2.jpg";
-import Pic3 from "../../asset/img/tmp/pic3.jpg";
-
-import Ava1 from "../../asset/img/tmp/ava1.jpg";
-import Ava2 from "../../asset/img/tmp/ava2.jpg";
-import Ava3 from "../../asset/img/tmp/ava3.jpg";
-
 import { uploadAvatar, getAllFile, getFriends } from "../../store/actions";
 import { FILE_MANAGER_ON, FRIEND_MANAGER_ON } from "../../store/value";
+import { ReactComponent as FileIcon } from "../../asset/img/icon/file.svg";
 
 const Profile = ({ uploadAvatar }) => {
   const { user, id, file } = useSelector((state) => state.auth);
@@ -21,6 +14,23 @@ const Profile = ({ uploadAvatar }) => {
     dispatch(getAllFile(id));
     dispatch(getFriends());
   }, [id]);
+
+  const render = ({ fileUrl, fileName }) => {
+    const arr = fileName.split(".");
+    if (
+      arr[arr.length - 1] === "jpeg" ||
+      arr[arr.length - 1] === "png" ||
+      arr[arr.length - 1] === "jpg"
+    ) {
+      return <img src={fileUrl} alt="" />;
+    } else {
+      return (
+        <a href={fileUrl}>
+          <FileIcon />
+        </a>
+      );
+    }
+  };
 
   return (
     <div className="profile-container">
@@ -91,8 +101,8 @@ const Profile = ({ uploadAvatar }) => {
         ) : (
           <div className="profile-info-picture">
             <img src={file[0].fileUrl} alt="" />
-            <img src={file[1].fileUrl} alt="" />
-            <img src={file[2].fileUrl} alt="" />
+            {render(file[1])}
+            {render(file[2])}
             <div className="profile-info-picture-more">
               <div
                 className="profile-info-picture-more-content"
