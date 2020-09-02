@@ -6,12 +6,13 @@ import {
   userSubmitDeadline,
 } from "../../store/actions";
 
+import { DEADLINE_FILE_ON } from "../../store/value";
+
 import { ReactComponent as TeamIcon } from "../../asset/img/icon/team.svg";
 import { ReactComponent as EyeIcon } from "../../asset/img/icon/eye.svg";
 import { ReactComponent as LockIcon } from "../../asset/img/icon/lock.svg";
 import { ReactComponent as FileIcon } from "../../asset/img/icon/file.svg";
 import { connect, useSelector, useDispatch } from "react-redux";
-import { downloadDeadline } from "../../store/actions";
 import nested from "../../utils/nested";
 import DeadLineButton from "./deadlineButton";
 
@@ -143,7 +144,7 @@ const GroupInfo = ({ getDeadline }) => {
                     <button
                       className="group-page-home-main-right__deadline__info__can"
                       onClick={() => {
-                        dispatch(downloadDeadline(index));
+                        dispatch({ type: DEADLINE_FILE_ON, payload: index });
                       }}
                     >
                       {d.files.length} submit

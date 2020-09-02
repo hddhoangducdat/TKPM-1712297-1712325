@@ -73,6 +73,10 @@ a {
     border-radius: 20px;
     width: 480px;
 
+  &.post-file-manager {
+  width: 550px !important;
+  }
+
     &-file {
       background-color: #ffffff;
     }
