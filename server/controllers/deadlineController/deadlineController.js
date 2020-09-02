@@ -314,3 +314,10 @@ exports.downloadFile = async (req, res) => {
 
   // start download with gg api
 };
+
+exports.getDeadlineAll = async (req, res) => {
+  const deadline = await deadlineModel.find({
+    groupId: req.params._id,
+  });
+  res.send(deadline);
+};

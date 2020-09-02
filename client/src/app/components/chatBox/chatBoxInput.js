@@ -6,6 +6,7 @@ import { ReactComponent as UploadFileIcon } from "../../asset/img/icon/uploadfil
 import { ReactComponent as PhotoIcon } from "../../asset/img/icon/photo.svg";
 import { ReactComponent as SendIcon } from "../../asset/img/icon/send.svg";
 import { ReactComponent as EmojiIcon } from "../../asset/img/icon/emoji.svg";
+import EmojiChooser from "../emoji/emojiChooser";
 
 import {
   RENDER_MESSAGE,
@@ -21,6 +22,8 @@ import { useSelector, useDispatch, connect } from "react-redux";
 let socket;
 
 const ChatBoxInput = ({ id, saveMessage }) => {
+  const [emoji, setEmoji] = useState(false);
+
   const userId = useSelector((state) => state.auth.id);
   const { avatar, userName } = useSelector((state) => state.auth.user);
   const [chat, setChat] = React.useState("");
@@ -65,6 +68,16 @@ const ChatBoxInput = ({ id, saveMessage }) => {
 
   return (
     <form className="messenger-chatbox-input" onSubmit={onSendMessage}>
+      {emoji ? (
+        <EmojiChooser
+          setEmoji={setEmoji}
+          setChat={(emo) => {
+            setChat(chat + String.fromCodePoint(emo));
+          }}
+        />
+      ) : (
+        <div></div>
+      )}
       <div className="messenger-chatbox-input-detail">
         <a
           href="#"
@@ -80,7 +93,11 @@ const ChatBoxInput = ({ id, saveMessage }) => {
         </a>
         <div className="messenger-chatbox-input-detail__form">
           <a href="#" className="messenger-chatbox-input-detail__form__icon ">
-            <EmojiIcon />
+            <EmojiIcon
+              onClick={() => {
+                setEmoji(true);
+              }}
+            />
           </a>
           <input
             placeholder="Aa"

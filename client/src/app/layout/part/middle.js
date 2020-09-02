@@ -108,7 +108,9 @@ const Middle = ({ logout, saveNoti }) => {
               className={tab[1]}
               onClick={(e) => {
                 colorTab(1);
-                setRender(<Calendar />);
+                setRender(
+                  <Calendar setRender={setRender} colorTab={colorTab} />
+                );
               }}
             >
               <CalendarIcon />

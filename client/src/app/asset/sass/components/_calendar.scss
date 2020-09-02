@@ -12,7 +12,7 @@
   background: #2b4450;
   border-radius: 4px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-  height: 600px;
+  height: 660px;
   perspective: 1000;
   transition: 0.9s;
   transform-style: preserve-3d;
@@ -58,13 +58,13 @@
   padding: 0 40px;
 }
 
-.weeks div {
+.weeks .weeks-contain {
   display: flex;
-  font-size: 1.2em;
+  //
   font-weight: 300;
   justify-content: space-between;
   margin-bottom: 20px;
-  width: 100%;
+  // width: 100%;
 }
 
 .last-month {
@@ -72,6 +72,7 @@
 }
 
 .weeks span {
+  font-size: 1.2em;
   padding: 10px;
 }
 

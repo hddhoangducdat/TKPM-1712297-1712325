@@ -1,10 +1,7 @@
 import axios from "../../../api/server";
 import { saveNoti } from "../../actions";
 
-export const commentStatus = (text, status, index) => async (
-  dispatch,
-  getState
-) => {
+export const commentStatus = (text, status) => async (dispatch, getState) => {
   if (status.from !== getState().auth.id) {
     const noti = {
       from: getState().auth.id,

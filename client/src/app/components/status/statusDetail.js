@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
-import { ReactComponent as EmojiIcon } from "../../asset/img/icon/emoji.svg";
 import { ReactComponent as SaveIcon } from "../../asset/img/icon/save.svg";
 import { ReactComponent as ShareIcon } from "../../asset/img/icon/share.svg";
 import { ReactComponent as LikeIcon } from "../../asset/img/icon/heart.svg";
@@ -8,19 +7,14 @@ import { ReactComponent as CommentIcon } from "../../asset/img/icon/comment.svg"
 import { ReactComponent as HeartActive } from "../../asset/img/icon/heart-active.svg";
 import { ReactComponent as CloseIcon } from "../../asset/img/icon/close.svg";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getStatus,
-  likeStatus,
-  unlikeStatus,
-  commentStatus,
-} from "../../store/actions";
+import { getStatus, likeStatus, unlikeStatus } from "../../store/actions";
 import { STATUS_OFF } from "../../store/value";
+import CommentStatus from "./commentStatus";
 
 const StatusDetail = () => {
   const [status, setStatus] = useState(false);
   const [like, setLike] = useState([]);
   const [comments, setComments] = useState([]);
-  const { avatar, userName } = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const id = useSelector((state) => state.utils.status);
   const userId = useSelector((state) => state.auth.id);
@@ -173,30 +167,11 @@ const StatusDetail = () => {
             );
           })}
         </div>
-        <div className="home-page-list-status__comment__input status-detail-input">
-          <img src={avatar} alt="" />
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              dispatch(commentStatus(e.target.comment.value, status));
-              setComments([
-                {
-                  userName,
-                  avatar,
-                  text: e.target.comment.value,
-                },
-                ...comments,
-              ]);
-              e.target.comment.value = "";
-            }}
-            className="home-page-form"
-          >
-            <input placeholder="write comment here..." name="comment" />
-          </form>
-          <a href="#">
-            <EmojiIcon />
-          </a>
-        </div>
+        <CommentStatus
+          status={status}
+          comments={comments}
+          setComments={setComments}
+        />
       </div>
     </div>
   );
