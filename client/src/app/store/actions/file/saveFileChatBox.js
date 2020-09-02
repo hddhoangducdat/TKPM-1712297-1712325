@@ -6,7 +6,7 @@ import { saveMessage } from "../../actions";
 
 export const saveFileChatBox = (file) => async (dispatch, getState) => {
   console.log(file);
-  // const ENDPOINT = "localhost:5000";
+  // const ENDPOINT = "/";
   // let socket;
   const arr = file.fileName.split(".");
 

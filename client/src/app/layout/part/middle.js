@@ -37,7 +37,7 @@ const Middle = ({ logout, saveNoti }) => {
   const { noti } = useSelector((state) => state.auth.user);
 
   const [render, setRender] = useState(<Home />);
-  const ENDPOINT = "localhost:5000";
+  const ENDPOINT = "/";
   const [tab, setTab] = useState([
     "nav-tab-detail nav-tab-color",
     "nav-tab-detail",

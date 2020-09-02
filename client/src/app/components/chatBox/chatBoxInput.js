@@ -27,7 +27,7 @@ const ChatBoxInput = ({ id, saveMessage }) => {
   const userId = useSelector((state) => state.auth.id);
   const { avatar, userName } = useSelector((state) => state.auth.user);
   const [chat, setChat] = React.useState("");
-  const ENDPOINT = "localhost:5000";
+  const ENDPOINT = "/";
   const dispatch = useDispatch();
 
   const onSendMessage = (e) => {
