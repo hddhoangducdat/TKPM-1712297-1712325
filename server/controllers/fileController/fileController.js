@@ -31,7 +31,7 @@ function getAccessToken(oAuth2Client) {
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const filePath = path.join(__dirname, "..", "..", "..", "../../");
+    const filePath = path.join(__dirname, "..", "..", "..", "..", "/tmp/");
     cb(null, filePath);
   },
   filename: (req, file, cb) => {
