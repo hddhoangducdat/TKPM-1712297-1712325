@@ -4,6 +4,7 @@ import friend from "./friend";
 import deadline from "./deadline";
 import submit from "./submit";
 import invite from "./invite";
+import deadline_file from "./fileDeadline";
 
 const authReducer = combineReducers({
   group,
@@ -11,6 +12,7 @@ const authReducer = combineReducers({
   deadline,
   submit,
   invite,
+  deadline_file,
 });
 
 export default authReducer;

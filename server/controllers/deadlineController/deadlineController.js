@@ -12,7 +12,7 @@ const oAuth2Client = new google.auth.OAuth2(
   client_secret,
   redirect_uris[0]
 );
-
+const os = require("os");
 // sourceFolder in GG drive
 const targetFolderId = "12OVzJ1Jxr0p5SUNuYgCxNu4sC6hqelsK";
 const SCOPES = ["https://www.googleapis.com/auth/drive"];
@@ -268,9 +268,9 @@ exports.downloadFile = async (req, res) => {
 
       let dir =
         req.body.dir === undefined
-          ? path.join(process.env.HOME || process.env.USERPROFILE, "downloads/")
+          ? path.join(os.homedir(), "downloads/")
           : req.body.dir;
-
+      console.log(dir);
       const filePath = path.join(dir, docs[0].fileName.replace(/\s+/g, ""));
       console.log(`Writing to ${filePath}`);
       const dest = fs.createWriteStream(filePath, { flags: "w" });

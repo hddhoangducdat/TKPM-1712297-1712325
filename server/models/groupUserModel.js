@@ -11,7 +11,7 @@ const dataGroupModel = new mongoose.Schema({
 });
 
 const groupUserSchema = new mongoose.Schema({
-  groupName: { type: String, required: true },
+  groupName: { type: String, default: "group" + Date.now() },
   avatar: {
     type: String,
     default:

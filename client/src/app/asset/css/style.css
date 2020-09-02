@@ -1561,6 +1561,16 @@ input:focus {
     .friend-list-detail__text {
       font-size: 15px;
       font-weight: 600; }
+      .friend-list-detail__text-wrap {
+        width: 340px !important; }
+      .friend-list-detail__text.wrap {
+        margin: 10px 0;
+        overflow: hidden;
+        line-height: 15px;
+        height: 15px;
+        display: block;
+        text-overflow: ellipsis;
+        white-space: nowrap; }
     .friend-list-detail__svg {
       position: absolute;
       display: inline-flex;
@@ -2054,6 +2064,8 @@ a {
     transform: translate(-50%, -50%);
     border-radius: 20px;
     width: 480px; }
+    .middle-blur .post-input.post-file-manager {
+      width: 550px !important; }
     .middle-blur .post-input-file {
       background-color: #ffffff; }
     .middle-blur .post-input-text {

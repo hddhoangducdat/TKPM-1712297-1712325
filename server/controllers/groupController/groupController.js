@@ -1,5 +1,6 @@
 const groupUserModel = require("../../models/groupUserModel");
 const chatBoxModel = require("../../models/chatModel");
+const statusModel = require("../../models/statusModel");
 const userModel = require("../../models/userModel");
 const fileModel = require("../../models/fileModel");
 const multer = require("multer");
@@ -169,6 +170,62 @@ exports.uploadImageCover = async (req, res) => {
       await newModel.save();
     }
   );
+};
+
+exports.addMember = async (req, res) => {
+  const host = req.body.host;
+  const newMember = req.body.member;
+
+  const groupUser = await groupUserModel.findById(req.params._id);
+
+  if (groupUser.admin === host) {
+    // Add member to group
+    groupUser.data.member = [...groupUser.data.member, newMember];
+    groupUser.markModified("data.member");
+
+    await groupUser.save();
+
+    //Create chatBox in member
+
+    const newGroupMember = await userModel.findById(req.body.member);
+
+    newGroupMember.chatBox = [
+      ...newGroupMember.chatBox,
+      {
+        id: groupUser.data.chatGroup,
+        name: groupUser.groupName,
+        avatar: groupUser.avatar,
+      },
+    ];
+
+    newGroupMember.markModified("chatBox");
+    //Add status group to member
+    await Promise.all(
+      groupUser.data.status.map((e) => {
+        return "group-" + groupUser._id + "-" + e;
+      })
+    )
+      .then((status) => {
+        // tra ve tat ca stt của group
+        newGroupMember.status = [status, ...newGroupMember.status];
+        newGroupMember.markModified(status);
+      })
+      .catch((err) => res.status(400).json(err));
+
+    await newGroupMember.save();
+    //add member to chatGroup
+    const chatGroupDialog = await chatBoxModel.findById(
+      groupUser.data.chatGroup
+    );
+
+    chatGroupDialog.member = [...chatGroupDialog.member, newGroupMember._id];
+    chatGroupDialog.markModified("member");
+    await chatGroupDialog.save();
+    res.json(groupUser);
+  } else {
+    // khong phai admin
+    res.status(400).json("");
+  }
 };
 
 exports.getGroup = async (req, res) => {

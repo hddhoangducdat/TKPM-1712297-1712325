@@ -13,12 +13,12 @@ import StatusDetail from "../components/status/statusDetail";
 import FileManager from "../components/file/fileManager";
 import FriendManager from "../components/relationship/friendManager";
 import InviteFriend from "../components/relationship/inviteFriend";
-
+import FileDeadlineManager from "../components/deadline/fileDeadLineManager";
 const Home = () => {
   const { chatBox, postForm, fileManager } = useSelector(
     (state) => state.utils.file
   );
-  const { group, deadline, submit, invite } = useSelector(
+  const { group, deadline, submit, invite, deadline_file } = useSelector(
     (state) => state.utils.post
   );
   const { status } = useSelector((state) => state.utils);
@@ -44,6 +44,11 @@ const Home = () => {
       {fileManager !== 0 ? <FileManager /> : <div />}
       {friend !== 0 ? <FriendManager /> : <div />}
       {invite !== 0 ? <InviteFriend /> : <div />}
+      {deadline_file["flag"] !== 0 ? (
+        <FileDeadlineManager index={deadline_file.idx} />
+      ) : (
+        <div />
+      )}
     </div>
   );
 };
