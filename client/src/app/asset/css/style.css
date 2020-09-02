@@ -161,14 +161,14 @@ input:focus {
     justify-content: flex-end; }
 
 .nav-item {
-  width: calc($nav-size * 0.8);
+  width: calc(7.5vh * 0.8);
   display: flex;
   align-self: center;
   justify-content: center; }
 
 .icon-button {
-  width: calc($nav-size * 0.5);
-  height: calc($nav-size * 0.5);
+  width: calc(7.5vh * 0.5);
+  height: calc(7.5vh * 0.5);
   padding: 5px;
   margin: 2px;
   display: flex;
