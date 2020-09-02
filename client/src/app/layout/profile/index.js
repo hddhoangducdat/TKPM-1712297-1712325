@@ -4,6 +4,7 @@ import { useSelector, connect, useDispatch } from "react-redux";
 import { uploadAvatar, getAllFile, getFriends } from "../../store/actions";
 import { FILE_MANAGER_ON, FRIEND_MANAGER_ON } from "../../store/value";
 import { ReactComponent as FileIcon } from "../../asset/img/icon/file.svg";
+import nested from "../../utils/nested";
 
 const Profile = ({ uploadAvatar }) => {
   const { user, id, file } = useSelector((state) => state.auth);
@@ -15,21 +16,23 @@ const Profile = ({ uploadAvatar }) => {
     dispatch(getFriends());
   }, [id]);
 
-  const render = ({ fileUrl, fileName }) => {
-    const arr = fileName.split(".");
-    if (
-      arr[arr.length - 1] === "jpeg" ||
-      arr[arr.length - 1] === "png" ||
-      arr[arr.length - 1] === "jpg"
-    ) {
-      return <img src={fileUrl} alt="" />;
-    } else {
-      return (
-        <a href={fileUrl}>
-          <FileIcon />
-        </a>
-      );
-    }
+  const render = (file) => {
+    if (nested(file, "fileName") && nested(file, "fileUrl")) {
+      const arr = file.fileName.split(".");
+      if (
+        arr[arr.length - 1] === "jpeg" ||
+        arr[arr.length - 1] === "png" ||
+        arr[arr.length - 1] === "jpg"
+      ) {
+        return <img src={file.fileUrl} alt="" />;
+      } else {
+        return (
+          <a href={file.fileUrl}>
+            <FileIcon />
+          </a>
+        );
+      }
+    } else return <div></div>;
   };
 
   return (
@@ -75,7 +78,7 @@ const Profile = ({ uploadAvatar }) => {
           <div> NO FILE UPLOAD YET !!! </div>
         ) : file.length === 1 ? (
           <div className="profile-info-picture">
-            <img src={file[0].fileUrl} alt="" />
+            {render(file[0])}
             <div className="profile-info-picture-more">
               <div
                 className="profile-info-picture-more-content"
@@ -87,8 +90,8 @@ const Profile = ({ uploadAvatar }) => {
           </div>
         ) : file.length === 2 ? (
           <div className="profile-info-picture">
-            <img src={file[0].fileUrl} alt="" />
-            <img src={file[1].fileUrl} alt="" />
+            {render(file[0])}
+            {render(file[1])}
             <div className="profile-info-picture-more">
               <div
                 className="profile-info-picture-more-content"
@@ -100,7 +103,7 @@ const Profile = ({ uploadAvatar }) => {
           </div>
         ) : (
           <div className="profile-info-picture">
-            <img src={file[0].fileUrl} alt="" />
+            {render(file[0])}
             {render(file[1])}
             {render(file[2])}
             <div className="profile-info-picture-more">
